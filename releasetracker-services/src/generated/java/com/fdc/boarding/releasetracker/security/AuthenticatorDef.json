@@ -1,0 +1,28 @@
+{
+  "serviceName" : "Authenticator",
+  "serviceVersion" : 1,
+  "description" : "",
+  "apis" : [ {
+    "name" : "authenticate",
+    "description" : "Authenticate the user.",
+    "inputType" : "com.fdc.boarding.releasetracker.security.Credentials",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/authenticate",
+      "maxContentSize" : 200000
+    }
+  } ],
+  "webDef" : {
+    "encoding" : [ "JSON", "XML" ],
+    "methods" : [ "POST" ],
+    "path" : "authenticator",
+    "maxContentSize" : 200000
+  },
+  "configType" : "java.lang.String",
+  "configJsonSchema" : "{\"type\":\"string\"}",
+  "ns" : "com.fdc.boarding.releasetracker.security"
+}

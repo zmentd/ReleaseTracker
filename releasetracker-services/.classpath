@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src/generated/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib-10/fdinet-activemq-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-activemq-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-codegen-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-codegen-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-commonsvcs-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-core-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-core-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-jms-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-rabbit-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-svcimpl-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-svcimpl-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-tools-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-tools-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-web-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-web-1.1.9-sources.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-webspheremq-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/validation-api-1.1.0.Final.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/releasetracker-core"/>
+	<classpathentry kind="lib" path="lib-10/activemq-broker-5.11.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/activemq-client-5.11.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/activemq-openwire-legacy-5.11.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/amqp-client-3.5.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/bcpg-jdk15on-1.50.jar"/>
+	<classpathentry kind="lib" path="lib-10/bcprov-jdk15on-1.50.jar"/>
+	<classpathentry kind="lib" path="lib-10/bsh-2.0b5.jar"/>
+	<classpathentry kind="lib" path="lib-10/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/commons-dbcp2-2.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/commons-dbutils-1.6.jar"/>
+	<classpathentry kind="lib" path="lib-10/commons-io-1.3.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/commons-pool2-2.3.jar"/>
+	<classpathentry kind="lib" path="lib-10/db2jcc-3.8.47.jar"/>
+	<classpathentry kind="lib" path="lib-10/derby-10.11.1.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/derbyclient-10.11.1.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/dhbcore-7.1.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/freemarker-2.3.20.jar"/>
+	<classpathentry kind="lib" path="lib-10/geronimo-j2ee-management_1.1_spec-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/geronimo-jms_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/hawtbuf-1.11.jar"/>
+	<classpathentry kind="lib" path="lib-10/jackson-annotations-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/jackson-core-2.4.4.jar"/>
+	<classpathentry kind="lib" path="lib-10/jackson-databind-2.4.4.jar"/>
+	<classpathentry kind="lib" path="lib-10/jackson-dataformat-xml-2.4.4.jar"/>
+	<classpathentry kind="lib" path="lib-10/jackson-module-jaxb-annotations-2.4.4.jar"/>
+	<classpathentry kind="lib" path="lib-10/jackson-module-jsonSchema-2.6.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jasypt-1.9.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/javatuples-1.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/javax.jms-api-2.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/jdbm-1.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/jdom-1.1.3.jar"/>
+	<classpathentry kind="lib" path="lib-10/je-5.0.73.jar"/>
+	<classpathentry kind="lib" path="lib-10/jetty-http-9.3.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jetty-io-9.3.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jetty-security-9.3.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jetty-server-9.3.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jetty-servlet-9.3.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jetty-util-9.3.0.M2.jar"/>
+	<classpathentry kind="lib" path="lib-10/jline-1.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/jmqi-7.1.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/jpos-2.0.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="lib-10/log4j-api-2.3.jar"/>
+	<classpathentry kind="lib" path="lib-10/log4j-core-2.3.jar"/>
+	<classpathentry kind="lib" path="lib-10/log4j-slf4j-impl-2.3.jar"/>
+	<classpathentry kind="lib" path="lib-10/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="lib-10/mqjms-7.1.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/ojdbc_g-6.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/org.osgi.core-4.3.1.jar"/>
+	<classpathentry kind="lib" path="lib-10/slf4j-api-1.7.12.jar"/>
+	<classpathentry kind="lib" path="lib-10/stax2-api-3.1.4.jar"/>
+	<classpathentry kind="lib" path="lib-10/xercesImpl-2.10.0.jar"/>
+	<classpathentry kind="lib" path="lib-10/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

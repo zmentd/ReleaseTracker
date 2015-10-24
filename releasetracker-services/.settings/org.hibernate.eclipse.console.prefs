@@ -1,0 +1,3 @@
+default.configuration=releasetracker-services
+eclipse.preferences.version=1
+hibernate3.enabled=true

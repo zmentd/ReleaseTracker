@@ -1,0 +1,28 @@
+{
+  "serviceName" : "Registrar",
+  "serviceVersion" : 1,
+  "description" : "",
+  "apis" : [ {
+    "name" : "register",
+    "description" : "Register a user.",
+    "inputType" : "com.fdc.boarding.releasetracker.domain.security.RegistrationRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.security.RegistrationResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/register",
+      "maxContentSize" : 200000
+    }
+  } ],
+  "webDef" : {
+    "encoding" : [ "JSON", "XML" ],
+    "methods" : [ "POST" ],
+    "path" : "registrar",
+    "maxContentSize" : 200000
+  },
+  "configType" : "java.lang.String",
+  "configJsonSchema" : "{\"type\":\"string\"}",
+  "ns" : "com.fdc.boarding.releasetracker.security"
+}

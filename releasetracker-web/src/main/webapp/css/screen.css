@@ -1,0 +1,308 @@
+body{
+    font-size: 14px;
+    background-color: #f5f5f5;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.highlight {
+    color: #fb4f14;
+}
+
+a {
+    color: #00698c;
+}
+th {
+	padding:4px 4px 4px 4px
+}
+
+td {
+	padding:4px 4px 4px 4px
+}
+
+a:hover {
+    color: #0069ac;
+}
+
+/* JSON EDITOR OVERRIDES */
+.jsoneditor textarea.text {
+    min-height: 250px;
+    resize: 'vertical'
+}
+
+.jsoneditor div.tree {
+    min-height: 250px;
+}
+
+/*BOOTSTRAP OVERRIDES*/
+.popover.bottom>.arrow {
+  left: auto !important;
+  right: 10px;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+  color: #ffffff;
+  background-color: #043f5a;
+  margin-top: -1px;
+  border-bottom: 1px solid #043f5a;
+  box-shadow: 0px 1px 0px #043f5a;
+}
+.nav-pills>li>a {
+  border-radius: 0px;
+}
+
+.nav-stacked>li.active>a, .nav-stacked>li.active>a:hover, .nav-stacked>li.active>a:focus {
+    color: #ffffff;
+    background-color: #fff;
+    margin: 0 -2px -2px -10px;
+    border: 1px solid #ececec;
+    border-right: 0;
+    border-bottom:0;
+    z-index: 2;
+    color: #00698c;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    font-size: 20px;
+}
+
+.nav-stacked>li.active>a:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    border-color: transparent;
+    border-style: solid;
+    border-radius: 0;
+    border-width: 5px;
+    border-right-color: #cecece;
+    border-top-color: #cecece;
+}
+
+.nav-stacked>li>a {
+    border-radius: 0px;
+    border: 1px solid #ececec;
+    margin-bottom: -2px;
+    border-right: 0;
+    background-color: #fafafa;
+    border-bottom: 0;
+    color: #00698c;
+}
+
+.well {
+  min-height: 20px;
+  padding: 10px 15px;
+  background-color: #fff;
+  border: 1px solid #ececec;
+  border-radius: 4px;
+  margin: 10px 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+}
+
+.dropdown-header {
+    font-size: 15px;
+    color: #f5f5f5;
+    background-color: #333;
+    margin-top: -5px;
+    border-radius: 3px 3px 0 0;
+}
+
+.dropdown-header:after {
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #333;
+    top: -10px;
+    content: "";
+    left: 10px;
+}
+
+.pull-right > .dropdown-menu > .dropdown-header:after{
+    left: 84%;
+}
+
+.open>.dropdown-menu {
+    margin-top: 10px;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>thead>tr>th, table-bordered>tbody>tr>th, .table-bordered>tbody>tr>th, table-bordered>tfoot>tr>th, .table-bordered>tfoot>tr>th, table-bordered>thead>tr>td, .table-bordered>thead>tr>td, table-bordered>tbody>tr>td, .table-bordered>tbody>tr>td, table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>td {
+    border: 1 !important;
+    padding: 3px 15px 3px 15px;
+    text-align:center;
+}
+.table-bordered>thead>tr, .table-bordered>tbody>tr {
+    border-bottom: 1px solid #ececec !important;
+}
+
+.table {
+    border: 0 !important;
+}
+
+.modal-backdrop.in {
+    opacity: 0.1;
+    filter: alpha(opacity=10);
+}
+
+.modal-dialog{
+    margin-top: -10px;
+}
+
+@media (min-width: 768px)
+.modal-dialog {
+    margin-top: -10px;
+}
+
+.well {
+    margin-top:20px;
+}
+
+.btn-default {
+    color: #333;
+    background-color: white;
+    border-color: #95a5a6;
+}
+.btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+    color: #ffffff;
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+
+.modal {
+    z-index: 5000;
+}
+
+/*BOOTSTRAP OVERRIDES - END*/
+
+.application-title-banner {
+    padding: 10px 15px;
+    background-color: white !important;
+}
+
+
+.application-title {
+    font-size: 24px;
+    color: #043f5a;
+    font-family: 'Lato';
+}
+
+.application-btn {
+    float: right;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.application-btn-popover{
+  top: 33px;
+  right: 42px;
+  display: block;
+  left: auto;
+  max-width: 100%;
+}
+
+.application-toolbar {
+      background-color: #ecece8;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      padding: 0 15px;
+      min-height: 42px;
+}
+
+.well-title {
+  border-bottom: 1px solid #ececec;
+  margin-bottom: 15px;
+  margin-left: -15px;
+  font-size: 20px;
+  padding-bottom: 5px;
+  margin-right: -15px;
+  padding-left: 15px;
+}
+
+.well-icon {
+  float: left;
+  padding: 10px;
+  font-size: 20px;
+  margin-top: -20px;
+  margin-right: 5px;
+  background-color: #fb4f14;
+  color: #f5f5f5;
+  box-shadow: 1px 1px 3px #444;
+  position:relative;
+}
+
+.well-icon:after{
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: 100%;
+        border-color: transparent;
+        border-style: solid;
+        border-radius: 0;
+        border-width: 5px;
+        border-left-color: #882706;
+        border-bottom-color: #882706;
+
+}
+
+.well-action-btn {
+    float: right;
+    margin: 0 5px 0 0;
+    color: #8c8c8c;
+    padding: 0;
+}
+
+.well-action-btn:hover {
+    color: #aaa;
+}
+
+.info-tab {
+    font-size: 17px;
+    font-weight: bold;
+    margin:0;
+    border-bottom: 1px solid #444;
+    background-color: #043f5a;
+    color: #f5f5f5;
+    padding: 5px 10px;
+}
+
+.info-tag {
+    text-align:right;
+    vertical-align: middle !important;
+    color: #6b6b6b;
+}
+
+.info-value {
+         word-wrap: break-word;
+         white-space: -moz-pre-wrap;
+         white-space: -pre-wrap;
+         white-space: -o-pre-wrap;
+         display: inline-block;
+         width: calc(100% - 50px);
+         font-size:16px;
+         font-weight: bold;
+}
+
+.serviceContainers{
+    position: relative;
+}
+.serviceContainers > div {
+  background: #f5f5f5;
+  position: absolute;
+  height: 100px;
+  width: 150px;
+  border: 1px solid #cecece;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.serviceContainers > .ss-placeholder-child {
+  background: transparent;
+  border: 1px dashed blue;
+}

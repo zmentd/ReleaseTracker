@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="releasetracker">
+<head>
+    <title>Release Tracker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Disable phone number detection on iOS.  -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="stylesheet" href="css/screen.css" type="text/css" />
+    <link rel="stylesheet"	href="bootstrap-3.3.4/css/bootstrap.min.css">
+    <script	src="jquery/jquery-1.11.2.min.js"></script>
+    <script	src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    
+    <!-- Load angularjs -->
+    <script src="js/libs/angular.js"></script>
+    <!-- Load angularjs-route, which allows us to use multiple views displayed through application routes -->
+    <script src="js/libs/angular-route.js"></script>
+    <!-- Load angularjs-resource, which allows us to interact with REST resources as high level services -->
+    <script src="js/libs/angular-resource.js"></script>
+   
+    <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script> 
+    <!-- Load the controllers for our app -->
+    <script src="js/controllers.js"></script>
+    
+    <!-- Load the application wide JS, such as route definitions -->
+    <script src="js/app.js"></script>
+    
+    
+	<script src="js/flash.service.js"></script>
+ 	<script src="home/home.controller.js"></script>
+    <script src="login/login.controller.js"></script>
+    <script src="register/register.controller.js"></script>
+        
+    <!-- Load the services we have defined for the application, particularly the REST services -->
+    <script src="js/services.js"></script>
+    <script>
+    var monInterval;
+    
+	$(function() {
+		$("#home").load("home.html");
+	});
+
+	function navigateTo(l) {
+	 	clearInterval(monInterval);
+		location.hash = "#" + l;
+	}
+
+	$(window).unload(function() {
+   		$.cookies.del('SMSESSION');
+	});
+	
+
+</script>
+    
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	    <div class="container">
+	        <div class="navbar-header">
+	            <a class="navbar-brand" href="#"><strong>Release Tracker</strong>
+	            </a>
+	        </div>
+	        <div id="navbar" class="navbar-collapse collapse">
+	            <ul class="nav navbar-nav">
+	                <li><a href="#homePage" onclick="navigateTo('homePage')">Home</a></li>
+	                <li>
+	                    <a href="#ideasearch" onclick="navigateTo('homePage')">Idea Report</a>
+	                </li>
+	                <li>
+	                	<a href="#releasecalendar" onclick="navigateTo('homePage')">Release Calendar</a>
+	                </li>
+	                <li class="dropdown">
+	                	<a class="dropdown-toggle"	data-toggle="dropdown" href="#" style="font-size:15px;">Administration<span class="caret"></span></a>
+	                    <ul class="dropdown-menu">
+	                        <li>
+	                    		<a href="#team" onclick="navigateTo('homePage')">Team</a>
+	                        </li>
+	                        <li>
+	                    		<a href="#workflow" onclick="navigateTo('homePage')">Workflow</a>
+	                        </li>
+	                    </ul>
+	                </li>
+	            </ul>
+		            <ul class="nav navbar-nav navbar-right">
+		            	<li>
+		                	<h:form>
+		                	<!-- 
+			  					<p:autoComplete id="itPartial" completeMethod="#{ideaPartialSearchController.autocomplete}"
+			                     				var="partial" itemLabel="#{partial.ideaNumber}" itemValue="#{partial.name}" forceSelection="true"
+			                     				 rendered="#{identity.loggedIn}"
+			                     				 minQueryLength="6"
+			                     				 maxResults = "6"
+			                     				>
+			                	</p:autoComplete>
+		                	 -->
+							</h:form>		            	
+		            	</li>
+		                <li>
+	                    	<a href="#/login">Login</a>
+		                </li>
+		                <li>
+	                   	 	<a href="#/login">Logout</a>
+		                </li>
+		            </ul>
+	        </div>
+	        <!--/.nav-collapse -->
+	        <div class="alert alert-warning" role="alert" id="alertPanel"
+	             style="display: none;"></div>
+	    </div>
+    </nav>
+    	        
+    <div class="container" id="mainContent" ng-view>
+	    <div id="homePage">
+	        <div class="panel-body" id="home" ng-view>
+	        </div>
+	    </div>
+    </div>
+
+    <footer id="footer">
+    </footer>
+    
+</body>
+</html>
