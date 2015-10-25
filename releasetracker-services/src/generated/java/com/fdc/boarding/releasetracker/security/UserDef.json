@@ -1,0 +1,28 @@
+{
+  "serviceName" : "User",
+  "serviceVersion" : 1,
+  "description" : "",
+  "apis" : [ {
+    "name" : "locateUsers",
+    "description" : "locate users by prefix",
+    "inputType" : "com.fdc.boarding.releasetracker.domain.security.LocateUserRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.security.LocateUserResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/locateUsers",
+      "maxContentSize" : 200000
+    }
+  } ],
+  "webDef" : {
+    "encoding" : [ "JSON", "XML" ],
+    "methods" : [ "POST" ],
+    "path" : "user",
+    "maxContentSize" : 200000
+  },
+  "configType" : "java.lang.String",
+  "configJsonSchema" : "{\"type\":\"string\"}",
+  "ns" : "com.fdc.boarding.releasetracker.security"
+}

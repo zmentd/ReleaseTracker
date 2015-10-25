@@ -1,37 +1,188 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
-import com.fdc.boarding.releasetracker.persistence.team.TeamEntity;
+import com.fdc.boarding.core.query.EntityQuery;
+import com.fdc.boarding.core.query.EntityQueryAp;
+import com.fdc.boarding.core.query.exception.QueryException;
+import com.fdc.boarding.core.service.EntityPersistenceService;
+import com.fdc.boarding.core.service.EntityReaderSvc;
+import com.fdc.boarding.core.transaction.annotation.Transactional;
+import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
+import com.fdc.boarding.releasetracker.domain.ValidationFailure;
 
 public class TeamUC implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private EntityPersistenceService	service;
+	
+	@Inject
+	private EntityReaderSvc				reader;
+	
+	@Inject
+	private Validator					validator;
+
 	@Inject 
-	private ITeamPersistenceGateway	gateway;
+	private EntityQuery					query;
 
-	public void createTeam( TeamRequest request )
+	@Transactional
+	public TeamResponse addTeam( TeamRequest request )
 	{
-		ITeam						team;
+		TeamResponse					response;
+		ITeam							team;
 		
-		team	= new TeamEntity( request.getName(), request.getObs());
-		gateway.addTeam(team);
+		response	= new TeamResponse();
+		try {
+			team		= CDIContext.getInstance().getBean( ITeam.class );
+			team.setName( request.getTeam().getName() );
+			team.setObs( request.getTeam().getObs() );
+			service.insert( team );
+			response.setTeam( team );
+			response.setSuccess( true );
+			response.setMessage( "Team added." );
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Unable to add team." );
+		}
+		
+		return response;
 	}
 
-	public void addTeam( ITeam team )
+	@Transactional
+	public TeamResponse removeTeam( TeamRequest request )
 	{
-		gateway.addTeam(team);
+		TeamResponse					response;
+		ITeam							team;
+		
+		response	= new TeamResponse();
+		try {
+			if( request.getTeam() == null || request.getTeam().getId() == null ){
+				response.setSuccess( false );
+				response.setMessage( "No team given to delete." );
+			}
+			else{
+				team		= reader.findByNaturalKey( ITeam.class, "id", request.getTeam().getId() );
+				if( !team.getLastModifiedDate().equals( request.getTeam().getLastModifiedDate() ) ){
+					response.setSuccess( false );
+					response.setMessage( "Team updated by another user." );
+				}
+				else{
+					service.delete( team );
+					response.setTeam( team );
+					response.setSuccess( true );
+					response.setMessage( "Team deleted." );
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Unable to update team." );
+		}
+
+		return response;
 	}
 
-	public void updateTeam( ITeam team )
+	@Transactional
+	public ListTeamResponse retrieveTeams( TeamsRequest request ){
+		EntityQueryAp					ap;
+		ListTeamResponse 				response;
+		List<ITeam>						results;
+		List<TeamResponse> 				list;
+		int 							count;
+		int 							first	= 0;
+		
+		ap			= new EntityQueryAp();
+		ap.setEntityClass( ITeam.class );
+		ap.setSort( request.getOrderBy().toLowerCase() );
+		ap.setDescending( !request.isAsc() );
+		response 	= new ListTeamResponse();
+		
+		try {
+			count	= query.getCount( ap );
+			list	= new ArrayList<>();
+			if( count > 0 ){
+				if( count > request.getCountPerPage() ){
+					first	= ( ( request.getPage() * request.getCountPerPage() ) - request.getCountPerPage() );
+				}
+				results	= query.find( ap, first, request.getCountPerPage() );
+				for( ITeam team : results ){
+					list.add( new TeamResponse( team) );	
+				}
+			}
+			response.setList( list );
+			response.setCount( Long.valueOf( count ) );
+			response.setSuccess( true );
+			response.setMessage( "Search successful." );
+		} catch (QueryException e) {
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Search failed." );
+		}
+		
+		return response;
+	}
+	
+	@Transactional
+	public TeamResponse updateTeam( TeamRequest request )
 	{
-		gateway.modifyTeam(team);
+		TeamResponse					response;
+		ITeam							team;
+		ValidationFailure								vf;
+		Set<ConstraintViolation<ITeam>>	violations;
+		
+		response	= new TeamResponse();
+		try {
+			if( request.getTeam() == null || request.getTeam().getId() == null ){
+				response.setSuccess( false );
+				response.setMessage( "No team given to update." );
+			}
+			else{
+				team		= reader.findByNaturalKey( ITeam.class, "id", request.getTeam().getId() );
+				if( !team.getLastModifiedDate().equals( request.getTeam().getLastModifiedDate() ) ){
+					response.setSuccess( false );
+					response.setMessage( "Team updated by another user." );
+				}
+				else{
+					team.setName( request.getTeam().getName() );
+					team.setObs( request.getTeam().getObs() );
+					violations	= validator.validate( team );
+					if( !violations.isEmpty() ){
+						for( ConstraintViolation<?> cv : violations ){
+							vf	= new ValidationFailure();	
+							vf.setMessage( cv.getMessage() );
+							vf.setPath( cv.getPropertyPath().toString() );
+							vf.setValidator( cv.getConstraintDescriptor().getAnnotation().annotationType().getName() );
+							response.addValidationFailure( vf );
+						}
+						response.setSuccess( false );
+						response.setMessage( "Validation failed." );
+					}
+					else{
+						service.update( team );
+						response.setTeam( team );
+						response.setSuccess( true );
+						response.setMessage( "Team updated." );
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Unable to update team." );
+		}
+		
+		return response;
 	}
 
-	public void removeTeam( ITeam team )
-	{
-		gateway.removeTeam(team);
-	}
 }

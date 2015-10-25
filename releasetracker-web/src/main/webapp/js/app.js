@@ -3,8 +3,8 @@
 (function () {
     'use strict';
  
-    angular
-        .module('releasetracker', ['ngRoute', 'ngCookies'])
+    var app = angular
+        .module('releasetracker', ['ngRoute', 'ngCookies', 'xeditable'])
         .config(config)
         .run(run);
  
@@ -14,40 +14,99 @@
             .when('/', {
                 controller: 'HomeController',
                 templateUrl: 'home/home.view.html',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                access: {
+                    restricted: true
+                  }
             })
- 
+            .when('/releasecalendar', {
+                controller: 'ReleaseCalendarController',
+                templateUrl: 'releasecalendar/releasecalendar.view.html',
+                controllerAs: 'vm',
+                access: {
+                    restricted: true
+                  }
+            })
+            .when('/team', {
+                controller: 'TeamController',
+                templateUrl: 'administration/team.view.html',
+                controllerAs: 'vm',
+                access: {
+                    restricted: true
+                  }
+            })
+           .when('/workflow', {
+                controller: 'WorkflowController',
+                templateUrl: 'administration/workflow.view.html',
+                controllerAs: 'vm',
+                access: {
+                    restricted: true
+                  }
+            })
+
             .when('/login', {
                 controller: 'LoginController',
-                templateUrl: 'login/login.view.html',
-                controllerAs: 'vm'
+                templateUrl: 'security/login.view.html',
+                controllerAs: 'vm',
+                access: {
+                    restricted: false
+                  }
             })
- 
+             .when('/logout', {
+                controller: 'LogoutController',
+                templateUrl: 'security/logout.view.html',
+                controllerAs: 'vm',
+                access: {
+                    restricted: false
+                  }
+            })
+
             .when('/register', {
                 controller: 'RegisterController',
-                templateUrl: 'register/register.view.html',
-                controllerAs: 'vm'
+                templateUrl: 'security/register.view.html',
+                controllerAs: 'vm',
+                access: {
+                    restricted: false
+                  }
             })
  
             .otherwise({ redirectTo: '/login' });
     }
  
-    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
-    function run($rootScope, $location, $cookieStore, $http) {
-        // keep user logged in after page refresh
+    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http', 'editableOptions'];
+    function run($rootScope, $location, $cookieStore, $http, editableOptions) {
+
+    	// keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
+        editableOptions.theme = 'bs2';
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
  
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        $rootScope.$on('$routeChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
-            if (restrictedPage && !loggedIn) {
+            if (next.access.restricted && !loggedIn) {
                 $location.path('/login');
             }
         });
     }
- 
+    
+	app.factory("flash", function($rootScope) {
+	  var queue = [];
+	  var currentMessage = "";
+
+	  $rootScope.$on("$routeChangeSuccess", function() {
+	    currentMessage = queue.shift() || "";
+	  });
+
+	  return {
+	    setMessage: function(message) {
+	      queue.push(message);
+	    },
+	    getMessage: function() {
+	      return currentMessage;
+	    }
+	  };
+	});
 })();

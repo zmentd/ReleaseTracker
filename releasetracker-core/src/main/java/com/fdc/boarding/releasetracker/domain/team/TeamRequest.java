@@ -1,26 +1,20 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
+import com.fdc.boarding.releasetracker.persistence.team.TeamEntity;
+
 public class TeamRequest {
-	private Long						id;
-	private String						name;
-	private String						obs;
+	private TeamEntity					team;
 	
-	public Long getId() {
-		return id;
+
+	public TeamRequest(){
+		super();
 	}
-	public String getName() {
-		return name;
+
+	public TeamEntity getTeam() {
+		return team;
 	}
-	public String getObs() {
-		return obs;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public void setObs(String obs) {
-		this.obs = obs;
+	
+	public void setTeam(TeamEntity team) {
+		this.team = team;
 	}
 }

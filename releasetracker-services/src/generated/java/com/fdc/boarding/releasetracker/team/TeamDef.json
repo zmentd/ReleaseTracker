@@ -1,0 +1,67 @@
+{
+  "serviceName" : "Team",
+  "serviceVersion" : 1,
+  "description" : "",
+  "apis" : [ {
+    "name" : "removeTeam",
+    "description" : "Remove a Team",
+    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.team.TeamResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/removeTeam",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "updateTeam",
+    "description" : "Update a Team",
+    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.team.TeamResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/updateTeam",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "addTeam",
+    "description" : "Add a new Team",
+    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.team.TeamResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/addTeam",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "getAllTeams",
+    "description" : "Retrieve all teams",
+    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamsRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.domain.team.ListTeamResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/getAllTeams",
+      "maxContentSize" : 200000
+    }
+  } ],
+  "webDef" : {
+    "encoding" : [ "JSON", "XML" ],
+    "methods" : [ "POST" ],
+    "path" : "team",
+    "maxContentSize" : 200000
+  },
+  "configType" : "java.lang.String",
+  "configJsonSchema" : "{\"type\":\"string\"}",
+  "ns" : "com.fdc.boarding.releasetracker.team"
+}

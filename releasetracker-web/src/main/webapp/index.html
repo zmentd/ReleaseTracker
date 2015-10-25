@@ -1,123 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="releasetracker">
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 <head>
-    <title>Release Tracker</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!-- Disable phone number detection on iOS.  -->
-    <meta name="format-detection" content="telephone=no" />
 
-    <link rel="stylesheet" href="css/screen.css" type="text/css" />
-    <link rel="stylesheet"	href="bootstrap-3.3.4/css/bootstrap.min.css">
-    <script	src="jquery/jquery-1.11.2.min.js"></script>
-    <script	src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
-    
-    <!-- Load angularjs -->
-    <script src="js/libs/angular.js"></script>
-    <!-- Load angularjs-route, which allows us to use multiple views displayed through application routes -->
-    <script src="js/libs/angular-route.js"></script>
-    <!-- Load angularjs-resource, which allows us to interact with REST resources as high level services -->
-    <script src="js/libs/angular-resource.js"></script>
-   
-    <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script> 
-    <!-- Load the controllers for our app -->
-    <script src="js/controllers.js"></script>
-    
-    <!-- Load the application wide JS, such as route definitions -->
-    <script src="js/app.js"></script>
-    
-    
-	<script src="js/flash.service.js"></script>
- 	<script src="home/home.controller.js"></script>
-    <script src="login/login.controller.js"></script>
-    <script src="register/register.controller.js"></script>
-        
-    <!-- Load the services we have defined for the application, particularly the REST services -->
-    <script src="js/services.js"></script>
-    <script>
-    var monInterval;
-    
-	$(function() {
-		$("#home").load("home.html");
-	});
+<!-- Meta-Information -->
+<title>Release Tracker</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="Release Tracker">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	function navigateTo(l) {
-	 	clearInterval(monInterval);
-		location.hash = "#" + l;
-	}
+<!-- Vendor: Bootstrap Stylesheets http://getbootstrap.com -->
+<link rel="stylesheet" href="libs/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="libs/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<link href="libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
-	$(window).unload(function() {
-   		$.cookies.del('SMSESSION');
-	});
-	
+<!-- Our Website CSS Styles -->
+<link rel="stylesheet" href="css/main.css">
 
-</script>
-    
 </head>
-<body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-	    <div class="container">
-	        <div class="navbar-header">
-	            <a class="navbar-brand" href="#"><strong>Release Tracker</strong>
-	            </a>
-	        </div>
-	        <div id="navbar" class="navbar-collapse collapse">
-	            <ul class="nav navbar-nav">
-	                <li><a href="#homePage" onclick="navigateTo('homePage')">Home</a></li>
-	                <li>
-	                    <a href="#ideasearch" onclick="navigateTo('homePage')">Idea Report</a>
-	                </li>
-	                <li>
-	                	<a href="#releasecalendar" onclick="navigateTo('homePage')">Release Calendar</a>
-	                </li>
-	                <li class="dropdown">
-	                	<a class="dropdown-toggle"	data-toggle="dropdown" href="#" style="font-size:15px;">Administration<span class="caret"></span></a>
-	                    <ul class="dropdown-menu">
-	                        <li>
-	                    		<a href="#team" onclick="navigateTo('homePage')">Team</a>
-	                        </li>
-	                        <li>
-	                    		<a href="#workflow" onclick="navigateTo('homePage')">Workflow</a>
-	                        </li>
-	                    </ul>
-	                </li>
-	            </ul>
-		            <ul class="nav navbar-nav navbar-right">
-		            	<li>
-		                	<h:form>
-		                	<!-- 
-			  					<p:autoComplete id="itPartial" completeMethod="#{ideaPartialSearchController.autocomplete}"
-			                     				var="partial" itemLabel="#{partial.ideaNumber}" itemValue="#{partial.name}" forceSelection="true"
-			                     				 rendered="#{identity.loggedIn}"
-			                     				 minQueryLength="6"
-			                     				 maxResults = "6"
-			                     				>
-			                	</p:autoComplete>
-		                	 -->
-							</h:form>		            	
-		            	</li>
-		                <li>
-	                    	<a href="#/login">Login</a>
-		                </li>
-		                <li>
-	                   	 	<a href="#/login">Logout</a>
-		                </li>
-		            </ul>
-	        </div>
-	        <!--/.nav-collapse -->
-	        <div class="alert alert-warning" role="alert" id="alertPanel"
-	             style="display: none;"></div>
-	    </div>
-    </nav>
-    	        
-    <div class="container" id="mainContent" ng-view>
-	    <div id="homePage">
-	        <div class="panel-body" id="home" ng-view>
-	        </div>
-	    </div>
-    </div>
+<body ng-app="releasetracker">
+	<!--[if lt IE 7]>
+	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+	    your browser</a> to improve your experience.</p>
+	<![endif]-->
 
-    <footer id="footer">
-    </footer>
-    
+	<!-- Our Website Content Goes Here -->
+	<div ng-include='"templates/header.html"'></div>
+	<div ng-view></div>
+	<div ng-include='"templates/footer.html"'></div>
+
+	<!-- Vendor: Javascripts -->
+	<script src="libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+	<!-- Vendor: Angular, followed by our custom Javascripts -->
+   	<script src="js/libs/angular.js"></script>
+    <script src="js/libs/angular-route.js"></script>
+    <script src="js/libs/angular-resource.js"></script>
+   	<script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script> 
+   	
+   	<link href="libs/bower_components/angular-xeditable/css/xeditable.css" rel="stylesheet">
+	<script src="libs/bower_components/angular-xeditable/js/xeditable.js"></script>
+
+	<!-- 
+		Our Website Javascripts 
+	-->
+	<script src="js/app.js"></script>
+	<script src="js/flash.service.js"></script>
+	
+	<!--  Home -->
+ 	<script src="home/home.controller.js"></script>
+
+	<!--  Security -->
+    <script src="security/logout.controller.js"></script>
+    <script src="security/login.controller.js"></script>
+    <script src="security/login.service.js"></script>
+   	<script src="security/register.controller.js"></script>
+    <script src="security/register.service.js"></script>
+
+	<!--  Release Calendar -->
+    <script src="releasecalendar/releasecalendar.controller.js"></script>
+    <script src="releasecalendar/releasecalendar.service.js"></script>
+
+	<!--  Team -->
+    <script src="administration/team.controller.js"></script>
+    <script src="administration/team.service.js"></script>
+
+	<!--  Workflow -->
+    <script src="administration/workflow.controller.js"></script>
+    <script src="administration/workflow.service.js"></script>
+        
 </body>
 </html>

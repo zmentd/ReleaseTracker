@@ -5,8 +5,9 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 import com.fdc.boarding.core.domain.IAuditable;
+import com.fdc.boarding.core.domain.IEntity;
 
-public interface IReleaseEntry extends IAuditable {
+public interface IReleaseEntry extends IAuditable, IEntity<Long> {
 
 	public void addMilestone(IMilestone milestone);
 

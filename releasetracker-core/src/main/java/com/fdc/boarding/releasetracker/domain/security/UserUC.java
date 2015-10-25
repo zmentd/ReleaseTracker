@@ -1,5 +1,6 @@
 package com.fdc.boarding.releasetracker.domain.security;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -7,6 +8,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import com.fdc.boarding.core.log.LoggerProxy;
+import com.fdc.boarding.core.query.Conjunction;
+import com.fdc.boarding.core.query.Restriction;
+import com.fdc.boarding.core.query.exception.QueryException;
 import com.fdc.boarding.core.service.EntityPersistenceService;
 import com.fdc.boarding.core.service.EntityReaderSvc;
 import com.fdc.boarding.core.transaction.annotation.Transactional;
@@ -26,7 +30,43 @@ public class UserUC {
 	private IUserPersistenceGateway		gateway;
 	
 	@Inject
+	private EntityReaderSvc				reader;
+	
+	@Inject
 	private Validator					validator;
+	
+	@Transactional
+	public AuthenticationResponse authenticateUser( Credentials credentials ){
+		boolean							authenticated	= true;
+		Identity						identity;
+		EntityReaderSvc					reader;
+		AuthenticationResponse			response;
+		IUser							user;
+		
+		logger.debug( "Entering authenticate." );
+		try {
+			identity	= CDIContext.getInstance().getBean( Identity.class );
+			reader		= CDIContext.getInstance().getBean( EntityReaderSvc.class );
+			identity.setUserId( credentials.getUserId() );
+			identity.setPassword( credentials.getPassword() );
+			identity.login();
+			authenticated	= identity.isLoggedIn();
+			if( authenticated ){
+				response	= new AuthenticationResponse( true, "User authenticated" );
+				user		= reader.findByKey( UserEntity.class, identity.getUserpk(), "preferences" );
+				response.setUser( user );
+			}
+			else{
+				response	= new AuthenticationResponse( false, "Authentication failed" );
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response		= new AuthenticationResponse( false, "Authentication failed" );
+		}
+		logger.debug( "Exiting authenticate." );
+		
+		return response;
+	}
 	
 	public void registerUser( IAuthenticatedUser auth, IUser user ){
 		service.addChild( auth, user, "user" );
@@ -99,36 +139,25 @@ public class UserUC {
 		return response;
 	}
 	
-	@Transactional
-	public AuthenticationResponse authenticateUser( Credentials credentials ){
-		boolean							authenticated	= true;
-		Identity						identity;
-		EntityReaderSvc					reader;
-		AuthenticationResponse			response;
-		IUser							user;
-		
-		logger.debug( "Entering authenticate." );
-		try {
-			identity	= CDIContext.getInstance().getBean( Identity.class );
-			reader		= CDIContext.getInstance().getBean( EntityReaderSvc.class );
-			identity.setUserId( credentials.getUserId() );
-			identity.setPassword( credentials.getPassword() );
-			identity.login();
-			authenticated	= identity.isLoggedIn();
-			if( authenticated ){
-				response	= new AuthenticationResponse( true, "User authenticated" );
-				user		= reader.findByKey( UserEntity.class, identity.getUserpk(), "preferences" );
-				response.setUser( user );
-			}
-			else{
-				response	= new AuthenticationResponse( false, "Authentication failed" );
-			}
-		} catch (Exception e) {
+	public LocateUserResponse locateUsers( LocateUserRequest request ){
+		List<IUser> 					results	= null;
+		LocateUserResponse				response;
+
+		response	= new LocateUserResponse();
+		try{
+			results	= reader.find( IUser.class, "firstName", true, Conjunction.or( Restriction.ilike( "firstName", request.getNamePrefix() ) 
+																				 , Restriction.ilike( "lastName", request.getNamePrefix() )
+																				 )
+			);
+			response.setUsers( results );
+			response.setMessage( "User registered." );
+			response.setSuccess( true );
+		} 
+		catch( QueryException e ) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			response		= new AuthenticationResponse( false, "Authentication failed" );
 		}
-		logger.debug( "Exiting authenticate." );
-		
+
 		return response;
 	}
 }

@@ -30,7 +30,7 @@
 	<classpathentry kind="lib" path="lib-10/fdinet-codegen-1.1.10-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-codegen-1.1.9-sources.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-commonsvcs-1.1.9-sources.jar"/>
-	<classpathentry kind="lib" path="lib-10/fdinet-core-1.1.10-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib-10/fdinet-core-1.1.10-SNAPSHOT.jar" sourcepath="lib-10/fdinet-core-1.1.9-sources.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-core-1.1.9-sources.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-jms-1.1.9-sources.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-rabbit-1.1.10-SNAPSHOT.jar"/>

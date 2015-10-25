@@ -7,10 +7,12 @@
 
     FlashService.$inject = ['$rootScope'];
     function FlashService($rootScope) {
-        var service = {};
+  	  	var queue 			= [];
+  	  	var currentMessage	= "";
 
-        service.Success = Success;
-        service.Error = Error;
+    	var service 		= {};
+        service.Success 	= Success;
+        service.Error 		= Error;
 
         initService();
 
@@ -18,6 +20,7 @@
 
         function initService() {
             $rootScope.$on('$locationChangeStart', function () {
+        	    currentMessage = queue.shift() || "";
                 clearFlashMessage();
             });
 
@@ -49,6 +52,6 @@
                 keepAfterLocationChange: keepAfterLocationChange
             };
         }
-    }
+     }
 
 })();

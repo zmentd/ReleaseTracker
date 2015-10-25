@@ -1,0 +1,43 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+            <a class="navbar-brand" href="#/">Release Tracker</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-Show="globals.currentUser != null">
+                	<a href="#/releasecalendar">Release Calendar</a>
+                </li>
+                <li class="dropdown" ng-Show="globals.currentUser != null">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/team">Team</a>
+                        </li>
+                        <li><a href="#/workflow">Workflow</a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-Show="globals.currentUser == null">
+                	<a href="#/login">Login</a>
+                </li>
+                <li ng-Show="globals.currentUser != null">
+                	<a href="#/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<div class="alert" ng-show="flash">
+	<p>{{flash.message}}</p>
+</div>

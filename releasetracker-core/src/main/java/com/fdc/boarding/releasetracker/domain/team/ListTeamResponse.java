@@ -2,14 +2,22 @@ package com.fdc.boarding.releasetracker.domain.team;
 
 import java.util.List;
 
-public class ListTeamResponse {
-	private List<ITeam>				list;
+import com.fdc.boarding.releasetracker.domain.AbstractResponse;
+
+public class ListTeamResponse extends AbstractResponse{
+	private static final long 			serialVersionUID 	= 1L;
+	
+	private List<TeamResponse>			list;
 	private Long						count;
 	
-	public List<ITeam> getList() {
+	public ListTeamResponse(){
+		super();
+	}
+	
+	public List<TeamResponse> getList() {
 		return list;
 	}
-	public void setList(List<ITeam> list) {
+	public void setList(List<TeamResponse> list) {
 		this.list = list;
 	}
 	public Long getCount() {

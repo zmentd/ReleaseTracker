@@ -23,6 +23,8 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.fdc.boarding.core.query.exception.QueryException;
+import com.fdc.boarding.core.service.EntityReaderSvc;
 import com.fdc.boarding.releasetracker.domain.common.CommentType;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
@@ -32,17 +34,13 @@ import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
 import com.fdc.boarding.releasetracker.domain.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.release.MilestoneByRom;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
-import com.fdc.boarding.releasetracker.domain.security.IUserPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
-import com.fdc.boarding.releasetracker.domain.team.ITeamPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.IIdeaWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseCompletion;
-import com.fdc.boarding.releasetracker.domain.workflow.IPhasePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatusCompletion;
-import com.fdc.boarding.releasetracker.domain.workflow.IStatusPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.ITeamImpactWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
@@ -62,15 +60,10 @@ public class IdeaPriorityListReader {
 	private static DateTimeFormatter	formatter 	= DateTimeFormat.forPattern("MM/dd/yyyy");
 
 	@Inject
-	private ITeamPersistenceGateway			teamGateway;
+	private EntityReaderSvc					reader;
+	
 	@Inject
 	private IReleasePersistenceGateway		releaseGateway;
-	@Inject
-	private IStatusPersistenceGateway		statusGateway;
-	@Inject
-	private IPhasePersistenceGateway		phaseGateway;
-	@Inject
-	private IUserPersistenceGateway			userGateway;
 
     @Inject
     private IIdeaPersistenceGateway			gateway;
@@ -626,27 +619,43 @@ public class IdeaPriorityListReader {
 	}
 	
 	private void readConfigData(){
-		for( ITeam team :teamGateway.findAllTeams() )
-		{
-			teams.put( team.getName(), team );	
-		}
-		for( IPhase phase :phaseGateway.findAllPhases() )
-		{
-			phases.put( phase.getName(), phase );	
-		}
-		for( IStatus status :statusGateway.findAllStatuses() )
-		{
-			statuses.put( status.getName(), status );	
-		}
-		for( IReleaseEntry release :releaseGateway.findAllReleases() )
-		{
-			releases.put( release.getReleaseDate(), release );	
-			releaseDates.add( release.getReleaseDate() );
-			Collections.sort( releaseDates );
-		}
-		for( IUser user : userGateway.findAllUsers() )
-		{
-			users.put( user.getFirstName() + " " + user.getLastName() , user );	
+		List<ITeam>						lteams;
+		List<IPhase>					lphases;
+		List<IStatus>					lstatuses;
+		List<IReleaseEntry>				lentries;
+		List<IUser>						lusers;
+		
+		try {
+			lteams		= reader.find( ITeam.class );
+			lphases		= reader.find( IPhase.class );
+			lstatuses	= reader.find( IStatus.class );
+			lentries	= reader.find( IReleaseEntry.class );
+			lusers		= reader.find( IUser.class );
+			for( ITeam team :lteams )
+			{
+				teams.put( team.getName(), team );	
+			}
+			for( IPhase phase : lphases )
+			{
+				phases.put( phase.getName(), phase );	
+			}
+			for( IStatus status : lstatuses )
+			{
+				statuses.put( status.getName(), status );	
+			}
+			for( IReleaseEntry release : lentries )
+			{
+				releases.put( release.getReleaseDate(), release );	
+				releaseDates.add( release.getReleaseDate() );
+				Collections.sort( releaseDates );
+			}
+			for( IUser user : lusers )
+			{
+				users.put( user.getFirstName() + " " + user.getLastName() , user );	
+			}
+		} catch (QueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

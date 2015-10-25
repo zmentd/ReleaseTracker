@@ -29,13 +29,9 @@ import com.fdc.boarding.releasetracker.domain.idea.IdeaPartialSearchResponse;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaSearchResponse;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaStatusResponse;
 import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
-import com.fdc.boarding.releasetracker.domain.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
-import com.fdc.boarding.releasetracker.domain.team.ITeamPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
-import com.fdc.boarding.releasetracker.domain.workflow.IPhasePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
-import com.fdc.boarding.releasetracker.domain.workflow.IStatusPersistenceGateway;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
 
 public class TestIdeaGateway extends AbstractPersistenceTest{
@@ -46,18 +42,9 @@ public class TestIdeaGateway extends AbstractPersistenceTest{
 	private IEntityReaderSvc				reader;
 
     @Inject
-    private IIdeaPersistenceGateway		gateway;
-
-	@Inject
-	private ITeamPersistenceGateway		teamGateway;
-	@Inject
-	private IReleasePersistenceGateway		releaseGateway;
-	@Inject
-	private IStatusPersistenceGateway		statusGateway;
-	@Inject
-	private IPhasePersistenceGateway		phaseGateway;
+    private IIdeaPersistenceGateway			gateway;
 	
-	private Map<String, ITeam>			teams	= new HashMap<>();
+	private Map<String, ITeam>				teams	= new HashMap<>();
 	private Map<String, IPhase>				phases		= new HashMap<>();
 	private Map<String, IStatus>			statuses	= new HashMap<>();
 	private Map<LocalDate, IReleaseEntry>	releases	= new HashMap<>();
@@ -175,21 +162,36 @@ public class TestIdeaGateway extends AbstractPersistenceTest{
 	}
 	
 	private void readConfigData(){
-		for( ITeam team :teamGateway.findAllTeams() )
-		{
-			teams.put( team.getName(), team );	
-		}
-		for( IPhase phase :phaseGateway.findAllPhases() )
-		{
-			phases.put( phase.getName(), phase );	
-		}
-		for( IStatus status :statusGateway.findAllStatuses() )
-		{
-			statuses.put( status.getName(), status );	
-		}
-		for( IReleaseEntry release :releaseGateway.findAllReleases() )
-		{
-			releases.put( release.getReleaseDate(), release );	
+		List<ITeam>						lteams;
+		List<IPhase>					lphases;
+		List<IStatus>					lstatuses;
+		List<IReleaseEntry>				lentries;
+		
+		try {
+			lteams		= reader.find( ITeam.class );
+			lphases		= reader.find( IPhase.class );
+			lstatuses	= reader.find( IStatus.class );
+			lentries	= reader.find( IReleaseEntry.class );
+			
+			for( ITeam team : lteams )
+			{
+				teams.put( team.getName(), team );	
+			}
+			for( IPhase phase : lphases )
+			{
+				phases.put( phase.getName(), phase );	
+			}
+			for( IStatus status : lstatuses )
+			{
+				statuses.put( status.getName(), status );	
+			}
+			for( IReleaseEntry release : lentries )
+			{
+				releases.put( release.getReleaseDate(), release );	
+			}
+		} catch (QueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

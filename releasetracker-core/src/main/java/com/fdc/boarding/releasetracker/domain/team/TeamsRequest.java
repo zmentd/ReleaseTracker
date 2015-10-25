@@ -1,11 +1,10 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
-import com.fdc.boarding.releasetracker.domain.team.ITeamPersistenceGateway.OrderBy;
 
 public class TeamsRequest {
 	private Integer						page;
 	private Integer						countPerPage;
-	private OrderBy						orderBy;
+	private String						orderBy;
 	private boolean						isAsc;
 
 	public Integer getPage() {
@@ -20,10 +19,10 @@ public class TeamsRequest {
 	public void setCountPerPage(Integer countPerPage) {
 		this.countPerPage = countPerPage;
 	}
-	public OrderBy getOrderBy() {
+	public String getOrderBy() {
 		return orderBy;
 	}
-	public void setOrderBy(OrderBy orderBy) {
+	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
 	public boolean isAsc() {
