@@ -29,7 +29,6 @@ import com.fdc.boarding.releasetracker.domain.idea.IdeaSearchResponse;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaStatusResponse;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
-import com.fdc.boarding.releasetracker.domain.workflow.IPhaseCompletion;
 import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 import com.fdc.boarding.releasetracker.gateway.excel.ReaderResponse;
 import com.fdc.boarding.releasetracker.persistence.release.MilestoneEntity;
@@ -227,7 +226,6 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 
 	@Override
 	public void insertIdeas( ReaderResponse response ){
-		IIdea 							pcidea;
 		
 		if( response.getUsers() == null || response.getIdeas() == null ){
 			return;
@@ -240,19 +238,8 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 		}
 		entityManager.flush();
 		for( IIdea idea : response.getIdeas() ){
-			if( idea.getId() == null ){
-			}
-//			entityManager.unwrap(Session.class).update( ( IdeaEntity )idea );
-//			service.insert( idea.getWorkflow() );
 			service.insert( idea );
-//			entityManager.persist( ( IdeaEntity )idea );
 			entityManager.flush();
-		}
-		for( IPhaseCompletion pc : response.getPhaseCmplts() ){
-//			pcidea	= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", pc.getWorkflow().getIdea().getIdeaNumber() );
-//			pc.setWorkflow( pcidea.getWorkflow() );
-//			entityManager.persist( ( PhaseCompletionEntity )pc );
-//			service.addChild( pcidea, pcidea.getWorkflow(), "phaseCompletions" );
 		}
 		entityManager.flush();
 	}

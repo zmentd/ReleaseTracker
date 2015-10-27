@@ -1,5 +1,6 @@
 package com.fdc.boarding.releasetracker.domain.security;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +55,7 @@ public class UserUC {
 			if( authenticated ){
 				response	= new AuthenticationResponse( true, "User authenticated" );
 				user		= reader.findByKey( UserEntity.class, identity.getUserpk(), "preferences" );
-				response.setUser( user );
+				response.setUser( UserDto.from( user ) );
 			}
 			else{
 				response	= new AuthenticationResponse( false, "Authentication failed" );
@@ -120,7 +121,7 @@ public class UserUC {
 					auth.setUserId( request.getUsername() );
 					
 					if( service.addChild( auth, user, "user" ) ){
-						response.setUser( user );
+						response.setUser( UserDto.from( user ) );
 						response.setMessage( "User registered." );
 						response.setSuccess( true );
 					}
@@ -141,6 +142,7 @@ public class UserUC {
 	
 	public LocateUserResponse locateUsers( LocateUserRequest request ){
 		List<IUser> 					results	= null;
+		List<UserDto> 					list	= null;
 		LocateUserResponse				response;
 
 		response	= new LocateUserResponse();
@@ -149,7 +151,11 @@ public class UserUC {
 																				 , Restriction.ilike( "lastName", request.getNamePrefix() )
 																				 )
 			);
-			response.setUsers( results );
+			list	= new ArrayList<>();
+			for( IUser user : results ){
+				list.add( UserDto.from( user ) );
+			}
+			response.setUsers( list );
 			response.setMessage( "User registered." );
 			response.setSuccess( true );
 		} 

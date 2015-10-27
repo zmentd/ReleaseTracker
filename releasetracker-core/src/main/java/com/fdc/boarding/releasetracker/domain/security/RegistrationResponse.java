@@ -7,17 +7,17 @@ import com.fdc.boarding.releasetracker.domain.AbstractResponse;
 public class RegistrationResponse extends AbstractResponse implements Serializable {
 	private static final long 			serialVersionUID 		= 1L;
 
-	private IUser						user;
+	private UserDto						user;
 	
 	public RegistrationResponse() {
 		super();
 	}
 	
-	public IUser getUser() {
+	public UserDto getUser() {
 		return user;
 	}
 
-	public void setUser(IUser user) {
+	public void setUser( UserDto user) {
 		this.user = user;
 	}
 }

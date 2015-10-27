@@ -46,17 +46,17 @@ public class TeamEntity extends AbstractAuditedEntity<Long> implements ITeam {
 				   )
 	@GeneratedValue(strategy=GenerationType.TABLE , generator="team_sequence")
 	@Column( name = "ID" )
-	private Long	id;
+	private Long						id;
 
 	@NotEmpty
 	@NotNull
 	@Column( name = "NAME" )
-	private String	name;
+	private String						name;
 	
 	@NotEmpty
 	@NotNull
 	@Column( name = "OBS" )
-	private String	obs;
+	private String						obs;
 	
 	@ManyToOne( targetEntity = UserEntity.class, cascade={CascadeType.ALL}, fetch = FetchType.LAZY )
 	@JoinColumn( name = "SA_ID" )	

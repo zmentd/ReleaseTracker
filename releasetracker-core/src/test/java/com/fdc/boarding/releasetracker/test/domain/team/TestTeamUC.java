@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
+import com.fdc.boarding.releasetracker.domain.team.TeamDto;
 import com.fdc.boarding.releasetracker.domain.team.TeamRequest;
 import com.fdc.boarding.releasetracker.domain.team.TeamResponse;
 import com.fdc.boarding.releasetracker.domain.team.TeamUC;
@@ -27,10 +28,10 @@ public class TestTeamUC extends AbstractPersistenceTest{
 	public void testAddTeam(){
 		TeamRequest						request;
 		TeamResponse					response;
-		TeamEntity						entity;
+		TeamDto							entity;
 		
 		request	= new TeamRequest();
-		entity	= new TeamEntity();
+		entity	= new TeamDto();
 		entity.setName( "New Team" );
 		entity.setObs( "/FDA/MY/OBS");
 		request.setTeam( entity );
@@ -53,7 +54,7 @@ public class TestTeamUC extends AbstractPersistenceTest{
 		request	= new TeamRequest();
 		entity 	= reader.findByKey( TeamEntity.class, 1L );
 		entity.setObs( "/FDA/MY/OBS");
-		request.setTeam( entity );
+		request.setTeam( TeamDto.from( entity ) );
 		
 		response	= usecase.updateTeam( request );
 		Assert.assertNotNull( response );
@@ -68,16 +69,16 @@ public class TestTeamUC extends AbstractPersistenceTest{
 	public void testRemoveTeam(){
 		TeamRequest						request;
 		TeamResponse					response;
-		TeamEntity						entity;
+		TeamDto							entity;
 		
 		request = new TeamRequest();
-		entity	= new TeamEntity();
+		entity	= new TeamDto();
 		entity.setName( "New Team" );
 		entity.setObs( "/FDA/MY/OBS");
 		request.setTeam( entity );
 		
 		response	= usecase.addTeam( request );
-		request.setTeam( ( TeamEntity )response.getTeam() );
+		request.setTeam( response.getTeam() );
 		response	= usecase.removeTeam( request );
 		
 		Assert.assertNotNull( response );

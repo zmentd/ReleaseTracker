@@ -2,13 +2,12 @@ package com.fdc.boarding.releasetracker.domain.security;
 
 import java.io.Serializable;
 
-import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.AbstractResponse;
 
 public class AuthenticationResponse extends AbstractResponse implements Serializable {
 	private static final long 			serialVersionUID 		= 1L;
 	
-	private IUser						user;
+	private UserDto						user;
 	
 	public AuthenticationResponse() {
 		super();
@@ -18,11 +17,11 @@ public class AuthenticationResponse extends AbstractResponse implements Serializ
 		super(success, message);
 	}
 
-	public IUser getUser() {
+	public UserDto getUser() {
 		return user;
 	}
 
-	public void setUser(IUser user) {
+	public void setUser( UserDto user) {
 		this.user = user;
 	}
 }

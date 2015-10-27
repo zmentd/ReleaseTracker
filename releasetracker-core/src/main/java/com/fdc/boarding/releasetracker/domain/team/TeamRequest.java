@@ -1,20 +1,19 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
-import com.fdc.boarding.releasetracker.persistence.team.TeamEntity;
 
 public class TeamRequest {
-	private TeamEntity					team;
+	private TeamDto						team;
 	
 
 	public TeamRequest(){
 		super();
 	}
 
-	public TeamEntity getTeam() {
+	public TeamDto getTeam() {
 		return team;
 	}
 	
-	public void setTeam(TeamEntity team) {
+	public void setTeam( TeamDto team) {
 		this.team = team;
 	}
 }

@@ -27,6 +27,7 @@ public class EntityManagerStoreImpl implements IEntityManagerStore
 	public EntityManager get(
 	) 
 	{
+		EntityManager					local;
 		Stack<EntityManager> 			entityManagerStack;
 		
 		logger.debug( "Getting the current entity manager" );
@@ -41,8 +42,9 @@ public class EntityManagerStoreImpl implements IEntityManagerStore
 			this.createAndRegister();
 //			return null;
 		} 
-
-		return entityManagerStack.peek();
+		local	= entityManagerStack.peek();
+		
+		return local;
 	}
 
 	/**

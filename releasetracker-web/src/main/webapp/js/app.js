@@ -4,7 +4,7 @@
     'use strict';
  
     var app = angular
-        .module('releasetracker', ['ngRoute', 'ngCookies', 'xeditable'])
+        .module('releasetracker', ['ngRoute', 'ngCookies', 'xeditable', "ui.bootstrap"])
         .config(config)
         .run(run);
  

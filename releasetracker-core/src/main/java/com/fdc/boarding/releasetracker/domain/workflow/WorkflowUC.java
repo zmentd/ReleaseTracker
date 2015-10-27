@@ -283,7 +283,6 @@ public class WorkflowUC implements Serializable {
 		return sc;
 	}
 	
-    @Transactional
 	private IStatusCompletion progress( IPhaseCompletion cpc, IPhaseCompletion newPc, IStatus status ){
 		IStatusCompletion				csc			= null;
 		IStatusCompletion				sc			= null;

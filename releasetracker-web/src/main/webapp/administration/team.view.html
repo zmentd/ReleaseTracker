@@ -2,14 +2,18 @@
 	<div class="container">
 		<div class="row">
 		    <div class="col-lg-12">
-	            <h1 class="page-header">Team {{vm.count}}</h1>
+	            <h1 class="page-header">Team</h1>
 		    </div>
 				<div >
 				  <table class="table table-bordered table-hover table-condensed">
 				    <tr style="font-weight: bold">
-				      <td style="width:25%">Name</td>
-				      <td style="width:70%">OBS</td>
-				      <td style="width:5%">Edit</td>
+				      <td>Name</td>
+				      <td>OBS</td>
+				      <td>Business Owner</td>
+				      <td>Demand Manager</td>
+				      <td>Development Manager</td>
+				      <td>Solutions Architect</td>
+				      <td>Edit</td>
 				    </tr>
 					<tr ng-repeat="response in vm.teams">
 						<!-- form -->
@@ -19,6 +23,38 @@
 							</td>
 							<td>
 								<a href="#" editable-text="response.team.obs">{{ response.team.obs || 'empty' }}</a>
+							</td>
+							<td>
+								<div>
+								<!-- onaftersave="setSelectedUser( data.selectedUser, 'businessOwner', response.team )"  -->
+								  <a href="#" editable-text="response.team.businessOwner.fullName" e-typeahead="user.fullName as user.fullName for user in locatUsers( $viewValue )" ng-model="data.selectedUser" typeahead-on-select="onSelect($item, $model, $label)" >
+								    {{ response.team.businessOwner.fullName || 'empty' }}
+								  </a>
+								</div>
+							</td>
+							<td>
+								<div>
+								<!-- onaftersave="setSelectedUser( data.selectedUser, 'businessOwner', response.team )"  -->
+								  <a href="#" editable-text="response.team.demandManager.fullName" e-typeahead="user.fullName as user.fullName for user in locatUsers( $viewValue )" ng-model="data.selectedUser" typeahead-on-select="onSelect($item, $model, $label)" >
+								    {{ response.team.demandManager.fullName || 'empty' }}
+								  </a>
+								</div>
+							</td>
+							<td>
+								<div>
+								<!-- onaftersave="setSelectedUser( data.selectedUser, 'businessOwner', response.team )"  -->
+								  <a href="#" editable-text="response.team.developmentManager.fullName" e-typeahead="user.fullName as user.fullName for user in locatUsers( $viewValue )" ng-model="data.selectedUser" typeahead-on-select="onSelect($item, $model, $label)" >
+								    {{ response.team.developmentManager.fullName || 'empty' }}
+								  </a>
+								</div>
+							</td>
+							<td>
+								<div>
+								<!-- onaftersave="setSelectedUser( data.selectedUser, 'businessOwner', response.team )"  -->
+								  <a href="#" editable-text="response.team.solutionsArchitect.fullName" e-typeahead="user.fullName as user.fullName for user in locatUsers( $viewValue )" ng-model="data.selectedUser" typeahead-on-select="onSelect($item, $model, $label)" >
+								    {{ response.team.solutionsArchitect.fullName || 'empty' }}
+								  </a>
+								</div>
 							</td>
 							<td style="white-space: nowrap">
 								<div class="buttons" ng-show="!isPersisted( response.team )">

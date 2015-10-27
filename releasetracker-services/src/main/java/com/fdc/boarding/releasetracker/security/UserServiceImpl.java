@@ -20,7 +20,7 @@ public class UserServiceImpl extends UserService {
 	public UserServiceImpl(
 	) 
 	{
-		super( "Team", Processor.NULL_PROCESSOR );
+		super( "User", Processor.NULL_PROCESSOR );
 		Map<String, Object> 			defaults;
 
 		defaults = new HashMap<>();

@@ -1,17 +1,21 @@
-(function () {
-    'use strict';
+//(function () {
+//    'use strict';
 
-    angular
+var app = angular
         .module('releasetracker')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['TeamService', '$location', '$rootScope', 'FlashService', '$scope'];
-    function TeamController(TeamService, $location, $rootScope, FlashService, $scope) {
-        var vm = this;
-        vm.getAllTeams = getAllTeams();
- 
-        (function initController() {
-        })();
+    TeamController.$inject = ['TeamService', 'UserService', '$controller', '$location', '$rootScope', 'FlashService', '$scope'];
+    function TeamController(TeamService, UserService, $controller, $location, $rootScope, FlashService, $scope) {
+        var vm 					= this;
+        $scope.data = {
+        		selectedUser: null,
+        };
+        vm.getAllTeams 			= getAllTeams();
+        
+//        var typeaheadScope		= $scope.$new();
+//        $controller( 'UserTypeaheadCtrl', { $scope : typeaheadScope } );
+//        vm.userTypeaheadCtrl	= UserTypeaheadCtrl;
 
         function getAllTeams() {
             vm.dataLoading = true;
@@ -32,13 +36,30 @@
                 }
             });
         }
-    
-        $scope.checkName = function(data, id) {
-        	if (id === 2 && data !== 'awesome') {
-        		return "Username 2 should be `awesome`";
-        	}
-        };
 
+        $scope.setSelectedUser = function( suser, field, team ){
+           var user = $scope.data.selectedUser; 
+        }
+
+        $scope.onSelect = function( $item, $model, $label ){
+           var user = $scope.data.selectedUser; 
+        }
+
+        $scope.locatUsers = function( viewValue ){
+            var userList	= [];
+            vm.dataLoading = true;
+            var request = {
+            		orderBy:"Name",
+            		isAsc:"false",
+            		countPerPage:"8",
+            		namePrefix:viewValue
+            };
+            
+            userList = UserService.LocateUsers( request );
+            
+        	return userList;
+        }
+        
         $scope.addTeam = function( team, index ) {
         	//$scope.user not updated yet
         	//
@@ -112,11 +133,10 @@
         $scope.isPersisted = function( team ) {
         	var persisted 	= team != null;
         	persisted		= persisted && team.id != null;
-        	if( !persisted ){
-        		var why = "why";
-        	}
         	return persisted;
         }; 
+        $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
     }
+	
 
-})();
+//})();

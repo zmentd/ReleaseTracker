@@ -25,6 +25,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.fdc.boarding.core.query.exception.QueryException;
 import com.fdc.boarding.core.service.EntityReaderSvc;
+import com.fdc.boarding.core.transaction.annotation.Transactional;
 import com.fdc.boarding.releasetracker.domain.common.CommentType;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
@@ -81,6 +82,7 @@ public class IdeaPriorityListReader {
 		super();
 	}
 
+	@Transactional
 	public void importFile(InputStream is){
 		ReaderResponse					response;
 
@@ -98,31 +100,20 @@ public class IdeaPriorityListReader {
 	
 	private void createPhaseProgress( ReaderResponse response, IWorkflow workflow, Row row, CurrentPhaseStatus currentPs ){
 		Cell 							cell;
-		LocalDate						reqsRcvd;
 		LocalDate						reqsAppr;
 		LocalDate						hladCmplt;
 		LocalDate						hleCmplt;
-//		LocalDate						rdmpAppr;
 		LocalDate						hleAppr;
 		LocalDate						dddAppr;
 		LocalDate						sltgSbmt;
 		LocalDate						sltgCfmd;
 		LocalDate						phaseStrt;
-//		LocalDate						sltd;
-//		LocalDate						date;
-//		IPhaseCompletion				pc			= null;
-//    	MilestoneByRom					milestone	= null;
-//    	Rom								rom;
-//    	LocalDate						targetDate;
 		IPhase							phase;
 		IPhase							current;
 		int								phaseIndex;
 		
 		cell		= row.getCell( 22 );
 		phaseStrt	= readDate( cell );
-		
-		cell		= row.getCell( 40 );
-		reqsRcvd	= readDate( cell );
 		
 		cell		= row.getCell( 42 );
 		reqsAppr	= readDate( cell );
@@ -133,9 +124,6 @@ public class IdeaPriorityListReader {
 		cell		= row.getCell( 44 );
 		hleCmplt	= readDate( cell );
 		
-//		cell		= row.getCell( 45 );
-//		rdmpAppr	= readDate( cell );
-		
 		cell		= row.getCell( 46 );
 		hleAppr		= readDate( cell );
 		
@@ -145,92 +133,88 @@ public class IdeaPriorityListReader {
 		cell		= row.getCell( 49 );
 		sltgCfmd	= readDate( cell );
 		
-//		cell		= row.getCell( 50 );
-//		sltd		= readDate( cell );
-		
 		cell		= row.getCell( 51 );
 		dddAppr		= readDate( cell );
 		
-		if( workflow.getIdea().getCreateDate() == null ){
-			System.out.println( "Idea " + workflow.getIdea().getIdeaNumber() + " does not have a complete date." );
+		current	= currentPs.getPhase();
+		if( current == null ){
+			System.out.println( "Cannot progress phase, no current phase." );
+			return;
 		}
-		if( reqsRcvd != null ){
-			current	= currentPs.getPhase();
-			if( current == null ){
-				System.out.println( "Cannot progress phase, no current phase." );
-				return;
+		phaseIndex	= current.getIndex();
+		if( phaseIndex == 9 ){
+			//
+			// Parked
+			//
+			if( reqsAppr == null ){
+				phaseIndex	= 1;	
 			}
-			phaseIndex	= current.getIndex();
-			if( phaseIndex == 9 ){
-				//
-				// Parked
-				//
-				if( reqsAppr == null ){
-					phaseIndex	= 1;	
-				}
-				if( reqsAppr != null ){
-					phaseIndex	= 2;	
-				}
-				if( hladCmplt != null ){
-					phaseIndex	= 3;	
-				}
-				if( hleCmplt != null ){
-					phaseIndex	= 4;	
-				}
-				if( sltgCfmd != null ){
-					phaseIndex	= 5;	
-				}
+			if( reqsAppr != null ){
+				phaseIndex	= 2;	
 			}
-			if( phaseIndex > 0 ){
-				//
-				// Requirements
-				//
-				phase	= phases.get( "Requirements" );
-				assertNotNull( workflow.getIdea().getCreateDate(), workflow.getIdea().getIdeaNumber() + " Phase is in Requirements without an idea create date." );
-				progressTo( response, workflow, phase, workflow.getIdea().getCreateDate(), reqsAppr, phaseStrt, currentPs );
+			if( hladCmplt != null ){
+				phaseIndex	= 3;	
 			}
-			if( phaseIndex > 1 ){
-				//
-				// HLAD
-				//
-				phase	= phases.get( "HLAD" );
-				assertNotNull( reqsAppr, workflow.getIdea().getIdeaNumber() + " Phase is past Requirements without Requirements approved date" );
-				progressTo( response, workflow, phase, reqsAppr, hladCmplt, phaseStrt, currentPs );
+			if( hleCmplt != null ){
+				phaseIndex	= 4;	
 			}
-			if( phaseIndex > 2 ){
-				//
-				// HLE
-				//
-				phase	= phases.get( "HLE" );
-				assertNotNull( hladCmplt, workflow.getIdea().getIdeaNumber() + " Phase is past HLAD without HLAD complete date" );
-				progressTo( response, workflow, phase, hladCmplt, hleAppr, phaseStrt, currentPs );
-			}
-			if( phaseIndex > 3 ){
-				//
-				// Slotting
-				//
-				phase	= phases.get( "Slotting" );
-				assertNotNull( sltgSbmt, workflow.getIdea().getIdeaNumber() + " Phase is past HLE without slotting submitted date" );
-				progressTo( response, workflow, phase, sltgSbmt, sltgCfmd, phaseStrt, currentPs );
-			}
-			if( phaseIndex > 4 ){
-				//
-				// DDD
-				//
-				phase	= phases.get( "DDD" );
-				assertNotNull( sltgCfmd, workflow.getIdea().getIdeaNumber() + " Phase is past Slotting without slotting confirmed date" );
-				progressTo( response, workflow, phase, sltgCfmd, dddAppr, phaseStrt, currentPs );
-			}
-			if( current.getIndex() == 9 ){
-				//
-				// Parked
-				//
-				phase	= phases.get( "Parked" );
-				assertNotNull( phaseStrt, workflow.getIdea().getIdeaNumber() + " Phase is Parked without a phase start date" );
-				progressTo( response, workflow, phase, phaseStrt, null, phaseStrt, currentPs );
+			if( sltgCfmd != null ){
+				phaseIndex	= 5;	
 			}
 		}
-
+		if( phaseIndex > 0 ){
+			//
+			// Requirements
+			//
+			phase	= phases.get( "Requirements" );
+			assertNotNull( workflow.getIdea().getCreateDate(), workflow.getIdea().getIdeaNumber() + " Phase is in Requirements without an idea create date. Using today's date." );
+			
+			progressTo( response, workflow, phase, workflow.getIdea().getCreateDate(), reqsAppr, phaseStrt, currentPs );
+		}
+		if( phaseIndex > 1 ){
+			//
+			// HLAD
+			//
+			phase	= phases.get( "HLAD" );
+			assertNotNull( reqsAppr, workflow.getIdea().getIdeaNumber() + " Phase is past Requirements without Requirements approved date" );
+			progressTo( response, workflow, phase, reqsAppr, hladCmplt, phaseStrt, currentPs );
+		}
+		if( phaseIndex > 2 ){
+			//
+			// HLE
+			//
+			phase	= phases.get( "HLE" );
+			assertNotNull( hladCmplt, workflow.getIdea().getIdeaNumber() + " Phase is past HLAD without HLAD complete date" );
+			progressTo( response, workflow, phase, hladCmplt, hleAppr, phaseStrt, currentPs );
+		}
+		if( phaseIndex > 3 ){
+			//
+			// Slotting
+			//
+			phase	= phases.get( "Slotting" );
+			assertNotNull( sltgSbmt, workflow.getIdea().getIdeaNumber() + " Phase is past HLE without slotting submitted date" );
+			progressTo( response, workflow, phase, sltgSbmt, sltgCfmd, phaseStrt, currentPs );
+		}
+		if( phaseIndex > 4 ){
+			//
+			// DDD
+			//
+			phase	= phases.get( "DDD" );
+			assertNotNull( sltgCfmd, workflow.getIdea().getIdeaNumber() + " Phase is past Slotting without slotting confirmed date" );
+			progressTo( response, workflow, phase, sltgCfmd, dddAppr, phaseStrt, currentPs );
+		}
+		if( current.getIndex() == 9 ){
+			//
+			// Parked
+			//
+			phase	= phases.get( "Parked" );
+			assertNotNull( phaseStrt, workflow.getIdea().getIdeaNumber() + " Phase is Parked without a phase start date" );
+			progressTo( response, workflow, phase, phaseStrt, null, phaseStrt, currentPs );
+		}
+		
+		if( workflow.getCurrentPhaseCompletion() == null ){
+			System.out.println( "No current phase completion determined for idea " + workflow.getIdea().getIdeaNumber() );
+		}
 	}
 	
 	private IReleaseEntry findRelease( LocalDate date ){
@@ -398,8 +382,6 @@ public class IdeaPriorityListReader {
 	){
 		IPhaseCompletion				pc			= null;
 		IStatusCompletion				sc			= null;
-		IPhaseCompletion				cpc			= null;
-		IStatusCompletion				csc			= null;
     	MilestoneByRom					milestone	= null;
     	Rom								rom;
     	LocalDate						date;
@@ -408,7 +390,6 @@ public class IdeaPriorityListReader {
     		return;
     	}
 		date	= workflow.getTargetImplementationDate();
-		cpc		= workflow.getCurrentPhaseCompletion();
 		rom		= workflow.getRom();
 		if( date != null && rom != null ){
 			milestone	= releaseGateway.findMilestoneByTargetDate( date, rom, phase.getType() );
@@ -495,6 +476,7 @@ public class IdeaPriorityListReader {
 		impact.setTeam( getTeam( value ) );
 		impact.setWorkflow( workflow );
 		workflow.setTeamImpact( impact );
+		impact.setIdea( idea );
 		
 		cell	= row.getCell( 16 );
 		value	= cell.getStringCellValue();
@@ -547,7 +529,6 @@ public class IdeaPriorityListReader {
 			user	= getUser( value );
 			impact.getTeam().setPortfolioManager( user );
 		}
-		impact.setIdea( idea );
 		workflow.setPhaseTargetDate( idea.getWorkflow().getPhaseTargetDate() );
 		
 		if( "Planned Effort Not Open".equals( phase ) ){
@@ -732,7 +713,7 @@ public class IdeaPriorityListReader {
 
 				cell	= row.getCell( 7 );
 				name	= cell.getStringCellValue().trim();
-				
+			
 				if( "P".equalsIgnoreCase( rel ) ){
 					ptotal++;
 				}
@@ -904,8 +885,13 @@ public class IdeaPriorityListReader {
 		
 		cell	= row.getCell( 38 );
 		date	= readDate( cell );
-		idea.setCreateDate( date );
-
+		if( date != null ){
+			idea.setCreateDate( date );
+		}
+		else{
+			System.out.println( "Idea " + idea.getIdeaNumber() + " does not have a create date, using today." );
+			idea.setCreateDate( new LocalDate() );
+		}
 		cell	= row.getCell( 50 );
 		date	= readDate( cell );
 		if( date != null ){
@@ -1111,6 +1097,11 @@ public class IdeaPriorityListReader {
 		else if( "On Hold".equals( cplValue ) ){
 			current.setPhase( phases.get( "Parked" ) );
 			current.setStatus( statuses.get( "On Hold" ) );
+		}
+		else{
+			System.out.println( "Unkown Phase '" + cplValue + " found for Idea " + workflow.getIdea().getIdeaNumber() + "' setting it to requirements." );
+			current.setPhase( phases.get( "Requirements" ) );
+			current.setStatus( statuses.get( "In Progress" ) );
 		}
 	}
 

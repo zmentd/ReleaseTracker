@@ -17,7 +17,6 @@ import com.fdc.boarding.core.domain.ILogicallyDeletable;
 import com.fdc.boarding.core.domain.IUniqueIdProvider;
 import com.fdc.boarding.core.domain.IVersioned;
 import com.fdc.boarding.core.query.exception.QueryException;
-import com.fdc.boarding.core.transaction.annotation.Transactional;
 import com.fdc.boarding.core.util.DateTimeUtil;
 
 
@@ -119,7 +118,6 @@ public class EntityQuery extends AbstractQuerySvc
      * @throws QueryException
      */
     @Override
-    @Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public <T extends IUniqueIdProvider, A extends AbstractAp> List<T> find(
       A                                 accessPath
@@ -244,7 +242,6 @@ public class EntityQuery extends AbstractQuerySvc
      * @return
      */
     @Override
-    @Transactional
     @SuppressWarnings("rawtypes")
     public <T extends IUniqueIdProvider, A extends AbstractAp> int getCount(
        A                                accessPath

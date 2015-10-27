@@ -5,22 +5,22 @@ import com.fdc.boarding.releasetracker.domain.AbstractResponse;
 public class TeamResponse extends AbstractResponse{
 	private static final long 			serialVersionUID	= 1L;
 
-	private ITeam						team;
+	private TeamDto						team;
 
 	public TeamResponse(){
 		super();
 	}
 
-	public TeamResponse(ITeam team) {
+	public TeamResponse(TeamDto team) {
 		super();
 		this.team = team;
 	}
 
-	public ITeam getTeam() {
+	public TeamDto getTeam() {
 		return team;
 	}
 	
-	public void setTeam(ITeam team) {
+	public void setTeam(TeamDto team) {
 		this.team = team;
 	}
 	

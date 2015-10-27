@@ -7,11 +7,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import javax.inject.Inject;
-
 import org.joda.time.Days;
 import org.junit.Test;
 
+import com.fdc.boarding.core.service.EntityReaderSvc;
+import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
 import com.fdc.boarding.releasetracker.gateway.excel.IdeaPriorityListReader;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
@@ -22,19 +22,25 @@ import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
  */
 public class TestXcelReader extends AbstractPersistenceTest {
 
-	private static String				fullFile	= "src\\test\\resources\\Concept Priority List New.xlsm";
+	protected static String				fullFile	= "src\\test\\resources\\Concept Priority List New.xlsm";
 	private static String				testFile	= "src\\test\\resources\\Concept Priority List Test.xls";
 
-    @Inject
-    private IdeaPriorityListReader	reader;
-
-    @Inject 
-    private ExpectedIdea			expected;
+    private IdeaPriorityListReader		reader;
+    private EntityReaderSvc				ereader;
+    
+	@Override
+	public void injectServices() {
+		ereader	= CDIContext.getInstance().getBean( EntityReaderSvc.class );
+		reader	= CDIContext.getInstance().getBean( IdeaPriorityListReader.class );
+	}
 
     @Test
 	public void testCON053117_FullTest(){
 		InputStream						stream;
-		
+		ExpectedIdea					expected;
+
+		expected	= new ExpectedIdea();
+		expected.setReader( ereader );
 		try {
 			stream		= new FileInputStream( testFile );
 			System.out.println( "Path:" + new File( "." ).getAbsolutePath() );
@@ -319,6 +325,10 @@ public class TestXcelReader extends AbstractPersistenceTest {
     @Test
 	public void testCON051247_OnHold(){
 		InputStream						stream;
+		ExpectedIdea					expected;
+
+		expected	= new ExpectedIdea();
+		expected.setReader( ereader );
 		
 		try {
 			stream		= new FileInputStream( testFile );
@@ -411,6 +421,10 @@ public class TestXcelReader extends AbstractPersistenceTest {
     @Test
 	public void testCON051247_DDD_Parked(){
 		InputStream						stream;
+		ExpectedIdea					expected;
+
+		expected	= new ExpectedIdea();
+		expected.setReader( ereader );
 		
 		try {
 			stream		= new FileInputStream( testFile );
@@ -488,6 +502,10 @@ public class TestXcelReader extends AbstractPersistenceTest {
     @Test
 	public void testCON051247_DDD_Approved(){
 		InputStream						stream;
+		ExpectedIdea					expected;
+
+		expected	= new ExpectedIdea();
+		expected.setReader( ereader );
 		
 		try {
 			stream		= new FileInputStream( testFile );
@@ -561,18 +579,4 @@ public class TestXcelReader extends AbstractPersistenceTest {
 			e.printStackTrace();
 		}
     }
- 
-    @Test
-	public void testReadFullFile(){
-		InputStream						stream;
-		
-		try {
-			stream		= new FileInputStream( fullFile );
-			System.out.println( "Path:" + new File( "." ).getAbsolutePath() );
-			reader.importFile( stream );
-			
-		} catch( Exception e ) {
-			e.printStackTrace();
-		}
-	}
 }

@@ -45,7 +45,7 @@ public class TeamUC implements Serializable {
 			team.setName( request.getTeam().getName() );
 			team.setObs( request.getTeam().getObs() );
 			service.insert( team );
-			response.setTeam( team );
+			response.setTeam( TeamDto.from( team ) );
 			response.setSuccess( true );
 			response.setMessage( "Team added." );
 		} catch (Exception e) {
@@ -77,7 +77,7 @@ public class TeamUC implements Serializable {
 				}
 				else{
 					service.delete( team );
-					response.setTeam( team );
+					response.setTeam( TeamDto.from( team ) );
 					response.setSuccess( true );
 					response.setMessage( "Team deleted." );
 				}
@@ -116,7 +116,7 @@ public class TeamUC implements Serializable {
 				}
 				results	= query.find( ap, first, request.getCountPerPage() );
 				for( ITeam team : results ){
-					list.add( new TeamResponse( team) );	
+					list.add( new TeamResponse( TeamDto.from( team ) ) );	
 				}
 			}
 			response.setList( list );
@@ -169,7 +169,7 @@ public class TeamUC implements Serializable {
 					}
 					else{
 						service.update( team );
-						response.setTeam( team );
+						response.setTeam( TeamDto.from( team ) );
 						response.setSuccess( true );
 						response.setMessage( "Team updated." );
 					}

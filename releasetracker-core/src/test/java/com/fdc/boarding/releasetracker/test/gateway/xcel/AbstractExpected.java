@@ -18,7 +18,6 @@ public class AbstractExpected {
 	@Inject
 	protected IEntityReaderSvc			reader;
 
-	
 	protected void assertDate( String value, LocalDate actual ){
 		LocalDate						date;
 		DateTimeFormatter 				formatter;
@@ -33,6 +32,7 @@ public class AbstractExpected {
 		}
 	}
 
+	
 	protected void assertSameUser( String value, IUser actual ){
 		IUser							expected	= null;
 		String[]						split;
@@ -54,6 +54,10 @@ public class AbstractExpected {
 			Assert.assertEquals( expected.getLastName(), actual.getLastName() );
 			Assert.assertEquals( expected.getEmail(), actual.getEmail() );
 		}
+	}
+
+	public void setReader(IEntityReaderSvc reader) {
+		this.reader = reader;
 	}
 
 }

@@ -11,7 +11,6 @@ import com.fdc.boarding.core.query.EntityQuery;
 import com.fdc.boarding.core.query.EntityQueryAp;
 import com.fdc.boarding.core.query.Restriction;
 import com.fdc.boarding.core.query.exception.QueryException;
-import com.fdc.boarding.core.transaction.annotation.Transactional;
 
 /**
  *
@@ -38,7 +37,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
     }
     
     @Override
-    @Transactional
     public <T extends IEntity<P>, P extends Serializable> List<T> find(
       Class<T>                          entityClass
   	, String...							initialize
@@ -52,7 +50,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
     }
  
     @Override
-    @Transactional
     public <T extends IEntity<P>, P extends Serializable> List<T> find(
       Class<T>                          entityClass
     , String                            orderBy
@@ -85,7 +82,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
     }
     
     @Override
-    @Transactional
     public <T extends IEntity<P>, P extends Serializable> List<T> find(
       Class<T>                          entityClass
     , String                            orderBy
@@ -120,7 +116,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
     }
     
     @Override
-    @Transactional
     public <T extends IEntity<P>, P extends Serializable> List<T> find(
       Class<T>                          entityClass
     , String                            orderBy
@@ -155,7 +150,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
     }
 
 	@Override
-    @Transactional
 	public <T extends IEntity<P>, P extends Serializable> T findByKey(
 	  Class<T> 							clazz
 	, P 								key
@@ -166,7 +160,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
 	}
 
 	@Override
-    @Transactional
 	public <T extends IEntity<P>, P extends Serializable> T findByNaturalKey(
 	  Class<T> 							clazz
 	, String 							name
@@ -178,7 +171,6 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
 	}
 
 	@Override
-    @Transactional
 	public <T extends IEntity<P>, P extends Serializable> List<T> readByAttribute(
 			Class<T> clazz, String name, Object key) {
 		return entityDao.readByAttribute( clazz, name, key );
