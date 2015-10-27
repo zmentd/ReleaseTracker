@@ -232,27 +232,6 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			
-			<plugin>
-				<groupId>org.jboss.tattletale</groupId>
-				<artifactId>tattletale-maven</artifactId>
-				<!-- The version of the plugin you want to use -->
-				<version>1.1.0.Final</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<!-- This is the location which will be scanned for generating tattletale 
-						reports -->
-					<source>C:/Users/tzman/.m2/repository</source>
-					<!-- This is where the reports will be generated -->
-					<destination>C:/dev/Workspaces/Services/releasetracker-web/reports</destination>
-				</configuration>
-		    </plugin>
 		</plugins>
 	</build>
 </project>
