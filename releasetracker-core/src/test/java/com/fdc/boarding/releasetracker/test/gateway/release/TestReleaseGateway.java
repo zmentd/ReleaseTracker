@@ -8,9 +8,9 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import com.fdc.boarding.releasetracker.domain.common.Rom;
-import com.fdc.boarding.releasetracker.domain.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.release.MilestoneByRom;
 import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
+import com.fdc.boarding.releasetracker.gateway.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
 
 public class TestReleaseGateway extends AbstractPersistenceTest{

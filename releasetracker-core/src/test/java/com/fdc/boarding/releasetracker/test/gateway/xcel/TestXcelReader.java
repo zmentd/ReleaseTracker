@@ -15,6 +15,7 @@ import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
 import com.fdc.boarding.releasetracker.gateway.excel.IdeaPriorityListReader;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
+import com.fdc.boarding.releasetracker.test.domain.idea.ExpectedIdea;
 
 /**
  * @author f6mkw7d

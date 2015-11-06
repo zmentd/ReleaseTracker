@@ -10,8 +10,8 @@ import org.hibernate.Hibernate;
 import com.fdc.boarding.core.persistence.GenericDao;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApproval;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalType;
-import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalTypePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
+import com.fdc.boarding.releasetracker.gateway.workflow.IPhaseApprovalTypePersistenceGateway;
 
 public class PhaseApprovalTypePersistenceGateway extends GenericDao<PhaseApprovalTypeEntity, Long> implements IPhaseApprovalTypePersistenceGateway {
 

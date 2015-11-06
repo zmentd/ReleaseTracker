@@ -35,12 +35,8 @@ public class EntityManagerStoreImpl implements IEntityManagerStore
 		entityManagerStack = emStackThreadLocal.get();
 		if( entityManagerStack == null || entityManagerStack.isEmpty() ) 
 		{
-			/* if nothing is found, we return null to cause a NullPointer exception in the business code.
-         		This leeds to a nicer stack trace starting with client code.
-			 */
-			logger.warn( "No entity manager was found. Did you forget to mark your method as transactional?" );
-			this.createAndRegister();
-//			return null;
+			createAndRegister();
+			entityManagerStack = emStackThreadLocal.get();
 		} 
 		local	= entityManagerStack.peek();
 		
@@ -68,9 +64,14 @@ public class EntityManagerStoreImpl implements IEntityManagerStore
 			entityManagerStack = new Stack<EntityManager>();
 			emStackThreadLocal.set(entityManagerStack);
 		}
-		entityManager = emf.createEntityManager();
-		entityManagerStack.push( entityManager );
-
+		if( entityManagerStack.isEmpty() ){
+			entityManager = emf.createEntityManager();
+			entityManagerStack.push( entityManager );
+		}
+		else{
+			entityManager	= entityManagerStack.peek();
+		}
+		
 		return entityManager;
 	}
 
@@ -98,7 +99,8 @@ public class EntityManagerStoreImpl implements IEntityManagerStore
 
 		if( entityManagerStack.peek() != entityManager )
 		{
-			throw new IllegalStateException( "Removing of entity manager failed. Your entity manager was not found." );
+//			throw new IllegalStateException( "Removing of entity manager failed. Your entity manager was not found." );
+//			return;
 		}
 		entityManagerStack.pop();
 	}

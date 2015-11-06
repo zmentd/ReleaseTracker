@@ -1,7 +1,10 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
+import com.fdc.boarding.releasetracker.domain.AbstractRequest;
+import com.fdc.boarding.releasetracker.domain.team.dto.TeamDto;
 
-public class TeamRequest {
+
+public class TeamRequest extends AbstractRequest {
 	private TeamDto						team;
 	
 

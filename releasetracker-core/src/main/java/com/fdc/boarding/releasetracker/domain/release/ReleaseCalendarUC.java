@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.fdc.boarding.releasetracker.gateway.release.IReleasePersistenceGateway;
+
 public class ReleaseCalendarUC implements Serializable {
 	private static final long serialVersionUID = 1L;
 

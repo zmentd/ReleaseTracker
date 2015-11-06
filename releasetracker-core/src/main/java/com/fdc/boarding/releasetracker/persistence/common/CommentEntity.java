@@ -25,7 +25,7 @@ import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
 
 @Entity
-@Table( name = "RT_COMMENT" )
+@Table( name = "RT_COMMON_COMMENT" )
 public class CommentEntity extends AbstractAuditedEntity<Long> implements Serializable, IComment{
 	private static final long 			serialVersionUID = 1L;
 

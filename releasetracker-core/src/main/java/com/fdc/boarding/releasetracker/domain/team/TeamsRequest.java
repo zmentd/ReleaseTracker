@@ -1,7 +1,9 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
+import com.fdc.boarding.releasetracker.domain.AbstractRequest;
 
-public class TeamsRequest {
+
+public class TeamsRequest extends AbstractRequest {
 	private Integer						page;
 	private Integer						countPerPage;
 	private String						orderBy;

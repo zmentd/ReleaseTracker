@@ -23,7 +23,7 @@ import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalType;
 
 @Entity
-@Table( name = "RT_PHASE_APRVL_TYPE",
+@Table( name = "RT_WORKFLOW_PHASE_APRVL_TYPE",
 		indexes = {
 		@Index( columnList="NAME", unique = false ),
 		@Index( columnList="PHASE_ID", unique = false ),

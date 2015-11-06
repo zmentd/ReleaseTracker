@@ -39,7 +39,7 @@ import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
 
 @Entity
 @Audited
-@Table( name = "RT_PHASE_APRVL",
+@Table( name = "RT_WORKFLOW_PHASE_APRVL",
 		indexes = {
 		@Index( columnList="PHASE_TYPE, PHASE_CMPLT_ID", unique = false ),
 		@Index( columnList="PHASE_CMPLT_ID", unique = false )
@@ -103,7 +103,7 @@ public class PhaseApprovalEntity extends AbstractAuditedEntity<Long> implements 
 	@OrderBy( "commentDate DESC")
 	@ManyToMany( targetEntity=CommentEntity.class, cascade={CascadeType.ALL} )
     @JoinTable(
-        name="RT_PHASE_APRVL_COMMENTS",
+        name="RT_WORKFLOW_PHASE_APRVL_COMMENTS",
         joinColumns=@JoinColumn(name="PHASE_APRVL_ID"),
         inverseJoinColumns=@JoinColumn(name="COMMENT_ID")
     )

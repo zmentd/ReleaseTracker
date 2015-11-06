@@ -32,7 +32,7 @@ import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 
 @Entity
 @Cacheable( true )
-@Table( name = "RT_PHASE",
+@Table( name = "RT_WORKFLOW_PHASE",
 		indexes = {
 		@Index( columnList="NAME", unique = true )
 		},
@@ -75,7 +75,7 @@ public class PhaseEntity extends AbstractAuditedEntity<Long> implements Serializ
 	
 	@ManyToMany( targetEntity=StatusEntity.class, cascade={CascadeType.PERSIST, CascadeType.MERGE} )
     @JoinTable(
-        name="RT_PHASE_AVAIL_STATUS",
+        name="RT_WORKFLOW_PHASE_AVAIL_STATUS",
         joinColumns=@JoinColumn(name="PHASE_ID"),
         inverseJoinColumns=@JoinColumn(name="STATUS_ID")
     )
@@ -84,7 +84,7 @@ public class PhaseEntity extends AbstractAuditedEntity<Long> implements Serializ
 	@OrderBy( "index" )
 	@ManyToMany( targetEntity=PhaseEntity.class, cascade={CascadeType.PERSIST, CascadeType.MERGE} )
     @JoinTable(
-        name="RT_PHASE_NEXT_PHASE",
+        name="RT_WORKFLOW_PHASE_NEXT_PHASE",
         joinColumns=@JoinColumn(name="PHASE_ID"),
         inverseJoinColumns=@JoinColumn(name="NEXT_PHASE_ID")
     )

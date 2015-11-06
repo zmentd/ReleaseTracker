@@ -13,16 +13,21 @@ import com.fdc.boarding.core.service.EntityPersistenceService;
 import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
+import com.fdc.boarding.releasetracker.domain.common.dto.CommentDto;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
+import com.fdc.boarding.releasetracker.domain.workflow.ApprovalRequest;
+import com.fdc.boarding.releasetracker.domain.workflow.ApprovalResponse;
 import com.fdc.boarding.releasetracker.domain.workflow.ApprovalType;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalType;
-import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalTypePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseCompletion;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatusCompletion;
+import com.fdc.boarding.releasetracker.domain.workflow.PhaseApprovalTypeResponse;
+import com.fdc.boarding.releasetracker.domain.workflow.WorkflowRequest;
 import com.fdc.boarding.releasetracker.domain.workflow.WorkflowUC;
+import com.fdc.boarding.releasetracker.gateway.workflow.IPhaseApprovalTypePersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.idea.IdeaEntity;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.PhaseApprovalTypeEntity;
@@ -31,7 +36,6 @@ import com.fdc.boarding.releasetracker.persistence.workflow.StatusEntity;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
 
 public class TestWorkflowUC extends AbstractPersistenceTest{
-
     private WorkflowUC								usecase;
 	private IEntityReaderSvc						reader;
 	private EntityPersistenceService				persistenceService;
@@ -47,16 +51,18 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
 
 	@Test
 	public void testApproveDev(){
+		ApprovalRequest 				request;
     	IIdea							idea;
     	IPhase							phase;
     	IPhaseApprovalType				type;
     	List<PhaseApprovalTypeEntity>	results;
     	IComment						comment		= null;
     	IUser							approver;
-    	
+		ApprovalResponse				response;
+  	
     	try {
     		approver	= reader.findByKey( UserEntity.class, 1L );
-    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719"
+    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test"
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes.name" 
 					   , "workflow.currentPhaseCompletion.phaseApprovals" 
 					   , "workflow.currentPhaseCompletion.currentStatusCompletion.status" 
@@ -65,7 +71,7 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     		phase		= reader.findByNaturalKey( PhaseEntity.class, "name", "HLE", "nextPhases", "availableStatuses", "requiredApprovalTypes" );
     		idea.getWorkflow().getCurrentPhaseCompletion().setPhase( phase );
     		idea.getWorkflow().getCurrentPhaseCompletion().setEntryDate( new LocalDate().withDayOfMonth( 1 ).withMonthOfYear( 9 ) );
-    		persistenceService.update( idea );
+    		usecase.updateWorkflow( idea.getWorkflow() );
     		results		= reader.find( PhaseApprovalTypeEntity.class
     								 , "name"
     								 , true
@@ -76,8 +82,17 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     		
     		Assert.assertFalse( results.isEmpty() );
     		type		= results.get( 0 );
-    		usecase.approvalRequested( idea.getWorkflow(), type, comment );
-    		usecase.approve( idea.getWorkflow(), type, approver, comment );
+    		request		= new ApprovalRequest();
+    		request.setPhaseApprovalTypeId( type.getId() );
+    		request.setWorkflowId( idea.getWorkflow().getId() );
+    		request.setComment( CommentDto.from( comment ) );
+    		
+    		response	= usecase.approvalRequested( request );
+			Assert.assertNotNull( response );
+			Assert.assertNotNull( response.getPhaseApproval() );
+			Assert.assertTrue( response.isSuccess() );
+    		
+			usecase.approve( idea.getWorkflow(), type, approver, comment );
     		
     		
 		} catch (Exception e) {
@@ -89,16 +104,19 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
 
 	@Test
 	public void testApproveDevAgain(){
-    	IIdea						idea;
+		ApprovalRequest 				request;
+    	IIdea							idea;
     	IPhase							phase;
     	IPhaseApprovalType				type;
     	List<PhaseApprovalTypeEntity>	results;
     	IComment						comment		= null;
     	IUser							approver;
+		ApprovalResponse				response;
     	
     	try {
+    		request		= new ApprovalRequest();
     		approver	= reader.findByKey( UserEntity.class, 1L );
-    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719" 
+    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes.name" 
 					   , "workflow.currentPhaseCompletion.phaseApprovals" 
@@ -119,8 +137,19 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     		
     		Assert.assertFalse( results.isEmpty() );
     		type		= results.get( 0 );
-    		usecase.approvalRequested( idea.getWorkflow(), type, comment );
-    		usecase.approvalRequested( idea.getWorkflow(), type, comment );
+    		request.setPhaseApprovalTypeId( type.getId() );
+    		request.setWorkflowId( idea.getWorkflow().getId() );
+    		request.setComment( CommentDto.from( comment ) );
+    		
+    		response	= usecase.approvalRequested( request );
+			Assert.assertNotNull( response );
+			Assert.assertNotNull( response.getPhaseApproval() );
+			Assert.assertTrue( response.isSuccess() );
+    		
+			response	= usecase.approvalRequested( request );
+			Assert.assertNotNull( response );
+			Assert.assertNotNull( response.getPhaseApproval() );
+			Assert.assertTrue( response.isSuccess() );
     		usecase.approve( idea.getWorkflow(), type, approver, comment );
     		
     		
@@ -133,25 +162,18 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
 	
 	@Test
 	public void testDetermineNextApprovalType(){
-    	IIdea						idea;
-    	IPhaseApprovalType			types		= null;
+		WorkflowRequest 				request;
+    	PhaseApprovalTypeResponse		response;
+    	IIdea							idea;
 
 		try {
-	   		idea = reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719"
-					   , "workflow.comments"
-					   , "teamImpacts" 
-					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes" 
-					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes.name" 
-					   , "workflow.currentPhaseCompletion.phaseApprovals" 
-					   , "workflow.currentPhaseCompletion.currentStatusCompletion.status" 
-					   , "assignedTo" 
-					   , "solutionArchitect" 
-					   , "demandOwner" 
-					   , "originalRequestor" 
-					   , "workflow.release" 
-	   				);
-			types	= usecase.determineNextApprovalType( idea.getWorkflow() );
-			Assert.assertNotNull( types );
+	   		idea 	= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test" );
+	   		request	= new WorkflowRequest();
+	   		request.setWorkflowId( idea.getWorkflow().getId() );
+	   		response	= usecase.determineNextApprovalType( request );
+			Assert.assertNotNull( response );
+			Assert.assertNotNull( response.getPhaseApprovalType() );
+			Assert.assertTrue( response.isSuccess() );
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -164,7 +186,7 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     	List<IPhaseApprovalType>		types		= null;
 
 		try {
-			idea	= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719" 
+			idea	= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes.name" 
 					   , "workflow.currentPhaseCompletion.phaseApprovals" 
@@ -188,7 +210,7 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     	IPhaseCompletion				pc;
     	
     	try {
-    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719" 
+    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes" 
 					   , "workflow.currentPhaseCompletion.phaseApprovals" 
 					   , "workflow.currentPhaseCompletion.currentStatusCompletion" 
@@ -201,7 +223,7 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     		idea.getWorkflow().getCurrentPhaseCompletion().setEntryDate( new LocalDate().withDayOfMonth( 1 ).withMonthOfYear( 9 ) );
     		persistenceService.update( idea.getWorkflow().getCurrentPhaseCompletion() );
     		
-    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719" 
+    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test" 
 					   , "workflow.currentPhaseCompletion.phase.nextPhases" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes" 
 					   , "workflow.currentPhaseCompletion.phaseApprovals" 
@@ -230,7 +252,7 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     	IStatusCompletion				sc;
     	
     	try {
-    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719"
+    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test"
     											 , "workflow.currentPhaseCompletion.currentStatusCompletion" 
     		);
     		phase		= reader.findByNaturalKey( PhaseEntity.class, "name", "HLAD", "nextPhases", "availableStatuses" );
@@ -241,7 +263,7 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
     		idea.getWorkflow().getCurrentPhaseCompletion().getCurrentStatusCompletion().setStatus( status );
     		idea.getWorkflow().getCurrentPhaseCompletion().getCurrentStatusCompletion().setEntryDate( new LocalDate().withDayOfMonth( 1 ).withMonthOfYear( 9 ) );
     		persistenceService.update( idea );
-    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719" 
+    		idea		= reader.findByNaturalKey( IdeaEntity.class, "ideaNumber", "CON-042719_test" 
 					   , "workflow.currentPhaseCompletion.phase.nextPhases" 
 					   , "workflow.currentPhaseCompletion.phase.requiredApprovalTypes" 
 					   , "workflow.currentPhaseCompletion.phase.availableStatuses" 

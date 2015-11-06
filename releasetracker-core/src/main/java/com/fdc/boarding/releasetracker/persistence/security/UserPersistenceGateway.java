@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import com.fdc.boarding.core.persistence.GenericDao;
 import com.fdc.boarding.releasetracker.domain.security.IAuthenticatedUser;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
-import com.fdc.boarding.releasetracker.domain.security.IUserPersistenceGateway;
+import com.fdc.boarding.releasetracker.gateway.security.IUserPersistenceGateway;
 
 public class UserPersistenceGateway extends GenericDao<UserEntity, Long> implements IUserPersistenceGateway{
 	private static final long 			serialVersionUID = 1L;

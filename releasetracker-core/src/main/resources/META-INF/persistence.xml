@@ -37,19 +37,23 @@
             <property name="hibernate.connection.url" value="jdbc:h2:tcp://localhost/~/releasetracker;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1"/>
             <property name="hibernate.connection.username" value="sa"/>
             <property name="hibernate.connection.password" value=""/>
-              <property name="hibernate.hbm2ddl.import_files" value="RT_USER_PREFS.sql, 
-            													RT_USER.sql, 
-            													RT_AUTH_USER.sql, 
+              <property name="hibernate.hbm2ddl.import_files" value="RT_SECURITY_USER_PREFERENCE.sql, 
+            													RT_SECURITY_USER.sql, 
+            													RT_SECURITY_AUTH_USER.sql, 
             													RT_TEAM.sql, 
             													RT_RELEASE_ENTRY.sql, 
-            													RT_MILESTONE.sql,
-            													RT_COMMENT.sql,
-            													RT_STATUS.sql,
-            													RT_PHASE.sql,
-            													RT_PHASE_AVAIL_STATUS.sql,
-            													RT_PHASE_NEXT_PHASE.sql,
-            													RT_PHASE_APRVL_TYPE.sql,
-            													RT_UNIQUE_KEY.sql
+            													RT_RELEASE_MILESTONE.sql,
+            													RT_WORKFLOW_STATUS.sql,
+            													RT_WORKFLOW_PHASE.sql,
+            													RT_WORKFLOW_PHASE_AVAIL_STATUS.sql,
+            													RT_WORKFLOW_PHASE_NEXT_PHASE.sql,
+            													RT_WORKFLOW_PHASE_APRVL_TYPE.sql,
+            													RT_UNIQUE_KEY.sql,
+            													RT_IDEA.sql,
+            													RT_TEAM_IMPACT.sql,
+            													RT_WORKFLOW_PHASE_COMPLETION_STAUTUS.sql,
+            													RT_COMMON_COMMENT.sql,
+            													RT_WORKFLOW_COMMENT.sql
             													" />
             
             <property name="hibernate.connection.CharSet" value="utf-8" />

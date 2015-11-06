@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fdc.boarding.core.persistence.GenericDao;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
-import com.fdc.boarding.releasetracker.domain.workflow.IStatusPersistenceGateway;
+import com.fdc.boarding.releasetracker.gateway.workflow.IStatusPersistenceGateway;
 
 public class StatusPersistenceGateway extends GenericDao<StatusEntity, Long> implements IStatusPersistenceGateway{
 

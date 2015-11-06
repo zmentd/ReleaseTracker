@@ -35,7 +35,7 @@ import com.fdc.boarding.releasetracker.domain.workflow.IStatusCompletion;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
 
 @Entity
-@Table( name = "RT_PHASE_COMPLETION",
+@Table( name = "RT_WORKFLOW_PHASE_COMPLETION",
 		indexes = {
 		@Index( columnList="ENTRY_DATE", unique = false ),
 		@Index( columnList="WORKFLOW_ID", unique = false ),
@@ -163,6 +163,11 @@ public class PhaseCompletionEntity extends AbstractAuditedEntity<Long> implement
 	}
 
 	@Override
+	public int getPhaseIndex() {
+		return phaseIndex;
+	}
+
+	@Override
 	public List<IStatusCompletion> getStatusCompletions() {
 		return statusCompletions;
 	}
@@ -231,6 +236,11 @@ public class PhaseCompletionEntity extends AbstractAuditedEntity<Long> implement
 	@Override
 	public void setPhaseApprovals(Set<IPhaseApproval> phaseApprovals) {
 		this.phaseApprovals = phaseApprovals;
+	}
+
+	@Override
+	public void setPhaseIndex(int phaseIndex) {
+		this.phaseIndex = phaseIndex;
 	}
 
 	@Override

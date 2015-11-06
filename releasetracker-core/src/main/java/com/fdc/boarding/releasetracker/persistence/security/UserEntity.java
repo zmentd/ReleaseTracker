@@ -24,7 +24,7 @@ import com.fdc.boarding.releasetracker.domain.security.IUserPreferences;
 
 @Entity
 @Cacheable( true )
-@Table( name = "RT_USER",
+@Table( name = "RT_SECURITY_USER",
 		indexes = {
 		@Index( columnList="FIRST_NAME", unique = false ),
 		@Index( columnList="EMAIL", unique = true )

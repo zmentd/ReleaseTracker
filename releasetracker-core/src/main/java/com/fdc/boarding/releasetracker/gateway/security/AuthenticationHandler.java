@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import com.fdc.boarding.core.transaction.annotation.Transactional;
-import com.fdc.boarding.releasetracker.domain.security.IUserPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.security.Identity;
 import com.fdc.boarding.releasetracker.gateway.security.exception.AuthenticationException;
 import com.fdc.boarding.releasetracker.persistence.security.AuthenticatedUserEntity;

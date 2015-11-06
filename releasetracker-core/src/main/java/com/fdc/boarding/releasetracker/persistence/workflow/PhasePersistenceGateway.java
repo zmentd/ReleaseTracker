@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fdc.boarding.core.persistence.GenericDao;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
-import com.fdc.boarding.releasetracker.domain.workflow.IPhasePersistenceGateway;
+import com.fdc.boarding.releasetracker.gateway.workflow.IPhasePersistenceGateway;
 
 public class PhasePersistenceGateway extends GenericDao<PhaseEntity, Long> implements IPhasePersistenceGateway{
 	private static final long 			serialVersionUID = 1L;

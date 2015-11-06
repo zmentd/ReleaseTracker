@@ -3,11 +3,8 @@ package com.fdc.boarding.releasetracker.domain.team;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
 import com.fdc.boarding.core.query.EntityQuery;
 import com.fdc.boarding.core.query.EntityQueryAp;
@@ -16,9 +13,10 @@ import com.fdc.boarding.core.service.EntityPersistenceService;
 import com.fdc.boarding.core.service.EntityReaderSvc;
 import com.fdc.boarding.core.transaction.annotation.Transactional;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
-import com.fdc.boarding.releasetracker.domain.ValidationFailure;
+import com.fdc.boarding.releasetracker.domain.AbstractUseCase;
+import com.fdc.boarding.releasetracker.domain.team.dto.TeamDto;
 
-public class TeamUC implements Serializable {
+public class TeamUC extends AbstractUseCase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
@@ -26,9 +24,6 @@ public class TeamUC implements Serializable {
 	
 	@Inject
 	private EntityReaderSvc				reader;
-	
-	@Inject
-	private Validator					validator;
 
 	@Inject 
 	private EntityQuery					query;
@@ -44,10 +39,12 @@ public class TeamUC implements Serializable {
 			team		= CDIContext.getInstance().getBean( ITeam.class );
 			team.setName( request.getTeam().getName() );
 			team.setObs( request.getTeam().getObs() );
-			service.insert( team );
-			response.setTeam( TeamDto.from( team ) );
-			response.setSuccess( true );
-			response.setMessage( "Team added." );
+			if( validate( team, response ) ){
+				service.insert( team );
+				response.setTeam( TeamDto.from( team ) );
+				response.setSuccess( true );
+				response.setMessage( "Team added." );
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setSuccess( false );
@@ -137,8 +134,6 @@ public class TeamUC implements Serializable {
 	{
 		TeamResponse					response;
 		ITeam							team;
-		ValidationFailure								vf;
-		Set<ConstraintViolation<ITeam>>	violations;
 		
 		response	= new TeamResponse();
 		try {
@@ -155,19 +150,7 @@ public class TeamUC implements Serializable {
 				else{
 					team.setName( request.getTeam().getName() );
 					team.setObs( request.getTeam().getObs() );
-					violations	= validator.validate( team );
-					if( !violations.isEmpty() ){
-						for( ConstraintViolation<?> cv : violations ){
-							vf	= new ValidationFailure();	
-							vf.setMessage( cv.getMessage() );
-							vf.setPath( cv.getPropertyPath().toString() );
-							vf.setValidator( cv.getConstraintDescriptor().getAnnotation().annotationType().getName() );
-							response.addValidationFailure( vf );
-						}
-						response.setSuccess( false );
-						response.setMessage( "Validation failed." );
-					}
-					else{
+					if( validate( team, response ) ){
 						service.update( team );
 						response.setTeam( TeamDto.from( team ) );
 						response.setSuccess( true );

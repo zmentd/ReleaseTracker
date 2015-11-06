@@ -43,6 +43,7 @@ var app = angular
 
         $scope.onSelect = function( $item, $model, $label ){
            var user = $scope.data.selectedUser; 
+           alert("I am an alert box!");
         }
 
         $scope.locatUsers = function( viewValue ){

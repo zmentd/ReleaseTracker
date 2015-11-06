@@ -22,15 +22,16 @@ import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.idea.DaysToTargetStatus;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
-import com.fdc.boarding.releasetracker.domain.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaAp;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaPartialSearchResponse;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaSearchResponse;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaStatusResponse;
+import com.fdc.boarding.releasetracker.domain.release.IMilestone;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
 import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 import com.fdc.boarding.releasetracker.gateway.excel.ReaderResponse;
+import com.fdc.boarding.releasetracker.gateway.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.release.MilestoneEntity;
 
 public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> implements IIdeaPersistenceGateway{
@@ -261,7 +262,7 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 		jql 		= "from MilestoneEntity ";
 		query		= entityManager.createQuery( jql );
 		entities	= query.getResultList();
-		for( MilestoneEntity e : entities ){
+		for( IMilestone e : entities ){
 			results	= new Object[3];
 			results[0]	= e.getId();
 			results[1]	= e.getName();

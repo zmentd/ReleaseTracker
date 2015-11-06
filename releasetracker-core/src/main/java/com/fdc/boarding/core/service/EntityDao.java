@@ -137,7 +137,8 @@ public class EntityDao extends AbstractPersistentSvc implements IEntityDao
      * @return
      *      The entity object if found, null if not found.
      */
-    public <T extends IEntity<P>, P extends Serializable> T findByKey(
+    @SuppressWarnings("unchecked")
+	public <T extends IEntity<P>, P extends Serializable> T findByKey(
       Class<T>                        	clazz
     , P                               	key
     , boolean                           includeInactive
@@ -147,6 +148,7 @@ public class EntityDao extends AbstractPersistentSvc implements IEntityDao
     {
         Class<T>                        entityClass;
         T                          		entity;
+        Query                           query;
         
         try
         {
@@ -157,7 +159,9 @@ public class EntityDao extends AbstractPersistentSvc implements IEntityDao
             //
             // Find the entity.
             //
-            entity      = getEntityManager().find( entityClass, key );
+            query       = getEntityManager().createQuery( "from " + entityClass.getName() + " entity where entity.id = :propValue" );
+            query.setParameter( "propValue", key );
+            entity      = ( T )query.getSingleResult();
             if( entity != null )
             {
                 //

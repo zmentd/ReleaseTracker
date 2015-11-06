@@ -21,7 +21,7 @@ import com.fdc.boarding.releasetracker.domain.security.IAuthenticatedUser;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 
 @Entity
-@Table( name = "RT_AUTH_USER",
+@Table( name = "RT_SECURITY_AUTH_USER",
 		indexes = {
 		@Index( columnList="USER_ID", unique = true )
 		},

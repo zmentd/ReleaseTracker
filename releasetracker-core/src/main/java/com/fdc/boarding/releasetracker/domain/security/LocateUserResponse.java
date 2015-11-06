@@ -3,6 +3,7 @@ package com.fdc.boarding.releasetracker.domain.security;
 import java.util.List;
 
 import com.fdc.boarding.releasetracker.domain.AbstractResponse;
+import com.fdc.boarding.releasetracker.domain.security.dto.UserDto;
 
 public class LocateUserResponse extends AbstractResponse {
 	private static final long 			serialVersionUID 	= 1L;

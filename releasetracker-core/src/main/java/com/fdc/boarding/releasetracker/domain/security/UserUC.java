@@ -17,6 +17,8 @@ import com.fdc.boarding.core.service.EntityReaderSvc;
 import com.fdc.boarding.core.transaction.annotation.Transactional;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.domain.ValidationFailure;
+import com.fdc.boarding.releasetracker.domain.security.dto.UserDto;
+import com.fdc.boarding.releasetracker.gateway.security.IUserPersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.security.AuthenticatedUserEntity;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
 import com.fdc.boarding.releasetracker.security.Credentials;

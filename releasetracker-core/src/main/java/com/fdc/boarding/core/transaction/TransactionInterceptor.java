@@ -40,10 +40,13 @@ public class TransactionInterceptor {
 	   em = entityManagerStore.createAndRegister();
 	   try 
 	   {
-		   em.getTransaction().begin();
+		   if( !em.getTransaction().isActive() ){
+			   em.getTransaction().begin();
+		   }
 		   result = invocationContext.proceed();
-		   em.getTransaction().commit();
-
+		   if( em.getTransaction().isActive() ){
+			   em.getTransaction().commit();
+		   }
 	   } 
 	   catch( Exception e ) 
 	   {
@@ -66,7 +69,9 @@ public class TransactionInterceptor {
 		   if( em != null ) 
 		   {
 			   entityManagerStore.unregister( em );
-			   em.close();
+			   if( em.isOpen() ){
+				   em.close();
+			   }
 		   }
 	   }
 

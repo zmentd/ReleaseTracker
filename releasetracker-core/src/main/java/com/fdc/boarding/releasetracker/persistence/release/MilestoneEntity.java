@@ -25,7 +25,7 @@ import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 
 @Entity
 @Cacheable( true )
-@Table( name = "RT_MILESTONE",
+@Table( name = "RT_RELEASE_MILESTONE",
 		indexes = {
 		@Index( columnList="NAME", unique = false )
 		}
@@ -101,6 +101,11 @@ public class MilestoneEntity extends AbstractAuditedEntity<Long> implements Seri
 	}
 
 	@Override
+	public int getIndex() {
+		return index;
+	}
+
+	@Override
 	public LocalDate getLargeDueDate() {
 		return largeDueDate;
 	}
@@ -149,17 +154,22 @@ public class MilestoneEntity extends AbstractAuditedEntity<Long> implements Seri
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@Override
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
 	@Override
 	public void setLargeDueDate(LocalDate largeDueDate) {
 		this.largeDueDate = largeDueDate;
 	}
-	
+
 	@Override
 	public void setMediumDueDate(LocalDate mediumDueDate) {
 		this.mediumDueDate = mediumDueDate;
 	}
-	
+
 	@Override
 	public void setName(String name) {
 		this.name = name;

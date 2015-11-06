@@ -43,7 +43,7 @@
 							<td>
 								<div>
 								<!-- onaftersave="setSelectedUser( data.selectedUser, 'businessOwner', response.team )"  -->
-								  <a href="#" editable-text="response.team.developmentManager.fullName" e-typeahead="user.fullName as user.fullName for user in locatUsers( $viewValue )" ng-model="data.selectedUser" typeahead-on-select="onSelect($item, $model, $label)" >
+								  <a href="#" editable-text="response.team.developmentManager.fullName" e-typeahead="user.fullName as user.fullName for user in locatUsers( $viewValue )" ng-model="data.selectedUser" typeahead-on-select="onSelect($item, $model, $label)" typeahead-select-on-blur="true" >
 								    {{ response.team.developmentManager.fullName || 'empty' }}
 								  </a>
 								</div>

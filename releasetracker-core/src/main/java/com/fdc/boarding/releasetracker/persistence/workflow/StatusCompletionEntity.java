@@ -23,7 +23,7 @@ import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatusCompletion;
 
 @Entity
-@Table( name = "RT_STATUS_COMPLETION",
+@Table( name = "RT_WORKFLOW_STATUS_COMPLETION",
 		indexes = {
 		@Index( columnList="ENTRY_DATE", unique = false ),
 		@Index( columnList="PHASE_CMPLT_ID", unique = false )

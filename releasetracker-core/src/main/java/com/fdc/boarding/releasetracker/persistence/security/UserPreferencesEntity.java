@@ -14,7 +14,7 @@ import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
 import com.fdc.boarding.releasetracker.domain.security.IUserPreferences;
 
 @Entity
-@Table( name = "RT_USER_PREFS" )
+@Table( name = "RT_SECURITY_USER_PREFERENCE" )
 public class UserPreferencesEntity extends AbstractAuditedEntity<Long> implements Serializable, IUserPreferences{
 	private static final long serialVersionUID = 1L;
 

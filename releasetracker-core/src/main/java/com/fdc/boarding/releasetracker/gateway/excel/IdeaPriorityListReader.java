@@ -30,9 +30,7 @@ import com.fdc.boarding.releasetracker.domain.common.CommentType;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
-import com.fdc.boarding.releasetracker.domain.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
-import com.fdc.boarding.releasetracker.domain.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.release.MilestoneByRom;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
@@ -46,6 +44,8 @@ import com.fdc.boarding.releasetracker.domain.workflow.ITeamImpactWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 import com.fdc.boarding.releasetracker.domain.workflow.StatusType;
+import com.fdc.boarding.releasetracker.gateway.idea.IIdeaPersistenceGateway;
+import com.fdc.boarding.releasetracker.gateway.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.common.CommentEntity;
 import com.fdc.boarding.releasetracker.persistence.idea.IdeaEntity;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
@@ -71,6 +71,7 @@ public class IdeaPriorityListReader {
 
     private int								startRow	= 1;
     private int								endRow		= -1;
+    private String							ideaNumber;
 	private Map<String, ITeam>				teams		= new HashMap<>();
 	private Map<String, IPhase>				phases		= new HashMap<>();
 	private Map<String, IStatus>			statuses	= new HashMap<>();
@@ -684,6 +685,7 @@ public class IdeaPriorityListReader {
 		int								ccount		= 0;
 		int								ctotal		= 0;
 		IIdeaWorkflow					workflow;
+		boolean							foundParent	= false;
 		
 		try {
 			readConfigData();
@@ -707,7 +709,21 @@ public class IdeaPriorityListReader {
 
 				cell	= row.getCell( 9 );
 				con		= cell.getStringCellValue().trim();
-				
+				if( ideaNumber != null ){
+					if( ideaNumber.equals( con ) ){
+						if( !foundParent ){
+							foundParent = true;
+						}
+					}
+					else{
+						if( foundParent ){
+							break;
+						}
+						else{
+							continue;
+						}
+					}
+				}				
 				cell	= row.getCell( 1 );
 				rel		= cell.getStringCellValue().trim();
 
@@ -778,6 +794,10 @@ public class IdeaPriorityListReader {
 		return response;
 	}
 	
+	public void setIdeaNumber(String ideaNumber) {
+		this.ideaNumber = ideaNumber;
+	}
+
 	private void readParentIdea( ReaderResponse response, Row row, IIdea idea ){
 		Cell 							cell;
 		String							value;

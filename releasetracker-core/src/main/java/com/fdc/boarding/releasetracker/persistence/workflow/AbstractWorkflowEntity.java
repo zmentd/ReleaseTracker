@@ -43,7 +43,7 @@ import com.fdc.boarding.releasetracker.persistence.release.ReleaseEntryEntity;
 
 @Audited
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance( strategy=InheritanceType.SINGLE_TABLE )
 @DiscriminatorColumn( name="DISC",
     				  discriminatorType=DiscriminatorType.STRING
 )
@@ -90,7 +90,7 @@ public abstract class AbstractWorkflowEntity extends AbstractAuditedEntity<Long>
 	
 	@Audited( targetAuditMode = RelationTargetAuditMode.NOT_AUDITED )
 	@ManyToOne( targetEntity = PhaseCompletionEntity.class, fetch = FetchType.LAZY, cascade={CascadeType.ALL} )
-	@JoinColumn( name = "CUR_PHASE_CMPLT_ID" )
+	@JoinColumn( name = "CUR_PHASE_CMPLT_ID", nullable = true )
 	private IPhaseCompletion			currentPhaseCompletion;
 	
 	@Audited( targetAuditMode = RelationTargetAuditMode.NOT_AUDITED )
@@ -107,7 +107,7 @@ public abstract class AbstractWorkflowEntity extends AbstractAuditedEntity<Long>
 	@OrderBy( "commentDate DESC")
 	@ManyToMany( targetEntity=CommentEntity.class, cascade={CascadeType.ALL} )
     @JoinTable(
-        name="RT_WORKFLOW_COMMENTS",
+        name="RT_WORKFLOW_COMMENT",
         joinColumns=@JoinColumn(name="WORKFLOW_ID"),
         inverseJoinColumns=@JoinColumn(name="COMMENT_ID")
     )

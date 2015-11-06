@@ -1,6 +1,7 @@
 package com.fdc.boarding.releasetracker.domain.team;
 
 import com.fdc.boarding.releasetracker.domain.AbstractResponse;
+import com.fdc.boarding.releasetracker.domain.team.dto.TeamDto;
 
 public class TeamResponse extends AbstractResponse{
 	private static final long 			serialVersionUID	= 1L;

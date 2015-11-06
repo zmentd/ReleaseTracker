@@ -22,7 +22,6 @@ import com.fdc.boarding.core.query.Restriction;
 import com.fdc.boarding.core.query.exception.QueryException;
 import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
-import com.fdc.boarding.releasetracker.domain.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaAp;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaGroupBy;
 import com.fdc.boarding.releasetracker.domain.idea.IdeaPartialSearchResponse;
@@ -32,6 +31,7 @@ import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
+import com.fdc.boarding.releasetracker.gateway.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
 
 public class TestIdeaGateway extends AbstractPersistenceTest{

@@ -23,7 +23,7 @@ import com.fdc.boarding.releasetracker.domain.workflow.StatusType;
 
 @Entity
 @Cacheable( true )
-@Table( name = "RT_STATUS",
+@Table( name = "RT_WORKFLOW_STATUS",
 		indexes = {
 		@Index( columnList="NAME", unique = true )
 		},
