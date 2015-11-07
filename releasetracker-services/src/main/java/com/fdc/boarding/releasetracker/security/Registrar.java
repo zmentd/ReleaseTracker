@@ -1,7 +1,7 @@
 package com.fdc.boarding.releasetracker.security;
 
-import com.fdc.boarding.releasetracker.domain.security.RegistrationRequest;
-import com.fdc.boarding.releasetracker.domain.security.RegistrationResponse;
+import com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest;
+import com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse;
 
 import fdinet.core.TypedResponseHandler;
 import fdinet.core.annotations.Description;

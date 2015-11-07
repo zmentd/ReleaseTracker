@@ -31,7 +31,7 @@ import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
 import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
-import com.fdc.boarding.releasetracker.domain.release.MilestoneByRom;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
@@ -42,7 +42,6 @@ import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatusCompletion;
 import com.fdc.boarding.releasetracker.domain.workflow.ITeamImpactWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 import com.fdc.boarding.releasetracker.domain.workflow.StatusType;
 import com.fdc.boarding.releasetracker.gateway.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.gateway.release.IReleasePersistenceGateway;
@@ -54,6 +53,7 @@ import com.fdc.boarding.releasetracker.persistence.workflow.IdeaWorkflowEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.PhaseCompletionEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.StatusCompletionEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.TeamImpactWorkflowEntity;
+import com.fdc.boarding.releasetracker.usecase.release.MilestoneByRom;
 
 public class IdeaPriorityListReader {
 	private static Pattern 				p1 			= Pattern.compile( "^(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)[ :-](.*)" );
@@ -426,7 +426,7 @@ public class IdeaPriorityListReader {
 			sc.setDaysInStatus( null );
 			if( current.getStatus().getType().equals( StatusType.OnHold ) || 
 					current.getStatus().getType().equals( StatusType.Cancelled ) ){
-				if( !phase.getType().equals( PhaseType.Parked ) && !phase.getType().equals( PhaseType.Done ) ){
+				if( !phase.getType().equals( MilestoneType.Parked ) && !phase.getType().equals( MilestoneType.Done ) ){
 					sc.setStatus( statuses.get( "In Queue" ) );
 					sc.setEntryDate( entryDate );
 				}

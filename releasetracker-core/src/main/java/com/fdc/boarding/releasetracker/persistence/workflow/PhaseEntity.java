@@ -25,10 +25,10 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhase;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalType;
 import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 
 @Entity
 @Cacheable( true )
@@ -68,10 +68,10 @@ public class PhaseEntity extends AbstractAuditedEntity<Long> implements Serializ
 	@Column( name = "TYPE" )
 	@Type( type 		= "com.fdc.boarding.core.persistence.type.EnumType",
 	   parameters	= {
-		@Parameter( name = "enum_type", value = "com.fdc.boarding.releasetracker.domain.workflow.PhaseType" )
+		@Parameter( name = "enum_type", value = "com.fdc.boarding.releasetracker.domain.release.MilestoneType" )
 	}
 	)
-	private PhaseType					type;
+	private MilestoneType					type;
 	
 	@ManyToMany( targetEntity=StatusEntity.class, cascade={CascadeType.PERSIST, CascadeType.MERGE} )
     @JoinTable(
@@ -151,7 +151,7 @@ public class PhaseEntity extends AbstractAuditedEntity<Long> implements Serializ
 	}
 
 	@Override
-	public PhaseType getType() {
+	public MilestoneType getType() {
 		return type;
 	}
 
@@ -204,7 +204,7 @@ public class PhaseEntity extends AbstractAuditedEntity<Long> implements Serializ
 	}
 
 	@Override
-	public void setType(PhaseType type) {
+	public void setType(MilestoneType type) {
 		this.type = type;
 	}
 	

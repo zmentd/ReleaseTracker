@@ -21,8 +21,8 @@ public final class RegistrarProxy extends FDiNetServiceProxyBase implements Regi
 	}
 
 	@Override
-	public final void register(com.fdc.boarding.releasetracker.domain.security.RegistrationRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.RegistrationResponse> handler) {
-		invokeRR("register", request, 10000, handler, com.fdc.boarding.releasetracker.domain.security.RegistrationResponse.class, false);
+	public final void register(com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse> handler) {
+		invokeRR("register", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse.class, false);
 	}
 	
 }

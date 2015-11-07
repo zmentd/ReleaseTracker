@@ -5,5 +5,6 @@
        bean-discovery-mode="all">
    <interceptors>
       <class>com.fdc.boarding.core.transaction.TransactionInterceptor</class>
+      <class>com.fdc.boarding.core.intercept.ServiceCallInterceptor</class>
    </interceptors>
 </beans>  

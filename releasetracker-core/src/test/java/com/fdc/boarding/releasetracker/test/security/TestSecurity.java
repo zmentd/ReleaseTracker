@@ -5,12 +5,12 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
-import com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse;
-import com.fdc.boarding.releasetracker.domain.security.RegistrationRequest;
-import com.fdc.boarding.releasetracker.domain.security.RegistrationResponse;
-import com.fdc.boarding.releasetracker.domain.security.UserUC;
 import com.fdc.boarding.releasetracker.security.Credentials;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
+import com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse;
+import com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest;
+import com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse;
+import com.fdc.boarding.releasetracker.usecase.security.UserUC;
 
 public class TestSecurity extends AbstractPersistenceTest{
 

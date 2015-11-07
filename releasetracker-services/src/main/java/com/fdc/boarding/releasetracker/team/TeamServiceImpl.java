@@ -5,12 +5,12 @@ import java.util.Map;
 
 import com.fdc.boarding.core.log.LoggerProxy;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
-import com.fdc.boarding.releasetracker.domain.team.ListTeamResponse;
-import com.fdc.boarding.releasetracker.domain.team.TeamRequest;
-import com.fdc.boarding.releasetracker.domain.team.TeamResponse;
-import com.fdc.boarding.releasetracker.domain.team.TeamUC;
-import com.fdc.boarding.releasetracker.domain.team.TeamsRequest;
 import com.fdc.boarding.releasetracker.registry.annotation.Register;
+import com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse;
+import com.fdc.boarding.releasetracker.usecase.team.TeamRequest;
+import com.fdc.boarding.releasetracker.usecase.team.TeamResponse;
+import com.fdc.boarding.releasetracker.usecase.team.TeamUC;
+import com.fdc.boarding.releasetracker.usecase.team.TeamsRequest;
 
 import fdinet.core.Processor;
 import fdinet.core.TypedResponseHandler;

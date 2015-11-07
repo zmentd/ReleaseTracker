@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaAp;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaPartialSearchResponse;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaSearchResponse;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
 import com.fdc.boarding.releasetracker.gateway.excel.ReaderResponse;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaAp;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaPartialSearchResponse;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaSearchResponse;
 
 public interface IIdeaPersistenceGateway extends Serializable{
 

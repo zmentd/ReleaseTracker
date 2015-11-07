@@ -5,10 +5,10 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
-import com.fdc.boarding.releasetracker.domain.security.LocateUserRequest;
-import com.fdc.boarding.releasetracker.domain.security.LocateUserResponse;
-import com.fdc.boarding.releasetracker.domain.security.UserUC;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
+import com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest;
+import com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse;
+import com.fdc.boarding.releasetracker.usecase.security.UserUC;
 
 public class TestUser extends AbstractPersistenceTest{
     private UserUC								usecase;

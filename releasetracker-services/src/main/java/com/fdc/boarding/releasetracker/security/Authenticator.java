@@ -1,6 +1,6 @@
 package com.fdc.boarding.releasetracker.security;
 
-import com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse;
+import com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse;
 
 import fdinet.core.TypedResponseHandler;
 import fdinet.core.annotations.Description;

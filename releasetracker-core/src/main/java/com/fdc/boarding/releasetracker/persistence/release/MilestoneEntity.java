@@ -21,7 +21,7 @@ import org.joda.time.LocalDate;
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
 import com.fdc.boarding.releasetracker.domain.release.IMilestone;
 import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 
 @Entity
 @Cacheable( true )
@@ -54,13 +54,13 @@ public class MilestoneEntity extends AbstractAuditedEntity<Long> implements Seri
 	@Column( name = "DSC" )
 	private String				description;
 
-	@Column( name = "PHASE_TYPE" )
+	@Column( name = "MILESTONE_TYPE" )
 	@Type( type 		= "com.fdc.boarding.core.persistence.type.EnumType",
 	   parameters	= {
-		@Parameter( name = "enum_type", value = "com.fdc.boarding.releasetracker.domain.workflow.PhaseType" )
+		@Parameter( name = "enum_type", value = "com.fdc.boarding.releasetracker.domain.release.MilestoneType" )
 	}
 	)
-	private PhaseType			phaseType;
+	private MilestoneType		milestoneType;
 
 	@Type( type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
 	@Column( name = "DUE_DATE" )
@@ -121,8 +121,8 @@ public class MilestoneEntity extends AbstractAuditedEntity<Long> implements Seri
 	}
 
 	@Override
-	public PhaseType getPhaseType() {
-		return phaseType;
+	public MilestoneType getMilestoneType() {
+		return milestoneType;
 	}
 
 	@Override
@@ -176,8 +176,8 @@ public class MilestoneEntity extends AbstractAuditedEntity<Long> implements Seri
 	}
 
 	@Override
-	public void setPhaseType(PhaseType phaseType) {
-		this.phaseType = phaseType;
+	public void setMilestoneType(MilestoneType milestoneType) {
+		this.milestoneType = milestoneType;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public interface AuthenticatorDef {
 
     @FDiNetWebInfo(path="/authenticate", maxContentSize=200000, methods={WebDef.WebMethod.POST,})
     @Description("Authenticate the user.")
-	@FDiNetServiceAPI_RR(timeoutMillis=10000, instanceOnly=true, responseType=com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse.class)
-	void authenticate(com.fdc.boarding.releasetracker.security.Credentials request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse> handler);
+	@FDiNetServiceAPI_RR(timeoutMillis=10000, instanceOnly=true, responseType=com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse.class)
+	void authenticate(com.fdc.boarding.releasetracker.security.Credentials request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse> handler);
 
 }

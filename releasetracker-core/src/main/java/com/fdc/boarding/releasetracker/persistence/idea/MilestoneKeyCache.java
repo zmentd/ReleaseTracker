@@ -1,18 +1,18 @@
 package com.fdc.boarding.releasetracker.persistence.idea;
 
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 
 public class MilestoneKeyCache {
 	private Long 						releaseId;
 	private String 						romAbbr;
-	private PhaseType 					phaseType;
+	private MilestoneType 				milestoneType;
 	
 	
-	public MilestoneKeyCache(Long releaseId, String romAbbr, PhaseType phaseType) {
+	public MilestoneKeyCache(Long releaseId, String romAbbr, MilestoneType milestoneType) {
 		super();
-		this.releaseId = releaseId;
-		this.romAbbr = romAbbr;
-		this.phaseType = phaseType;
+		this.releaseId 		= releaseId;
+		this.romAbbr 		= romAbbr;
+		this.milestoneType 	= milestoneType;
 	}
 	
 	@Override
@@ -24,7 +24,7 @@ public class MilestoneKeyCache {
 		if (getClass() != obj.getClass())
 			return false;
 		MilestoneKeyCache other = (MilestoneKeyCache) obj;
-		if (phaseType != other.phaseType)
+		if (milestoneType != other.milestoneType)
 			return false;
 		if (releaseId == null) {
 			if (other.releaseId != null)
@@ -38,8 +38,8 @@ public class MilestoneKeyCache {
 			return false;
 		return true;
 	}
-	public PhaseType getPhaseType() {
-		return phaseType;
+	public MilestoneType getMilestoneType() {
+		return milestoneType;
 	}
 	public Long getReleaseId() {
 		return releaseId;
@@ -52,14 +52,14 @@ public class MilestoneKeyCache {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((phaseType == null) ? 0 : phaseType.hashCode());
+				+ ((milestoneType == null) ? 0 : milestoneType.hashCode());
 		result = prime * result
 				+ ((releaseId == null) ? 0 : releaseId.hashCode());
 		result = prime * result + ((romAbbr == null) ? 0 : romAbbr.hashCode());
 		return result;
 	}
-	public void setPhaseType(PhaseType phaseType) {
-		this.phaseType = phaseType;
+	public void setMilestoneType(MilestoneType milestoneType) {
+		this.milestoneType = milestoneType;
 	}
 	public void setReleaseId(Long releaseId) {
 		this.releaseId = releaseId;

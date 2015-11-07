@@ -22,7 +22,7 @@ public abstract class AuthenticatorService extends FDiNetServiceBase implements 
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				authenticate((com.fdc.boarding.releasetracker.security.Credentials) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse>)r);
+				authenticate((com.fdc.boarding.releasetracker.security.Credentials) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse>)r);
 			}
 		});
 

@@ -2,6 +2,7 @@ package com.fdc.boarding.releasetracker.persistence.workflow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -93,7 +94,7 @@ public class PhaseCompletionEntity extends AbstractAuditedEntity<Long> implement
 	private IWorkflow					workflow;
 	
 	@OneToMany( mappedBy = "phaseCompletion", targetEntity = PhaseApprovalEntity.class )
-	private Set<IPhaseApproval>			phaseApprovals;
+	private Set<IPhaseApproval>			phaseApprovals		= new HashSet<>();
 
 	@NotAudited
 	@OrderBy( "lastModifiedDate DESC")

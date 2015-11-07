@@ -20,19 +20,19 @@ import com.fdc.boarding.core.persistence.GenericDao;
 import com.fdc.boarding.core.service.EntityPersistenceService;
 import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
-import com.fdc.boarding.releasetracker.domain.idea.DaysToTargetStatus;
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaAp;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaPartialSearchResponse;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaSearchResponse;
-import com.fdc.boarding.releasetracker.domain.idea.IdeaStatusResponse;
 import com.fdc.boarding.releasetracker.domain.release.IMilestone;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 import com.fdc.boarding.releasetracker.gateway.excel.ReaderResponse;
 import com.fdc.boarding.releasetracker.gateway.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.release.MilestoneEntity;
+import com.fdc.boarding.releasetracker.usecase.idea.DaysToTargetStatus;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaAp;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaPartialSearchResponse;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaSearchResponse;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaStatusResponse;
 
 public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> implements IIdeaPersistenceGateway{
 	private static final long 			serialVersionUID = 1L;
@@ -195,7 +195,7 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 		jql		= jql + "left outer join fetch entity.originalRequestor as originalRequestor ";
 		jql		= jql + "left outer join fetch workflow.release as release ";
 
-		jql		= jql + "where phase.type  != :phaseType ";
+		jql		= jql + "where phase.type  != :milestoneType ";
 		jql		= jql + "and ( release.releaseDate is null or release.releaseDate  >= current_date ) ";
 		
 		if( ap.getTeam() != null ){
@@ -219,7 +219,7 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 
 		jql			= jql + "order by phaseCompletion.phase.index ";
 		query 		= entityManager.createQuery( jql );
-		query.setParameter( "phaseType", PhaseType.Done );
+		query.setParameter( "milestoneType", MilestoneType.Done );
 		list 		= query.getResultList();
 		
 		return ( List<IIdea> )list;
@@ -268,21 +268,21 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 			results[1]	= e.getName();
 		
 			results[2]	= e.getSmallDueDate();
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "S", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "S", e.getMilestoneType() );
 			milestoneCache.put( key, results );
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XS", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XS", e.getMilestoneType() );
 			milestoneCache.put( key, results );
 			results[2]	= e.getMediumDueDate();
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "M", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "M", e.getMilestoneType() );
 			milestoneCache.put( key, results );
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "L", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "L", e.getMilestoneType() );
 			milestoneCache.put( key, results );
 			results[2]	= e.getLargeDueDate();
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XL", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XL", e.getMilestoneType() );
 			milestoneCache.put( key, results );
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XXL", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XXL", e.getMilestoneType() );
 			milestoneCache.put( key, results );
-			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XXXL", e.getPhaseType() );
+			key	= new MilestoneKeyCache( e.getReleaseEntry().getId(), "XXXL", e.getMilestoneType() );
 			milestoneCache.put( key, results );
 		}
 	}
@@ -306,10 +306,10 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 		return notFiltered;
 	}
 
-	private Object[] queryStatusInfo( Long releaseId, String romAbbr, PhaseType phaseType ){
+	private Object[] queryStatusInfo( Long releaseId, String romAbbr, MilestoneType milestoneType ){
 		MilestoneKeyCache				key;
 		
-		key	= new MilestoneKeyCache( releaseId, romAbbr, phaseType );
+		key	= new MilestoneKeyCache( releaseId, romAbbr, milestoneType );
 		
 		return milestoneCache.get( key );
 	}

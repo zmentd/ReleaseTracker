@@ -29,11 +29,11 @@ import org.joda.time.LocalDate;
 
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApproval;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseApprovalType;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseCompletion;
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
 import com.fdc.boarding.releasetracker.persistence.common.CommentEntity;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
 
@@ -67,10 +67,10 @@ public class PhaseApprovalEntity extends AbstractAuditedEntity<Long> implements 
 	@Column( name = "PHASE_TYPE" )
 	@Type( type 		= "com.fdc.boarding.core.persistence.type.EnumType",
 	   parameters	= {
-		@Parameter( name = "enum_type", value = "com.fdc.boarding.releasetracker.domain.workflow.PhaseType" )
+		@Parameter( name = "enum_type", value = "com.fdc.boarding.releasetracker.domain.release.MilestoneType" )
 	}
 	)
-	private PhaseType					phaseType;
+	private MilestoneType				milestoneType;
 
 	@Column( name = "APRVL_END_DATE" )
 	@Type( type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate" )
@@ -159,8 +159,8 @@ public class PhaseApprovalEntity extends AbstractAuditedEntity<Long> implements 
 	}
 
 	@Override
-	public PhaseType getPhaseType() {
-		return phaseType;
+	public MilestoneType getMilestoneType() {
+		return milestoneType;
 	}
 
 	@Override
@@ -225,8 +225,8 @@ public class PhaseApprovalEntity extends AbstractAuditedEntity<Long> implements 
 	}
 
 	@Override
-	public void setPhaseType(PhaseType phaseType) {
-		this.phaseType = phaseType;
+	public void setMilestoneType(MilestoneType milestoneType) {
+		this.milestoneType = milestoneType;
 	}
 
 	@Override

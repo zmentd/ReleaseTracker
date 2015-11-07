@@ -12,7 +12,7 @@ public interface UserDef {
 
     @FDiNetWebInfo(path="/locateUsers", maxContentSize=200000, methods={WebDef.WebMethod.POST,})
     @Description("locate users by prefix")
-	@FDiNetServiceAPI_RR(timeoutMillis=10000, instanceOnly=true, responseType=com.fdc.boarding.releasetracker.domain.security.LocateUserResponse.class)
-	void locateUsers(com.fdc.boarding.releasetracker.domain.security.LocateUserRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.LocateUserResponse> handler);
+	@FDiNetServiceAPI_RR(timeoutMillis=10000, instanceOnly=true, responseType=com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse.class)
+	void locateUsers(com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse> handler);
 
 }

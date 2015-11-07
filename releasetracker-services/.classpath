@@ -41,7 +41,7 @@
 	<classpathentry kind="lib" path="lib-10/fdinet-web-1.1.10-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-web-1.1.9-sources.jar"/>
 	<classpathentry kind="lib" path="lib-10/fdinet-webspheremq-1.1.10-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib-10/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib-10/validation-api-1.1.0.Final.jar" sourcepath="C:/Users/tzman/.m2/repository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/releasetracker-core"/>
 	<classpathentry kind="lib" path="lib-10/activemq-broker-5.11.1.jar"/>
 	<classpathentry kind="lib" path="lib-10/activemq-client-5.11.1.jar"/>

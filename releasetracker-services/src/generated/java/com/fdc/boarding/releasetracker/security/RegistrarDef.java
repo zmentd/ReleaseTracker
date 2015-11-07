@@ -12,7 +12,7 @@ public interface RegistrarDef {
 
     @FDiNetWebInfo(path="/register", maxContentSize=200000, methods={WebDef.WebMethod.POST,})
     @Description("Register a user.")
-	@FDiNetServiceAPI_RR(timeoutMillis=10000, instanceOnly=true, responseType=com.fdc.boarding.releasetracker.domain.security.RegistrationResponse.class)
-	void register(com.fdc.boarding.releasetracker.domain.security.RegistrationRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.RegistrationResponse> handler);
+	@FDiNetServiceAPI_RR(timeoutMillis=10000, instanceOnly=true, responseType=com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse.class)
+	void register(com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse> handler);
 
 }

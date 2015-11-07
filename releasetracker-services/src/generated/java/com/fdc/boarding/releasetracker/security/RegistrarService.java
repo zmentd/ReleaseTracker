@@ -18,11 +18,11 @@ public abstract class RegistrarService extends FDiNetServiceBase implements Regi
 
 	public RegistrarService(String serviceName, Processor processor) {
 		super(serviceName, processor);
-		handlers.put("register",new ServiceApiHandler<com.fdc.boarding.releasetracker.domain.security.RegistrationRequest>("register", com.fdc.boarding.releasetracker.domain.security.RegistrationRequest.class) {
+		handlers.put("register",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest>("register", com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				register((com.fdc.boarding.releasetracker.domain.security.RegistrationRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.RegistrationResponse>)r);
+				register((com.fdc.boarding.releasetracker.usecase.security.RegistrationRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.RegistrationResponse>)r);
 			}
 		});
 

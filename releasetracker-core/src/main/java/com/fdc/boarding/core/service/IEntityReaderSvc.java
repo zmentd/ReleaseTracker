@@ -22,7 +22,18 @@ public interface IEntityReaderSvc
     , P                               	key
 	, String...							initialize
     );
-    
+	   
+	 /**
+	  * @param clazz
+	  * @param key
+	  * @return
+	  */
+	 public <T extends IEntity<P>, P extends Serializable> T findByKeyWithAssertion(
+	   Class<T>                        	clazz
+	 , P                               	key
+	 , String...						initialize
+	 );
+   
     /**
      *  Function for fetching entity objects by a natural key.
      *  Note that because we do not have a generic entity object factory, we cannot factory-create
@@ -43,6 +54,32 @@ public interface IEntityReaderSvc
      *      The entity object if found, null if not found.
      */
     public <T extends IEntity<P>, P extends Serializable> T findByNaturalKey(
+      Class<T>                          clazz
+    , String                            name
+    , Object                            value
+    , String...							initialize
+    );
+    
+    /**
+     *  Function for fetching entity objects by a natural key.
+     *  Note that because we do not have a generic entity object factory, we cannot factory-create
+     *  the return value; if this is used to fetch a member of a base class, the result will be
+     *  of the base class, not any derived class.
+     *  
+     * @param <T>
+     *      The business object class
+     * @param <P>
+     *      The key class
+     * @param clazz
+     *      The business class object
+     * @param key
+     *      The key
+     * @param em
+     *      An entityManager
+     * @return
+     *      The entity object if found, null if not found.
+     */
+    public <T extends IEntity<P>, P extends Serializable> T findByNaturalKeyWithAssertion(
       Class<T>                          clazz
     , String                            name
     , Object                            value

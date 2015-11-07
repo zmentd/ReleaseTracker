@@ -12,9 +12,9 @@ import org.joda.time.LocalDate;
 import com.fdc.boarding.core.persistence.GenericDao;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
 import com.fdc.boarding.releasetracker.domain.release.IReleaseEntry;
-import com.fdc.boarding.releasetracker.domain.release.MilestoneByRom;
-import com.fdc.boarding.releasetracker.domain.workflow.PhaseType;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 import com.fdc.boarding.releasetracker.gateway.release.IReleasePersistenceGateway;
+import com.fdc.boarding.releasetracker.usecase.release.MilestoneByRom;
 
 public class ReleasePersistenceGateway extends GenericDao<ReleaseEntryEntity, Long> implements IReleasePersistenceGateway{
 
@@ -84,7 +84,7 @@ public class ReleasePersistenceGateway extends GenericDao<ReleaseEntryEntity, Lo
 	}
 	
 	@Override
-	public MilestoneByRom findMilestoneByTargetDate( LocalDate date, Rom rom, PhaseType phaseType ){
+	public MilestoneByRom findMilestoneByTargetDate( LocalDate date, Rom rom, MilestoneType milestoneType ){
 		Query 							query;
 		String							jql;
 		Object[]						results		= null;
@@ -104,7 +104,7 @@ public class ReleasePersistenceGateway extends GenericDao<ReleaseEntryEntity, Lo
 		
 		jql = jql + "where YEAR( milestone.releaseEntry.releaseDate ) = :releaseYear ";
 		jql = jql + " and MONTH( milestone.releaseEntry.releaseDate ) = :releaseMonth";
-		jql = jql + " and milestone.phaseType = :phaseType ";
+		jql = jql + " and milestone.milestoneType = :milestoneType ";
 		if( "XS".equals( rom.value() ) || "S".equals( rom.value() ) ){
 			jql = jql + "and milestone.smallDueDate is not null ";
 		}
@@ -118,7 +118,7 @@ public class ReleasePersistenceGateway extends GenericDao<ReleaseEntryEntity, Lo
 		
 		
 		query	= entityManager.createQuery( jql );
-		query.setParameter( "phaseType", phaseType );
+		query.setParameter( "milestoneType", milestoneType );
 		query.setParameter( "releaseYear", date.year().get() );
 		query.setParameter( "releaseMonth", date.monthOfYear().get() );
 
@@ -132,10 +132,10 @@ public class ReleasePersistenceGateway extends GenericDao<ReleaseEntryEntity, Lo
 			milestone.setReleaseEntry( ( IReleaseEntry )results[4] );
 			milestone.setDueDate( ( LocalDate )results[5] );
 			milestone.setRom( rom );
-			milestone.setPhaseType( phaseType );
+			milestone.setMilestoneType( milestoneType );
 			
 		} catch( NoResultException e ) {
-			System.out.println( "No Milestone found for phase type " + phaseType.display() );
+			System.out.println( "No Milestone found for milestone type " + milestoneType.display() );
 		}
 		
 		

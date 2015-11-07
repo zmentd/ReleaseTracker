@@ -1,9 +1,9 @@
 package com.fdc.boarding.releasetracker.team;
 
-import com.fdc.boarding.releasetracker.domain.team.ListTeamResponse;
-import com.fdc.boarding.releasetracker.domain.team.TeamRequest;
-import com.fdc.boarding.releasetracker.domain.team.TeamResponse;
-import com.fdc.boarding.releasetracker.domain.team.TeamsRequest;
+import com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse;
+import com.fdc.boarding.releasetracker.usecase.team.TeamRequest;
+import com.fdc.boarding.releasetracker.usecase.team.TeamResponse;
+import com.fdc.boarding.releasetracker.usecase.team.TeamsRequest;
 
 import fdinet.core.TypedResponseHandler;
 import fdinet.core.annotations.Description;

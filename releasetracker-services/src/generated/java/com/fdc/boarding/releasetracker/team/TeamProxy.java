@@ -21,23 +21,23 @@ public final class TeamProxy extends FDiNetServiceProxyBase implements TeamDef {
 	}
 
 	@Override
-	public final void removeTeam(com.fdc.boarding.releasetracker.domain.team.TeamRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.TeamResponse> handler) {
-		invokeRR("removeTeam", request, 10000, handler, com.fdc.boarding.releasetracker.domain.team.TeamResponse.class, false);
+	public final void removeTeam(com.fdc.boarding.releasetracker.usecase.team.TeamRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse> handler) {
+		invokeRR("removeTeam", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.team.TeamResponse.class, false);
 	}
 	
 	@Override
-	public final void updateTeam(com.fdc.boarding.releasetracker.domain.team.TeamRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.TeamResponse> handler) {
-		invokeRR("updateTeam", request, 10000, handler, com.fdc.boarding.releasetracker.domain.team.TeamResponse.class, false);
+	public final void updateTeam(com.fdc.boarding.releasetracker.usecase.team.TeamRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse> handler) {
+		invokeRR("updateTeam", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.team.TeamResponse.class, false);
 	}
 	
 	@Override
-	public final void addTeam(com.fdc.boarding.releasetracker.domain.team.TeamRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.TeamResponse> handler) {
-		invokeRR("addTeam", request, 10000, handler, com.fdc.boarding.releasetracker.domain.team.TeamResponse.class, false);
+	public final void addTeam(com.fdc.boarding.releasetracker.usecase.team.TeamRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse> handler) {
+		invokeRR("addTeam", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.team.TeamResponse.class, false);
 	}
 	
 	@Override
-	public final void getAllTeams(com.fdc.boarding.releasetracker.domain.team.TeamsRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.ListTeamResponse> handler) {
-		invokeRR("getAllTeams", request, 10000, handler, com.fdc.boarding.releasetracker.domain.team.ListTeamResponse.class, false);
+	public final void getAllTeams(com.fdc.boarding.releasetracker.usecase.team.TeamsRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse> handler) {
+		invokeRR("getAllTeams", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse.class, false);
 	}
 	
 }

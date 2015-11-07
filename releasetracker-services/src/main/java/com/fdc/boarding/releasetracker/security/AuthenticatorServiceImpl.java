@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.fdc.boarding.core.log.LoggerProxy;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
-import com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse;
-import com.fdc.boarding.releasetracker.domain.security.UserUC;
 import com.fdc.boarding.releasetracker.registry.annotation.Register;
+import com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse;
+import com.fdc.boarding.releasetracker.usecase.security.UserUC;
 
 import fdinet.core.Processor;
 import fdinet.core.TypedResponseHandler;

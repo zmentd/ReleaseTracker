@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 import com.fdc.boarding.core.domain.IAuditable;
 import com.fdc.boarding.core.domain.IEntity;
 import com.fdc.boarding.releasetracker.domain.common.IComment;
+import com.fdc.boarding.releasetracker.domain.release.MilestoneType;
 import com.fdc.boarding.releasetracker.domain.security.IUser;
 
 public interface IPhaseApproval extends IAuditable, IEntity<Long> {
@@ -18,7 +19,7 @@ public interface IPhaseApproval extends IAuditable, IEntity<Long> {
 	public abstract List<IComment> getComments();
 	public abstract Long getId();
 	public abstract IPhaseApprovalType getPhaseApprovalType();
-	public abstract PhaseType getPhaseType();
+	public abstract MilestoneType getMilestoneType();
 	public abstract LocalDate getRejectComplete();
 	public abstract void removeComment(IComment comment);
 	public abstract void setApprovalComplete(LocalDate approvalComplete);
@@ -28,7 +29,7 @@ public interface IPhaseApproval extends IAuditable, IEntity<Long> {
 	public abstract void setComments(List<IComment> comments);
 	public abstract void setId(Long id);
 	public abstract void setPhaseApprovalType(IPhaseApprovalType approvalType);
-	public abstract void setPhaseType(PhaseType phaseType);
+	public abstract void setMilestoneType(MilestoneType milestoneType);
 	public abstract void setRejectComplete(LocalDate rejectComplete);
 	public abstract void setPhaseCompletion(IPhaseCompletion phaseCompletion);
 	public abstract IPhaseCompletion getPhaseCompletion();

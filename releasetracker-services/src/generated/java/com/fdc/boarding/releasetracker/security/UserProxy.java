@@ -21,8 +21,8 @@ public final class UserProxy extends FDiNetServiceProxyBase implements UserDef {
 	}
 
 	@Override
-	public final void locateUsers(com.fdc.boarding.releasetracker.domain.security.LocateUserRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.LocateUserResponse> handler) {
-		invokeRR("locateUsers", request, 10000, handler, com.fdc.boarding.releasetracker.domain.security.LocateUserResponse.class, false);
+	public final void locateUsers(com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse> handler) {
+		invokeRR("locateUsers", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse.class, false);
 	}
 	
 }

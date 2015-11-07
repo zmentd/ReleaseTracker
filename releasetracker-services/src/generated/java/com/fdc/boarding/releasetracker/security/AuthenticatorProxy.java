@@ -21,8 +21,8 @@ public final class AuthenticatorProxy extends FDiNetServiceProxyBase implements 
 	}
 
 	@Override
-	public final void authenticate(com.fdc.boarding.releasetracker.security.Credentials request, TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse> handler) {
-		invokeRR("authenticate", request, 10000, handler, com.fdc.boarding.releasetracker.domain.security.AuthenticationResponse.class, false);
+	public final void authenticate(com.fdc.boarding.releasetracker.security.Credentials request, TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse> handler) {
+		invokeRR("authenticate", request, 10000, handler, com.fdc.boarding.releasetracker.usecase.security.AuthenticationResponse.class, false);
 	}
 	
 }

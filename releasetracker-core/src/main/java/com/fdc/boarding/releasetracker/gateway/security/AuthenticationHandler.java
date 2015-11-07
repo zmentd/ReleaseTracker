@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import com.fdc.boarding.core.transaction.annotation.Transactional;
-import com.fdc.boarding.releasetracker.domain.security.Identity;
 import com.fdc.boarding.releasetracker.gateway.security.exception.AuthenticationException;
 import com.fdc.boarding.releasetracker.persistence.security.AuthenticatedUserEntity;
+import com.fdc.boarding.releasetracker.usecase.security.Identity;
 
 public class AuthenticationHandler implements Serializable{
 	private static final long 			serialVersionUID 	= 1L;

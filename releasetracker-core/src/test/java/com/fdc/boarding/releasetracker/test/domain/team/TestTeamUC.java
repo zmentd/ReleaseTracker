@@ -6,12 +6,12 @@ import org.junit.Test;
 
 import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
-import com.fdc.boarding.releasetracker.domain.team.TeamRequest;
-import com.fdc.boarding.releasetracker.domain.team.TeamResponse;
-import com.fdc.boarding.releasetracker.domain.team.TeamUC;
-import com.fdc.boarding.releasetracker.domain.team.dto.TeamDto;
 import com.fdc.boarding.releasetracker.persistence.team.TeamEntity;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
+import com.fdc.boarding.releasetracker.usecase.team.TeamRequest;
+import com.fdc.boarding.releasetracker.usecase.team.TeamResponse;
+import com.fdc.boarding.releasetracker.usecase.team.TeamUC;
+import com.fdc.boarding.releasetracker.usecase.team.dto.TeamDto;
 
 public class TestTeamUC extends AbstractPersistenceTest{
 

@@ -18,35 +18,35 @@ public abstract class TeamService extends FDiNetServiceBase implements TeamDef {
 
 	public TeamService(String serviceName, Processor processor) {
 		super(serviceName, processor);
-		handlers.put("removeTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.domain.team.TeamRequest>("removeTeam", com.fdc.boarding.releasetracker.domain.team.TeamRequest.class) {
+		handlers.put("removeTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.team.TeamRequest>("removeTeam", com.fdc.boarding.releasetracker.usecase.team.TeamRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				removeTeam((com.fdc.boarding.releasetracker.domain.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.TeamResponse>)r);
+				removeTeam((com.fdc.boarding.releasetracker.usecase.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse>)r);
 			}
 		});
 
-		handlers.put("updateTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.domain.team.TeamRequest>("updateTeam", com.fdc.boarding.releasetracker.domain.team.TeamRequest.class) {
+		handlers.put("updateTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.team.TeamRequest>("updateTeam", com.fdc.boarding.releasetracker.usecase.team.TeamRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				updateTeam((com.fdc.boarding.releasetracker.domain.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.TeamResponse>)r);
+				updateTeam((com.fdc.boarding.releasetracker.usecase.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse>)r);
 			}
 		});
 
-		handlers.put("addTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.domain.team.TeamRequest>("addTeam", com.fdc.boarding.releasetracker.domain.team.TeamRequest.class) {
+		handlers.put("addTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.team.TeamRequest>("addTeam", com.fdc.boarding.releasetracker.usecase.team.TeamRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				addTeam((com.fdc.boarding.releasetracker.domain.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.TeamResponse>)r);
+				addTeam((com.fdc.boarding.releasetracker.usecase.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse>)r);
 			}
 		});
 
-		handlers.put("getAllTeams",new ServiceApiHandler<com.fdc.boarding.releasetracker.domain.team.TeamsRequest>("getAllTeams", com.fdc.boarding.releasetracker.domain.team.TeamsRequest.class) {
+		handlers.put("getAllTeams",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.team.TeamsRequest>("getAllTeams", com.fdc.boarding.releasetracker.usecase.team.TeamsRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				getAllTeams((com.fdc.boarding.releasetracker.domain.team.TeamsRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.team.ListTeamResponse>)r);
+				getAllTeams((com.fdc.boarding.releasetracker.usecase.team.TeamsRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse>)r);
 			}
 		});
 

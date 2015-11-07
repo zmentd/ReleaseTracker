@@ -51,7 +51,7 @@ public abstract class AbstractPersistenceTest {
         p.put( "hibernate.connection.characterEncoding", "utf-8");
         p.put( "hibernate.connection.useUnicode", "true");
         p.put( "hibernate.event.merge.entity_copy_observer", "allow");
-        p.put( "org.hibernate.envers.audit_strategy", "org.hibernate.envers.strategy.ValidityAuditStrategy");
+        p.put( "org.hibernate.envers.audit_strategy", "org.hibernate.envers.strategy.DefaultAuditStrategy");
         p.put( "org.hibernate.cache.CacheProvider", "org.hibernate.cache.EhCacheProvider");
         p.put( "jadira.usertype.autoRegisterUserTypes", "true");
 

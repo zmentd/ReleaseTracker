@@ -18,11 +18,11 @@ public abstract class UserService extends FDiNetServiceBase implements UserDef {
 
 	public UserService(String serviceName, Processor processor) {
 		super(serviceName, processor);
-		handlers.put("locateUsers",new ServiceApiHandler<com.fdc.boarding.releasetracker.domain.security.LocateUserRequest>("locateUsers", com.fdc.boarding.releasetracker.domain.security.LocateUserRequest.class) {
+		handlers.put("locateUsers",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest>("locateUsers", com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				locateUsers((com.fdc.boarding.releasetracker.domain.security.LocateUserRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.domain.security.LocateUserResponse>)r);
+				locateUsers((com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse>)r);
 			}
 		});
 

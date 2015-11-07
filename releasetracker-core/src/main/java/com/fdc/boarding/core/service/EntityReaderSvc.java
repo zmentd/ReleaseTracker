@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.fdc.boarding.core.domain.IEntity;
+import com.fdc.boarding.core.exception.NotFoundException;
 import com.fdc.boarding.core.query.Conjunction;
 import com.fdc.boarding.core.query.EntityQuery;
 import com.fdc.boarding.core.query.EntityQueryAp;
@@ -160,6 +161,24 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
 	}
 
 	@Override
+	public <T extends IEntity<P>, P extends Serializable> T findByKeyWithAssertion(
+	  Class<T> 							clazz
+	, P 								key
+	, String...							initialize
+	) 
+	{
+		T								entity;
+		
+		entity	= entityDao.findByKey( clazz, key, initialize );
+		if( entity == null )
+		{
+			throw new NotFoundException( clazz.getSimpleName() + " not found by key " + key );
+		}
+		
+		return entity;
+	}
+
+	@Override
 	public <T extends IEntity<P>, P extends Serializable> T findByNaturalKey(
 	  Class<T> 							clazz
 	, String 							name
@@ -168,6 +187,25 @@ public class EntityReaderSvc implements IEntityReaderSvc, Serializable {
 	) 
 	{
 		return entityDao.findByNaturalKey( clazz, name, value, initialize );
+	}
+
+	@Override
+	public <T extends IEntity<P>, P extends Serializable> T findByNaturalKeyWithAssertion(
+	  Class<T> 							clazz
+	, String 							name
+	, Object 							value
+	, String...							initialize
+	) 
+	{
+		T								entity;
+		
+		entity	= entityDao.findByNaturalKey( clazz, name, value, initialize );
+		if( entity == null )
+		{
+			throw new NotFoundException( clazz.getSimpleName() + " not found by natural key " + name + "=" + value );
+		}
+		
+		return entity;
 	}
 
 	@Override

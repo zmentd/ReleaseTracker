@@ -11,23 +11,14 @@ public interface IUser extends IAuditable, IEntity<Long> {
 	public Long getId();
 	public byte[] getImageBytes();
 	public String getJiraUserName();
-
 	public String getLastName();
-
 	public IUserPreferences getPreferences();
-
 	public void setEmail(String email);
-
 	public void setFirstName(String firstName);
-
 	public void setId(Long id);
-
 	public void setImageBytes(byte[] image);
-
 	public void setJiraUserName(String jiraUserName);
-
 	public void setLastName(String lastName);
-
 	public void setPreferences(IUserPreferences preferences);
 
 //	public IAuthenticatedUser getAuthUser();
