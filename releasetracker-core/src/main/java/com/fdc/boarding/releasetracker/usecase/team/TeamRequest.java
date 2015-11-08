@@ -1,12 +1,15 @@
 package com.fdc.boarding.releasetracker.usecase.team;
 
+import javax.validation.constraints.NotNull;
+
 import com.fdc.boarding.releasetracker.usecase.AbstractRequest;
 import com.fdc.boarding.releasetracker.usecase.team.dto.TeamDto;
 
 
 public class TeamRequest extends AbstractRequest {
-	private TeamDto						team;
 	
+	@NotNull
+	private TeamDto						team;
 
 	public TeamRequest(){
 		super();

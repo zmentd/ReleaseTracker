@@ -1,4 +1,4 @@
-package com.fdc.boarding.workflow.test;
+package com.fdc.boarding.releasetracker.test;
 
 import com.fdc.boarding.core.configuration.PropertiesLoader;
 

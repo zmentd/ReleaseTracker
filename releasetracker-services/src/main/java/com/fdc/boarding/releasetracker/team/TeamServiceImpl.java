@@ -6,6 +6,7 @@ import java.util.Map;
 import com.fdc.boarding.core.log.LoggerProxy;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.registry.annotation.Register;
+import com.fdc.boarding.releasetracker.usecase.LikeRequest;
 import com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse;
 import com.fdc.boarding.releasetracker.usecase.team.TeamRequest;
 import com.fdc.boarding.releasetracker.usecase.team.TeamResponse;
@@ -40,6 +41,18 @@ public class TeamServiceImpl extends TeamService {
 		response	= usecase.addTeam( request );
 		handler.handleResponse( response );
 		logger.debug( "Exiting addTeam." );
+	}
+
+	@Override
+	public void findTeams(LikeRequest request, TypedResponseHandler<ListTeamResponse> handler) {
+		TeamUC						usecase;
+		ListTeamResponse			response;
+		
+		logger.debug( "Entering findTeams." );
+		usecase		= CDIContext.getInstance().getBean( TeamUC.class );
+		response	= usecase.findTeams( request );
+		handler.handleResponse( response );
+		logger.debug( "Exiting findTeams." );
 	}
 
 	@Override

@@ -34,11 +34,11 @@ public abstract class TeamService extends FDiNetServiceBase implements TeamDef {
 			}
 		});
 
-		handlers.put("addTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.team.TeamRequest>("addTeam", com.fdc.boarding.releasetracker.usecase.team.TeamRequest.class) {
+		handlers.put("findTeams",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.LikeRequest>("findTeams", com.fdc.boarding.releasetracker.usecase.LikeRequest.class) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
-				addTeam((com.fdc.boarding.releasetracker.usecase.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse>)r);
+				findTeams((com.fdc.boarding.releasetracker.usecase.LikeRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse>)r);
 			}
 		});
 
@@ -47,6 +47,14 @@ public abstract class TeamService extends FDiNetServiceBase implements TeamDef {
 			@Override
 			protected void processRequest(Object request, TypedResponseHandler<?> r) {
 				getAllTeams((com.fdc.boarding.releasetracker.usecase.team.TeamsRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse>)r);
+			}
+		});
+
+		handlers.put("addTeam",new ServiceApiHandler<com.fdc.boarding.releasetracker.usecase.team.TeamRequest>("addTeam", com.fdc.boarding.releasetracker.usecase.team.TeamRequest.class) {
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void processRequest(Object request, TypedResponseHandler<?> r) {
+				addTeam((com.fdc.boarding.releasetracker.usecase.team.TeamRequest) request, (TypedResponseHandler<com.fdc.boarding.releasetracker.usecase.team.TeamResponse>)r);
 			}
 		});
 

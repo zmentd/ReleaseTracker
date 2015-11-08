@@ -5,8 +5,8 @@
   "apis" : [ {
     "name" : "locateUsers",
     "description" : "locate users by prefix",
-    "inputType" : "com.fdc.boarding.releasetracker.domain.security.LocateUserRequest",
-    "outputType" : "com.fdc.boarding.releasetracker.domain.security.LocateUserResponse",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.security.LocateUserRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.security.LocateUserResponse",
     "apiType" : "RR",
     "timeoutMillis" : 10000,
     "webDef" : {

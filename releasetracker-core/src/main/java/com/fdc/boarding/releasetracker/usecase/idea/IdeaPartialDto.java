@@ -2,7 +2,7 @@ package com.fdc.boarding.releasetracker.usecase.idea;
 
 import java.io.Serializable;
 
-public class IdeaPartialSearchResponse implements Serializable{
+public class IdeaPartialDto implements Serializable{
 	private static final long 			serialVersionUID = 1L;
 	
 	private Long 						id;
@@ -10,7 +10,7 @@ public class IdeaPartialSearchResponse implements Serializable{
 	private String						prjNumber;
 	private String						name;
 	
-	public IdeaPartialSearchResponse(){
+	public IdeaPartialDto(){
 		super();
 	}
 

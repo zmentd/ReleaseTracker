@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class IdeaSearchResponse {
+import com.fdc.boarding.releasetracker.usecase.AbstractResponse;
+
+public class IdeaSearchResponse extends AbstractResponse {
+	private static final long 			serialVersionUID = 1L;
 	
 	private SortedMap<String, IdeaSearchGroup>	groupedIdeas;
 	private List<IdeaStatusResponse>			ideas;

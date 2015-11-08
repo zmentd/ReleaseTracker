@@ -28,6 +28,7 @@ import org.hibernate.envers.RelationTargetAuditMode;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.URL;
 import org.joda.time.LocalDate;
@@ -40,6 +41,7 @@ import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
 import com.fdc.boarding.releasetracker.domain.workflow.IIdeaWorkflow;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
 import com.fdc.boarding.releasetracker.persistence.team.TeamImpactEntity;
+import com.fdc.boarding.releasetracker.persistence.workflow.AbstractWorkflowEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.IdeaWorkflowEntity;
 
 @Entity
@@ -74,11 +76,11 @@ public class IdeaEntity extends AbstractAuditedEntity<Long> implements Serializa
 	@Column( name = "NAME" )
 	private String						name;
 
-	@Column(name = "IDEA_NUMBER")
+	@Column(name = "IDEA_NUMBER" )
 	@Field(index=org.hibernate.search.annotations.Index.YES, analyze=Analyze.NO, store=Store.YES)
 	protected String 					ideaNumber;
 	
-	@Column( name = "PRIORITY")
+	@Column( name = "PRIORITY" )
 	private Integer						priority;
 	
 	@Field(index=org.hibernate.search.annotations.Index.YES, analyze=Analyze.YES, store=Store.YES)
@@ -93,6 +95,7 @@ public class IdeaEntity extends AbstractAuditedEntity<Long> implements Serializa
 	@Column( name = "PRJ_NUMBER" )
 	private String						projectNumber;
 	
+	@Field( index=org.hibernate.search.annotations.Index.YES, analyze=Analyze.NO, store=Store.YES)
 	@Column( name = "AMND_NUMBER" )
 	private String						amendmentNumber;
 	
@@ -143,9 +146,11 @@ public class IdeaEntity extends AbstractAuditedEntity<Long> implements Serializa
 	@JoinColumn(name = "ORGI_RQST_USER_ID")
 	protected IUser 					originalRequestor;
 	
+	@IndexedEmbedded( includePaths  = { "comments.comment" }, targetElement = AbstractWorkflowEntity.class )
 	@OneToOne( mappedBy = "idea", targetEntity = IdeaWorkflowEntity.class, fetch = FetchType.LAZY, cascade={CascadeType.ALL} )
 	private IIdeaWorkflow				workflow;
 	
+	@IndexedEmbedded( includePaths  = { "workflow.comments.comment", "team.name" }, targetElement = TeamImpactEntity.class )
 	@OneToMany( mappedBy = "idea", targetEntity = TeamImpactEntity.class, cascade={CascadeType.ALL} )
 	private Set<ITeamImpact>			teamImpacts	= new HashSet<>();
 	

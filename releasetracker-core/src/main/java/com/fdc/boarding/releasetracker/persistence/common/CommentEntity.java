@@ -16,6 +16,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
 import org.joda.time.DateTime;
 
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
@@ -44,6 +47,7 @@ public class CommentEntity extends AbstractAuditedEntity<Long> implements Serial
 	@Lob
 	@NotNull
 	@Column( name = "COMMENT" )
+	@Field(index=org.hibernate.search.annotations.Index.YES, analyze=Analyze.YES, store=Store.YES)
 	private String						comment;
 
 	@Type( type="com.fdc.boarding.core.persistence.type.UTCPersistentDateTime", parameters = {@Parameter( name="databaseZone", value="UTC" )} )

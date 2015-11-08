@@ -1,4 +1,4 @@
-package com.fdc.boarding.releasetracker.test.domain.workflow;
+package com.fdc.boarding.releasetracker.test.usecase.workflow;
 
 import java.util.List;
 
@@ -28,10 +28,13 @@ import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
 import com.fdc.boarding.releasetracker.usecase.common.dto.CommentDto;
 import com.fdc.boarding.releasetracker.usecase.workflow.ApprovalRequest;
 import com.fdc.boarding.releasetracker.usecase.workflow.ApprovalResponse;
+import com.fdc.boarding.releasetracker.usecase.workflow.PhaseApprovalTypeListResponse;
 import com.fdc.boarding.releasetracker.usecase.workflow.PhaseApprovalTypeResponse;
+import com.fdc.boarding.releasetracker.usecase.workflow.PhaseListResponse;
 import com.fdc.boarding.releasetracker.usecase.workflow.PhaseProgressionResponse;
 import com.fdc.boarding.releasetracker.usecase.workflow.ProgressionCheckResponse;
 import com.fdc.boarding.releasetracker.usecase.workflow.ProgressionRequest;
+import com.fdc.boarding.releasetracker.usecase.workflow.StatusListResponse;
 import com.fdc.boarding.releasetracker.usecase.workflow.StatusProgressionResponse;
 import com.fdc.boarding.releasetracker.usecase.workflow.WorkflowRequest;
 import com.fdc.boarding.releasetracker.usecase.workflow.WorkflowUC;
@@ -330,5 +333,53 @@ public class TestWorkflowUC extends AbstractPersistenceTest{
 			Assert.fail();
 		}
     }
+
+	@Test
+	public void testFindPhaseApprovalTypes(){
+		PhaseApprovalTypeListResponse	response;
+  	
+    	try {
+     		response	= usecase.findAllPhaseApprovalTypes();
+			Assert.assertNotNull( response );
+			Assert.assertTrue( response.isSuccess() );
+			Assert.assertFalse( response.getList().isEmpty() );
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+		
+	}
+
+	@Test
+	public void testFindPhases(){
+		PhaseListResponse				response;
+  	
+    	try {
+     		response	= usecase.findAllPhases();
+			Assert.assertNotNull( response );
+			Assert.assertTrue( response.isSuccess() );
+			Assert.assertFalse( response.getList().isEmpty() );
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+		
+	}
+
+	@Test
+	public void testFindAllStatuses(){
+		StatusListResponse				response;
+  	
+    	try {
+     		response	= usecase.findAllStatuses();
+			Assert.assertNotNull( response );
+			Assert.assertTrue( response.isSuccess() );
+			Assert.assertFalse( response.getList().isEmpty() );
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+		
+	}
 
 }

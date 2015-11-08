@@ -1,6 +1,7 @@
 package com.fdc.boarding.releasetracker.usecase.workflow;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.joda.time.LocalDate;
 
 import com.fdc.boarding.core.intercept.annotation.ServiceCall;
 import com.fdc.boarding.core.query.Restriction;
+import com.fdc.boarding.core.query.exception.QueryException;
 import com.fdc.boarding.core.service.EntityPersistenceService;
 import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.core.transaction.annotation.Transactional;
@@ -30,15 +32,20 @@ import com.fdc.boarding.releasetracker.domain.workflow.IStatusCompletion;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
 import com.fdc.boarding.releasetracker.gateway.release.IReleasePersistenceGateway;
 import com.fdc.boarding.releasetracker.gateway.workflow.IPhaseApprovalTypePersistenceGateway;
+import com.fdc.boarding.releasetracker.persistence.workflow.IWorkflowPersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.workflow.PhaseApprovalEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.PhaseCompletionEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.StatusCompletionEntity;
 import com.fdc.boarding.releasetracker.usecase.AbstractUseCase;
+import com.fdc.boarding.releasetracker.usecase.LikeRequest;
+import com.fdc.boarding.releasetracker.usecase.common.dto.CommentDto;
 import com.fdc.boarding.releasetracker.usecase.release.MilestoneByRom;
 import com.fdc.boarding.releasetracker.usecase.workflow.dto.PhaseApprovalDto;
 import com.fdc.boarding.releasetracker.usecase.workflow.dto.PhaseApprovalTypeDto;
 import com.fdc.boarding.releasetracker.usecase.workflow.dto.PhaseCompletionDto;
+import com.fdc.boarding.releasetracker.usecase.workflow.dto.PhaseDto;
 import com.fdc.boarding.releasetracker.usecase.workflow.dto.StatusCompletionDto;
+import com.fdc.boarding.releasetracker.usecase.workflow.dto.StatusDto;
 import com.fdc.boarding.releasetracker.usecase.workflow.dto.WorkflowDto;
 
 public class WorkflowUC extends AbstractUseCase implements Serializable {
@@ -55,6 +62,9 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
     
 	@Inject
 	private IPhaseApprovalTypePersistenceGateway	typeGateway;
+
+	@Inject
+    private IWorkflowPersistenceGateway	gateway;
 	
 	@ServiceCall
 	@Transactional
@@ -381,7 +391,111 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
 		return response;
 	}
 
-    private IStatusCompletion progress( IPhaseCompletion cpc, IPhaseCompletion newPc, IStatus status ){
+	@ServiceCall
+    public PhaseApprovalTypeListResponse findAllPhaseApprovalTypes(){
+		PhaseApprovalTypeListResponse	response;
+		List<IPhaseApprovalType>		entities;
+		List<PhaseApprovalTypeDto>		list;
+		
+		response	= new PhaseApprovalTypeListResponse();
+		list		= new ArrayList<>();
+		try{
+			entities	= reader.find( IPhaseApprovalType.class );
+			for( IPhaseApprovalType p : entities ){
+				list.add( PhaseApprovalTypeDto.from( p ) );
+			}
+			response.setList( list );
+			response.setSuccess( true );
+			response.setMessage( "Operation successful." );
+		} 
+		catch( QueryException e ){
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Operation failed, an unexpected exception occured." );
+		}
+		
+		return response;
+	}
+	
+	@ServiceCall
+	public PhaseListResponse findAllPhases(){
+		PhaseListResponse				response;
+		List<IPhase>					entities;
+		List<PhaseDto>					list;
+		
+		response	= new PhaseListResponse();
+		list		= new ArrayList<>();
+		try{
+			entities	= reader.find( IPhase.class, "index", false, "availableStatuses" );
+			for( IPhase p : entities ){
+				list.add( PhaseDto.from( p ) );
+			}
+			response.setList( list );
+			response.setSuccess( true );
+			response.setMessage( "Operation successful." );
+		} 
+		catch( QueryException e ){
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Operation failed, an unexpected exception occured." );
+		}
+		
+		return response;
+	}
+	
+	@ServiceCall
+	public StatusListResponse findAllStatuses(){
+		StatusListResponse				response;
+		List<IStatus>					entities;
+		List<StatusDto>					list;
+		
+		response	= new StatusListResponse();
+		list		= new ArrayList<>();
+		try{
+			entities	= reader.find( IStatus.class );
+			for( IStatus s : entities ){
+				list.add( StatusDto.from( s ) );
+			}
+			response.setList( list );
+			response.setSuccess( true );
+			response.setMessage( "Operation successful." );
+		} 
+		catch( QueryException e ){
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Operation failed, an unexpected exception occured." );
+		}
+		
+		return response;
+	}
+	
+	@ServiceCall
+	public PhaseListResponse findPhases( LikeRequest request ){
+		PhaseListResponse				response;
+		List<IPhase>					entities;
+		List<PhaseDto>					list;
+		
+		response	= new PhaseListResponse();
+		list		= new ArrayList<>();
+		try{
+			entities	= reader.find( IPhase.class, "name", true, Restriction.ilike( "name", request.getSearchValue() ) );
+			for( IPhase p : entities ){
+				list.add( PhaseDto.from( p ) );
+			}
+			response.setList( list );
+			response.setSuccess( true );
+			response.setMessage( "Operation successful." );
+		} 
+		catch( QueryException e ){
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Operation failed, an unexpected exception occured." );
+		}
+		
+		return response;
+	}
+  
+	private IStatusCompletion progress( IPhaseCompletion cpc, IPhaseCompletion newPc, IStatus status ){
 		IStatusCompletion				csc			= null;
 		IStatusCompletion				sc			= null;
 		
@@ -405,7 +519,7 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
 		return sc;
 	}
 	
-	protected IPhaseCompletion progressTo( IWorkflow workflow, IPhase phase ){
+    protected IPhaseCompletion progressTo( IWorkflow workflow, IPhase phase ){
 		IPhaseCompletion				cpc			= null;
 		IPhaseCompletion				pc			= null;
     	MilestoneByRom					milestone	= null;
@@ -460,7 +574,7 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
 		
 		return sc;
 	}
-   
+
 	@ServiceCall( validationGroups = {Default.class, PhaseProgressionValidation.class})
     @Transactional
 	public PhaseProgressionResponse progressToPhase( ProgressionRequest request ){
@@ -490,8 +604,8 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
 
     	return response;
     }
-	
-    @ServiceCall( validationGroups = {Default.class, StatusProgressionValidation.class})
+
+	@ServiceCall( validationGroups = {Default.class, StatusProgressionValidation.class})
     @Transactional
 	public StatusProgressionResponse progressToStatus( ProgressionRequest request ){
 		IWorkflow 						workflow;
@@ -517,6 +631,48 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
 
     	return response;
     }
+
+	@ServiceCall
+    public WorkflowCommentsResponse readComments( WorkflowCommentsRequest request ){
+		WorkflowCommentsResponse		response;
+		List<IComment>					entities;
+		List<CommentDto>				list;
+		
+		response	= new WorkflowCommentsResponse();
+		list		= new ArrayList<>();
+		try{
+			entities	= gateway.readComments( request.getUserId() );
+			for( IComment e : entities ){
+				switch( e.getCommentType() ){
+					case Public:
+						list.add( CommentDto.from( e ) );
+						break;
+					case Team:
+						break;
+					case User:
+						if( e.getUser().getId().equals( request.getUserId() ) ){
+							list.add( CommentDto.from( e ) );
+						}
+						break;
+					default:
+						break;
+				}
+				if( request.getCount() > 0 && list.size() == request.getCount() ){
+					break;
+				}
+			}
+			response.setList( list );
+			response.setSuccess( true );
+			response.setMessage( "Operation successful." );
+		} 
+		catch( Exception e ){
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Operation failed, an unexpected exception occured." );
+		}
+		
+		return response;
+	}
 	
 	@ServiceCall( validationGroups = {Default.class, ApprovalValidation.class})
 	@Transactional
@@ -600,6 +756,10 @@ public class WorkflowUC extends AbstractUseCase implements Serializable {
 		}
 
 		return response;
+	}
+	
+	@Transactional
+	public void updateWorkflow( WorkflowDto workflow ){
 	}
 	
 	@Transactional

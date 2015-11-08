@@ -12,11 +12,11 @@ import com.fdc.boarding.releasetracker.domain.workflow.IStatus;
 public class IdeaAp implements Serializable {
 	private static final long 			serialVersionUID = 1L;
 	
-	private ITeam					team;
+	private ITeam						team;
 	private IPhase						phase;
 	private Long						assignedTo;
 	private List<IStatus>				excludeStatuses;
-	private IdeaGroupBy				groupBy;
+	private IdeaGroupBy					groupBy;
 	private DaysToTargetStatus			milestoneStatus;
 	private DaysToTargetStatus			releaseStatus;
 	

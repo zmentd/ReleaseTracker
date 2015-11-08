@@ -2,12 +2,10 @@ package com.fdc.boarding.releasetracker.usecase.security;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 
+import com.fdc.boarding.core.intercept.annotation.ServiceCall;
 import com.fdc.boarding.core.log.LoggerProxy;
 import com.fdc.boarding.core.query.Conjunction;
 import com.fdc.boarding.core.query.Restriction;
@@ -37,9 +35,7 @@ public class UserUC {
 	@Inject
 	private EntityReaderSvc				reader;
 	
-	@Inject
-	private Validator					validator;
-	
+	@ServiceCall
 	@Transactional
 	public AuthenticationResponse authenticateUser( Credentials credentials ){
 		boolean							authenticated	= true;
@@ -73,77 +69,7 @@ public class UserUC {
 		return response;
 	}
 	
-	public void registerUser( IAuthenticatedUser auth, IUser user ){
-		service.addChild( auth, user, "user" );
-	}
-	
-	@Transactional
-	public RegistrationResponse registerUser( RegistrationRequest request ){
-		IUser											user	= null;
-		IAuthenticatedUser								auth;
-		RegistrationResponse							response;
-		ValidationFailure								vf;
-		Set<ConstraintViolation<RegistrationRequest>>	violations;
-		
-		response	= new RegistrationResponse();
-		violations	= validator.validate( request );
-		if( !violations.isEmpty() ){
-			for( ConstraintViolation<?> cv : violations ){
-				vf	= new ValidationFailure();	
-				vf.setMessage( cv.getMessage() );
-				vf.setPath( cv.getPropertyPath().toString() );
-				vf.setValidator( cv.getConstraintDescriptor().getAnnotation().annotationType().getName() );
-				response.addValidationFailure( vf );
-			}
-			response.setSuccess( false );
-			response.setMessage( "Validation failed." );
-		}
-		else{
-			if( !request.getConfirmPassword().equals( request.getPassword() ) ){
-				vf	= new ValidationFailure();	
-				vf.setMessage( "The password does not match the confirm password." );
-				vf.setPath( "password" );
-				vf.setValidator( "password.confirmed" );
-				response.addValidationFailure( vf );
-				response.setMessage( "Validation failed." );
-				response.setSuccess( false );
-			}
-			else{
-				auth	= gateway.findByUserId( request.getUsername() );
-				if( auth == null ){
-					user	= gateway.findByEmail( request.getEmail() );
-					if( user == null ){
-						user	= new UserEntity();
-					}
-		
-					user.setEmail( request.getEmail() );
-					user.setFirstName( request.getFirstName() );
-					user.setLastName( request.getLastName() );
-
-					auth	= new AuthenticatedUserEntity();
-					auth.setPassword( request.getPassword() );
-					auth.setUserId( request.getUsername() );
-					
-					if( service.addChild( auth, user, "user" ) ){
-						response.setUser( UserDto.from( user ) );
-						response.setMessage( "User registered." );
-						response.setSuccess( true );
-					}
-					else{
-						response.setMessage( "User registration failed." );
-						response.setSuccess( false );
-					}
-				}
-				else{
-					response.setMessage( "Username unavailable." );
-					response.setSuccess( false );
-				}
-			}
-		}
-		
-		return response;
-	}
-	
+	@ServiceCall
 	public LocateUserResponse locateUsers( LocateUserRequest request ){
 		List<IUser> 					results	= null;
 		List<UserDto> 					list	= null;
@@ -164,10 +90,68 @@ public class UserUC {
 			response.setSuccess( true );
 		} 
 		catch( QueryException e ) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			response.setMessage( "Unable to locate users." );
+			response.setSuccess( false );
 		}
 
+		return response;
+	}
+	
+	protected void registerUser( IAuthenticatedUser auth, IUser user ){
+		service.addChild( auth, user, "user" );
+	}
+	
+	@ServiceCall
+	@Transactional
+	public RegistrationResponse registerUser( RegistrationRequest request ){
+		IUser											user	= null;
+		IAuthenticatedUser								auth;
+		RegistrationResponse							response;
+		ValidationFailure								vf;
+		
+		response	= new RegistrationResponse();
+		if( !request.getConfirmPassword().equals( request.getPassword() ) ){
+			vf	= new ValidationFailure();	
+			vf.setMessage( "The password does not match the confirm password." );
+			vf.setPath( "password" );
+			vf.setValidator( "password.confirmed" );
+			response.addValidationFailure( vf );
+			response.setMessage( "Validation failed." );
+			response.setSuccess( false );
+		}
+		else{
+			auth	= gateway.findByUserId( request.getUsername() );
+			if( auth == null ){
+				user	= gateway.findByEmail( request.getEmail() );
+				if( user == null ){
+					user	= new UserEntity();
+				}
+	
+				user.setEmail( request.getEmail() );
+				user.setFirstName( request.getFirstName() );
+				user.setLastName( request.getLastName() );
+
+				auth	= new AuthenticatedUserEntity();
+				auth.setPassword( request.getPassword() );
+				auth.setUserId( request.getUsername() );
+				
+				if( service.addChild( auth, user, "user" ) ){
+					response.setUser( UserDto.from( user ) );
+					response.setMessage( "User registered." );
+					response.setSuccess( true );
+				}
+				else{
+					response.setMessage( "User registration failed." );
+					response.setSuccess( false );
+				}
+			}
+			else{
+				response.setMessage( "Username unavailable." );
+				response.setSuccess( false );
+			}
+		}
+		
 		return response;
 	}
 }

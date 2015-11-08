@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import com.fdc.boarding.core.datadef.DateFormat;
 import com.fdc.boarding.core.datadef.TimeFormat;
@@ -23,6 +25,20 @@ public class DateTimeUtil
     public final static TimeFormat      DEFAULT_TIME_FORMAT     = TimeFormat.HMSA;
     public final static String          DEFAULT_DATETIME_FORMAT = DEFAULT_DATE_FORMAT.display() + " " + DEFAULT_TIME_FORMAT.display();
     
+    private final static PeriodFormatter	PERIOD_FORMATTER;
+    static{
+    	PERIOD_FORMATTER = new PeriodFormatterBuilder().appendDays()
+													   .appendSuffix("d ")
+													   .appendHours()
+													   .appendSuffix("h ")
+													   .appendMinutes()
+													   .appendSuffix("m ")
+													   .appendSeconds()
+													   .appendSuffix("s ")
+													   .appendMillis()
+													   .appendSuffix("ms")
+													   .toFormatter();   	
+    }
     /**
      * @return
      *  The time at the start of the current date ( 0:0:0.000 )
@@ -85,6 +101,11 @@ public class DateTimeUtil
         return millis;
     }
     
+    public static PeriodFormatter getPeriodFormatter(
+    )
+    {
+		return PERIOD_FORMATTER;
+    }
     /**
      * @param millis
      * @return

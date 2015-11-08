@@ -1,4 +1,4 @@
-package com.fdc.boarding.releasetracker.test.domain.team;
+package com.fdc.boarding.releasetracker.test.usecase.team;
 
 import junit.framework.Assert;
 
@@ -8,6 +8,8 @@ import com.fdc.boarding.core.service.IEntityReaderSvc;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.persistence.team.TeamEntity;
 import com.fdc.boarding.releasetracker.test.AbstractPersistenceTest;
+import com.fdc.boarding.releasetracker.usecase.LikeRequest;
+import com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse;
 import com.fdc.boarding.releasetracker.usecase.team.TeamRequest;
 import com.fdc.boarding.releasetracker.usecase.team.TeamResponse;
 import com.fdc.boarding.releasetracker.usecase.team.TeamUC;
@@ -50,11 +52,13 @@ public class TestTeamUC extends AbstractPersistenceTest{
 		TeamRequest						request;
 		TeamResponse					response;
 		TeamEntity						entity;
+		TeamDto							dto;
 		
 		request	= new TeamRequest();
 		entity 	= reader.findByKey( TeamEntity.class, 1L );
-		entity.setObs( "/FDA/MY/OBS");
-		request.setTeam( TeamDto.from( entity ) );
+		dto		= TeamDto.from( entity );
+		dto.setObs( "/FDA/MY/OBS");
+		request.setTeam( dto );
 		
 		response	= usecase.updateTeam( request );
 		Assert.assertNotNull( response );
@@ -87,6 +91,24 @@ public class TestTeamUC extends AbstractPersistenceTest{
 		Assert.assertTrue( response.isSuccess() );
 		Assert.assertEquals( response.getTeam().getName(), entity.getName() );
 		Assert.assertEquals( response.getTeam().getObs(), entity.getObs() );
+	}
+
+	@Test
+	public void testFindTeams(){
+		LikeRequest 					request;
+		ListTeamResponse				response;
+		
+    	try {
+    		request		= new LikeRequest();
+    		request.setSearchValue( "SN" );
+     		response	= usecase.findTeams( request );
+			Assert.assertNotNull( response );
+			Assert.assertTrue( response.isSuccess() );
+			Assert.assertFalse( response.getList().isEmpty() );
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
 	}
 
 }

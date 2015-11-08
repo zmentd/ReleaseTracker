@@ -1,0 +1,210 @@
+{
+  "serviceName" : "Workflow",
+  "serviceVersion" : 1,
+  "description" : "",
+  "apis" : [ {
+    "name" : "findAllStatuses",
+    "description" : "",
+    "inputType" : "java.lang.Void",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.StatusListResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/findAllStatuses",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "approve",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/approve",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "findPhases",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.LikeRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.PhaseListResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/findPhases",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "findAllPhases",
+    "description" : "",
+    "inputType" : "java.lang.Void",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.PhaseListResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/findAllPhases",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "progressToPhase",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ProgressionRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.PhaseProgressionResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/progressToPhase",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "readComments",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.WorkflowCommentsRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.WorkflowCommentsResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/readComments",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "reject",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/reject",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "progressToStatus",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ProgressionRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.StatusProgressionResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/progressToStatus",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "determineNextApprovalType",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.WorkflowRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.PhaseApprovalTypeResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/determineNextApprovalType",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "canProgressToPhase",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ProgressionRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ProgressionCheckResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/canProgressToPhase",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "approvalRequested",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/approvalRequested",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "approvalsComplete",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.WorkflowRequest",
+    "outputType" : "java.lang.Boolean",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/approvalsComplete",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "determineLastApprovalSent",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.WorkflowRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ApprovalResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/determineLastApprovalSent",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "canProgressToStatus",
+    "description" : "",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ProgressionRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.ProgressionCheckResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/canProgressToStatus",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "findAllPhaseApprovalTypes",
+    "description" : "",
+    "inputType" : "java.lang.Void",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.workflow.PhaseApprovalTypeListResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/findAllPhaseApprovalTypes",
+      "maxContentSize" : 200000
+    }
+  } ],
+  "webDef" : {
+    "encoding" : [ "JSON", "XML" ],
+    "methods" : [ "POST" ],
+    "path" : "workflow",
+    "maxContentSize" : 200000
+  },
+  "configType" : "java.lang.String",
+  "configJsonSchema" : "{\"type\":\"string\"}",
+  "ns" : "com.fdc.boarding.releasetracker.workflow"
+}

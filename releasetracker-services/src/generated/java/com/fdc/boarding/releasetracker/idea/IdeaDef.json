@@ -1,0 +1,41 @@
+{
+  "serviceName" : "Idea",
+  "serviceVersion" : 1,
+  "description" : "",
+  "apis" : [ {
+    "name" : "searchIdeas",
+    "description" : "search ideas by key word",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.idea.IdeaSearchRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.idea.IdeaListPartialResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/searchIdeas",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "findAssignedTo",
+    "description" : "locate ideas by assigned to",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.idea.AssignedToRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.idea.IdeaListResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/findAssignedTo",
+      "maxContentSize" : 200000
+    }
+  } ],
+  "webDef" : {
+    "encoding" : [ "JSON", "XML" ],
+    "methods" : [ "POST" ],
+    "path" : "idea",
+    "maxContentSize" : 200000
+  },
+  "configType" : "java.lang.String",
+  "configJsonSchema" : "{\"type\":\"string\"}",
+  "ns" : "com.fdc.boarding.releasetracker.idea"
+}

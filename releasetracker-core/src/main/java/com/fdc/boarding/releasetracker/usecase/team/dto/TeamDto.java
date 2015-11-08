@@ -2,6 +2,8 @@ package com.fdc.boarding.releasetracker.usecase.team.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
 import com.fdc.boarding.releasetracker.usecase.AbstractAuditedDto;
 import com.fdc.boarding.releasetracker.usecase.security.dto.UserDto;
@@ -29,7 +31,11 @@ public class TeamDto extends AbstractAuditedDto implements Serializable {
 	}
 
 	private Long						id;
+	
+	@NotNull
 	private String						name;
+	
+	@NotNull
 	private String						obs;
 	private UserDto						solutionArchitect;
 	private UserDto						developmentManager;

@@ -30,6 +30,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.joda.time.LocalDate;
 
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
@@ -103,6 +104,7 @@ public abstract class AbstractWorkflowEntity extends AbstractAuditedEntity<Long>
 	@OneToMany( mappedBy = "workflow", targetEntity = PhaseCompletionEntity.class, cascade={CascadeType.ALL} )
 	private List<IPhaseCompletion>		phaseCompletions	= new ArrayList<>();
 
+	@IndexedEmbedded( includePaths  = { "comment" }, targetElement = CommentEntity.class )
 	@NotAudited
 	@OrderBy( "commentDate DESC")
 	@ManyToMany( targetEntity=CommentEntity.class, cascade={CascadeType.ALL} )

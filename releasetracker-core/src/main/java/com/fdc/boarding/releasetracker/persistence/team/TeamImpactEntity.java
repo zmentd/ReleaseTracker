@@ -19,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.joda.time.LocalDate;
 
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
@@ -29,6 +31,7 @@ import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
 import com.fdc.boarding.releasetracker.domain.workflow.ITeamImpactWorkflow;
 import com.fdc.boarding.releasetracker.persistence.idea.IdeaEntity;
 import com.fdc.boarding.releasetracker.persistence.security.UserEntity;
+import com.fdc.boarding.releasetracker.persistence.workflow.AbstractWorkflowEntity;
 import com.fdc.boarding.releasetracker.persistence.workflow.TeamImpactWorkflowEntity;
 
 @Entity
@@ -62,12 +65,14 @@ public class TeamImpactEntity extends AbstractAuditedEntity<Long> implements Ser
 	@Column( name = "PLANNED_EFFORT_NOT_OPEN" )
 	private boolean						plannedEffortNotOpen;
 
+	@IndexedEmbedded( includePaths  = { "name" }, targetElement = TeamEntity.class )
 	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	@NotNull
 	@ManyToOne(targetEntity = TeamEntity.class)
 	@JoinColumn(name = "TEAM_ID")
 	protected ITeam 					team;
 	
+	@ContainedIn
 	@ManyToOne( targetEntity = IdeaEntity.class )
 	@JoinColumn( name = "IDEA_ID" )	
 	private IIdea						idea;
@@ -77,6 +82,7 @@ public class TeamImpactEntity extends AbstractAuditedEntity<Long> implements Ser
 	@JoinColumn( name = "ROM_OWNER_ID" )	
 	private IUser						romOwner;
 	
+	@IndexedEmbedded( includePaths  = { "comments.comment" }, targetElement = AbstractWorkflowEntity.class )
 	@OneToOne( mappedBy = "teamImpact", targetEntity = TeamImpactWorkflowEntity.class, fetch = FetchType.LAZY, cascade={CascadeType.ALL} )
 	private ITeamImpactWorkflow			workflow;
 

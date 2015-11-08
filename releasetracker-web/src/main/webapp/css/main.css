@@ -26,6 +26,21 @@ body {
 .portfolio-item {
     margin-bottom: 30px;
 }
+.navbar-brand {
+	margin-left: 10px;
+	float: left;
+	display: block;
+	width: 200px !important;
+	margin: 10px 0px 0px 10px;
+	background: url(../images/releasetracker-logo.png) no-repeat;
+	background-size: 100%;
+	overflow: hidden;
+	height:30px;
+	padding-top: 3px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
 
 .tab-pane {
     margin-top: 15px;

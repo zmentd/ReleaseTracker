@@ -6,6 +6,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.search.annotations.ContainedIn;
 
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
@@ -18,6 +19,7 @@ import com.fdc.boarding.releasetracker.persistence.team.TeamImpactEntity;
 public class TeamImpactWorkflowEntity extends AbstractWorkflowEntity implements ITeamImpactWorkflow {
 	private static final long 			serialVersionUID = 1L;
 
+	@ContainedIn
 	@Audited( targetAuditMode = RelationTargetAuditMode.NOT_AUDITED )
 	@OneToOne( targetEntity = TeamImpactEntity.class )
 	private ITeamImpact					teamImpact;

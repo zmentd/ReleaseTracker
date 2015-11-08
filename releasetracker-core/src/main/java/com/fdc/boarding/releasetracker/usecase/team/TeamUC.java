@@ -6,8 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.fdc.boarding.core.intercept.annotation.ServiceCall;
 import com.fdc.boarding.core.query.EntityQuery;
 import com.fdc.boarding.core.query.EntityQueryAp;
+import com.fdc.boarding.core.query.Restriction;
 import com.fdc.boarding.core.query.exception.QueryException;
 import com.fdc.boarding.core.service.EntityPersistenceService;
 import com.fdc.boarding.core.service.EntityReaderSvc;
@@ -15,6 +17,7 @@ import com.fdc.boarding.core.transaction.annotation.Transactional;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.domain.team.ITeam;
 import com.fdc.boarding.releasetracker.usecase.AbstractUseCase;
+import com.fdc.boarding.releasetracker.usecase.LikeRequest;
 import com.fdc.boarding.releasetracker.usecase.team.dto.TeamDto;
 
 public class TeamUC extends AbstractUseCase implements Serializable {
@@ -29,6 +32,7 @@ public class TeamUC extends AbstractUseCase implements Serializable {
 	@Inject 
 	private EntityQuery					query;
 
+	@ServiceCall
 	@Transactional
 	public TeamResponse addTeam( TeamRequest request )
 	{
@@ -54,7 +58,38 @@ public class TeamUC extends AbstractUseCase implements Serializable {
 		
 		return response;
 	}
+	
+	@ServiceCall
+	public ListTeamResponse findTeams( LikeRequest request ){
+		ListTeamResponse				response;
+		List<ITeam>						entities;
+		List<TeamResponse>				list;
+		TeamResponse					tr;
+		
+		response	= new ListTeamResponse();
+		list		= new ArrayList<>();
+		try{
+			entities	= reader.find( ITeam.class, "name", true, Restriction.ilike( "name", request.getSearchValue() ) );
+			for( ITeam e : entities ){
+				tr	= new TeamResponse();
+				tr.setTeam( TeamDto.from( e ) );
+				list.add( tr );
+			}
+			response.setList( list );
+			response.setCount( Long.valueOf( list.size() ) );
+			response.setSuccess( true );
+			response.setMessage( "Operation successful." );
+		} 
+		catch( QueryException e ){
+			e.printStackTrace();
+			response.setSuccess( false );
+			response.setMessage( "Operation failed, an unexpected exception occured." );
+		}
+		
+		return response;
+	}
 
+	@ServiceCall
 	@Transactional
 	public TeamResponse removeTeam( TeamRequest request )
 	{
@@ -90,6 +125,7 @@ public class TeamUC extends AbstractUseCase implements Serializable {
 		return response;
 	}
 
+	@ServiceCall
 	@Transactional
 	public ListTeamResponse retrieveTeams( TeamsRequest request ){
 		EntityQueryAp					ap;
@@ -130,6 +166,7 @@ public class TeamUC extends AbstractUseCase implements Serializable {
 		return response;
 	}
 	
+	@ServiceCall
 	@Transactional
 	public TeamResponse updateTeam( TeamRequest request )
 	{
@@ -143,7 +180,7 @@ public class TeamUC extends AbstractUseCase implements Serializable {
 				response.setMessage( "No team given to update." );
 			}
 			else{
-				team		= reader.findByNaturalKey( ITeam.class, "id", request.getTeam().getId() );
+				team		= reader.findByKey( ITeam.class, request.getTeam().getId() );
 				if( !team.getLastModifiedDate().equals( request.getTeam().getLastModifiedDate() ) ){
 					response.setSuccess( false );
 					response.setMessage( "Team updated by another user." );

@@ -5,8 +5,8 @@
   "apis" : [ {
     "name" : "removeTeam",
     "description" : "Remove a Team",
-    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamRequest",
-    "outputType" : "com.fdc.boarding.releasetracker.domain.team.TeamResponse",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamResponse",
     "apiType" : "RR",
     "timeoutMillis" : 10000,
     "webDef" : {
@@ -18,8 +18,8 @@
   }, {
     "name" : "updateTeam",
     "description" : "Update a Team",
-    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamRequest",
-    "outputType" : "com.fdc.boarding.releasetracker.domain.team.TeamResponse",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamResponse",
     "apiType" : "RR",
     "timeoutMillis" : 10000,
     "webDef" : {
@@ -29,29 +29,42 @@
       "maxContentSize" : 200000
     }
   }, {
-    "name" : "addTeam",
-    "description" : "Add a new Team",
-    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamRequest",
-    "outputType" : "com.fdc.boarding.releasetracker.domain.team.TeamResponse",
+    "name" : "findTeams",
+    "description" : "Find teams like the name given",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.LikeRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse",
     "apiType" : "RR",
     "timeoutMillis" : 10000,
     "webDef" : {
       "encoding" : [ "JSON", "XML" ],
       "methods" : [ "POST" ],
-      "path" : "/addTeam",
+      "path" : "/findTeams",
       "maxContentSize" : 200000
     }
   }, {
     "name" : "getAllTeams",
     "description" : "Retrieve all teams",
-    "inputType" : "com.fdc.boarding.releasetracker.domain.team.TeamsRequest",
-    "outputType" : "com.fdc.boarding.releasetracker.domain.team.ListTeamResponse",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamsRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse",
     "apiType" : "RR",
     "timeoutMillis" : 10000,
     "webDef" : {
       "encoding" : [ "JSON", "XML" ],
       "methods" : [ "POST" ],
       "path" : "/getAllTeams",
+      "maxContentSize" : 200000
+    }
+  }, {
+    "name" : "addTeam",
+    "description" : "Add a new Team",
+    "inputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamRequest",
+    "outputType" : "com.fdc.boarding.releasetracker.usecase.team.TeamResponse",
+    "apiType" : "RR",
+    "timeoutMillis" : 10000,
+    "webDef" : {
+      "encoding" : [ "JSON", "XML" ],
+      "methods" : [ "POST" ],
+      "path" : "/addTeam",
       "maxContentSize" : 200000
     }
   } ],

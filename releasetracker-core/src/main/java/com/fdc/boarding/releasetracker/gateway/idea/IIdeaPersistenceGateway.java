@@ -8,7 +8,7 @@ import com.fdc.boarding.releasetracker.domain.idea.IIdea;
 import com.fdc.boarding.releasetracker.domain.team.ITeamImpact;
 import com.fdc.boarding.releasetracker.gateway.excel.ReaderResponse;
 import com.fdc.boarding.releasetracker.usecase.idea.IdeaAp;
-import com.fdc.boarding.releasetracker.usecase.idea.IdeaPartialSearchResponse;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaPartialDto;
 import com.fdc.boarding.releasetracker.usecase.idea.IdeaSearchResponse;
 
 public interface IIdeaPersistenceGateway extends Serializable{
@@ -24,5 +24,5 @@ public interface IIdeaPersistenceGateway extends Serializable{
 	public abstract List<ITeamImpact> readImpactsForIdea(Long ideaId);
 	public abstract List<IComment> readCommentsForIdea(Long ideaId);
 	public abstract List<IComment> readCommentsForTeamImpact(Long teamImpactId);
-	public abstract List<IdeaPartialSearchResponse> searchIdeas(String value);
+	public abstract List<IdeaPartialDto> searchIdeas(String value);
 }

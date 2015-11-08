@@ -5,13 +5,11 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import com.fdc.boarding.releasetracker.domain.common.IComment;
 import com.fdc.boarding.releasetracker.domain.common.Rom;
 import com.fdc.boarding.releasetracker.domain.workflow.IIdeaWorkflow;
 import com.fdc.boarding.releasetracker.domain.workflow.IPhaseCompletion;
 import com.fdc.boarding.releasetracker.domain.workflow.IWorkflow;
 import com.fdc.boarding.releasetracker.usecase.AbstractAuditedDto;
-import com.fdc.boarding.releasetracker.usecase.common.dto.CommentDto;
 import com.fdc.boarding.releasetracker.usecase.release.dto.ReleaseEntryDto;
 
 public class WorkflowDto extends AbstractAuditedDto {
@@ -26,23 +24,15 @@ public class WorkflowDto extends AbstractAuditedDto {
 	public static WorkflowDto from( IWorkflow entity ){
 		WorkflowDto						dto		= null;
 		List<PhaseCompletionDto>		plist;
-		List<CommentDto>				clist;
 		
 		if( entity != null ){
 			dto	= new WorkflowDto();
 			locals( dto, entity );
-			dto.setCurrentPhaseCompletion( PhaseCompletionDto.from( entity.getCurrentPhaseCompletion() ) );
-			dto.setRelease( ReleaseEntryDto.partial( entity.getRelease() ) );
 			plist = new ArrayList<>();
 			for( IPhaseCompletion p : entity.getPhaseCompletions() ){
 				plist.add( PhaseCompletionDto.from( p ) );
 			}
 			dto.setPhaseCompletions( plist );
-			clist = new ArrayList<>();
-			for( IComment c : entity.getComments() ){
-				clist.add( CommentDto.from( c ) );
-			}
-			dto.setComments( clist );
 			if( entity instanceof IIdeaWorkflow ){
 				dto.setType( WorkflowType.Idea );
 			}
@@ -62,6 +52,8 @@ public class WorkflowDto extends AbstractAuditedDto {
 		dto.setRom( entity.getRom() );
 		dto.setLastModifiedBy( entity.getLastModifiedBy() );
 		dto.setLastModifiedDate( entity.getLastModifiedDate() );
+		dto.setCurrentPhaseCompletion( PhaseCompletionDto.from( entity.getCurrentPhaseCompletion() ) );
+		dto.setRelease( ReleaseEntryDto.partial( entity.getRelease() ) );
 	}
 
 	public static WorkflowDto partial( IWorkflow entity ){
@@ -84,7 +76,6 @@ public class WorkflowDto extends AbstractAuditedDto {
 	private PhaseCompletionDto			currentPhaseCompletion;
 	private ReleaseEntryDto				release;
 	private List<PhaseCompletionDto>	phaseCompletions	= new ArrayList<>();
-	private List<CommentDto>			comments		= new ArrayList<>();
 
 	public WorkflowDto(){
 		super();
@@ -92,10 +83,6 @@ public class WorkflowDto extends AbstractAuditedDto {
 
 	public LocalDate getCacnelledDate() {
 		return cacnelledDate;
-	}
-
-	public List<CommentDto> getComments() {
-		return comments;
 	}
 
 	public PhaseCompletionDto getCurrentPhaseCompletion() {
@@ -132,10 +119,6 @@ public class WorkflowDto extends AbstractAuditedDto {
 
 	public void setCacnelledDate(LocalDate cacnelledDate) {
 		this.cacnelledDate = cacnelledDate;
-	}
-
-	public void setComments(List<CommentDto> comments) {
-		this.comments = comments;
 	}
 
 	public void setCurrentPhaseCompletion(PhaseCompletionDto currentPhaseCompletion) {

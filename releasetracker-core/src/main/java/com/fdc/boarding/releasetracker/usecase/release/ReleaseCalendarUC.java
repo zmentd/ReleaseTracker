@@ -18,6 +18,18 @@ public class ReleaseCalendarUC implements Serializable {
 		return gateway.determineReleaseYears();
 	}
 	
+	public ReleaseCalendarResponse findReleaseCalendarForYear( ReleaseCalendarRequest request ){
+		ReleaseCalendarResponse			response;
+		List<IReleaseEntry>				list;
+
+		response 	= new ReleaseCalendarResponse();
+		list		= gateway.findReleaseCalendarForYear( request.getYear() );
+		response.setReleaseEntries( list );
+		response.setYear( request.getYear() );
+		
+		return response;
+	}
+	
 	public ReleaseCalendarResponse findReleaseCalendarForYear( int year){
 		ReleaseCalendarResponse			response;
 		List<IReleaseEntry>				list;

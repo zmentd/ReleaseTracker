@@ -16,6 +16,9 @@ import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fdc.boarding.core.persistence.AbstractAuditedEntity;
@@ -48,6 +51,7 @@ public class TeamEntity extends AbstractAuditedEntity<Long> implements ITeam {
 	@Column( name = "ID" )
 	private Long						id;
 
+	@Field(index=org.hibernate.search.annotations.Index.YES, analyze=Analyze.YES, store=Store.YES)
 	@NotEmpty
 	@NotNull
 	@Column( name = "NAME" )

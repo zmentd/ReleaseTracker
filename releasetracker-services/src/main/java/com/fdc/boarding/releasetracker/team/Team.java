@@ -1,5 +1,6 @@
 package com.fdc.boarding.releasetracker.team;
 
+import com.fdc.boarding.releasetracker.usecase.LikeRequest;
 import com.fdc.boarding.releasetracker.usecase.team.ListTeamResponse;
 import com.fdc.boarding.releasetracker.usecase.team.TeamRequest;
 import com.fdc.boarding.releasetracker.usecase.team.TeamResponse;
@@ -34,5 +35,10 @@ public interface Team {
     @FDiNetWebInfo(path="/removeTeam")
     @Description( "Remove a Team" )
 	public void removeTeam( TeamRequest request, TypedResponseHandler<TeamResponse> handler );
+	
+    @FDiNetServiceAPI_RR( responseType = ListTeamResponse.class, timeoutMillis=10000 )
+    @FDiNetWebInfo(path="/findTeams")
+    @Description( "Find teams like the name given" )
+	public void findTeams( LikeRequest request, TypedResponseHandler<ListTeamResponse> handler );
 
 }

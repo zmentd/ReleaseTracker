@@ -1,7 +1,11 @@
 package com.fdc.boarding.releasetracker.security;
 
+import javax.validation.constraints.NotNull;
+
 public class Credentials {
+	@NotNull
 	private String						userId;
+	@NotNull
 	private String						password;
 	
 	public Credentials(){

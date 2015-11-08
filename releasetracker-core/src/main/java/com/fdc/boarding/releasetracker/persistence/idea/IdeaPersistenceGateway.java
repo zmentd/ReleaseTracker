@@ -30,7 +30,7 @@ import com.fdc.boarding.releasetracker.gateway.idea.IIdeaPersistenceGateway;
 import com.fdc.boarding.releasetracker.persistence.release.MilestoneEntity;
 import com.fdc.boarding.releasetracker.usecase.idea.DaysToTargetStatus;
 import com.fdc.boarding.releasetracker.usecase.idea.IdeaAp;
-import com.fdc.boarding.releasetracker.usecase.idea.IdeaPartialSearchResponse;
+import com.fdc.boarding.releasetracker.usecase.idea.IdeaPartialDto;
 import com.fdc.boarding.releasetracker.usecase.idea.IdeaSearchResponse;
 import com.fdc.boarding.releasetracker.usecase.idea.IdeaStatusResponse;
 
@@ -366,29 +366,52 @@ public class IdeaPersistenceGateway extends GenericDao<IdeaEntity, Long> impleme
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<IdeaPartialSearchResponse> searchIdeas( String value ){
+	public List<IdeaPartialDto> searchIdeas( String value ){
 		FullTextEntityManager 			ftem;
 		QueryBuilder 					qb;
 		org.apache.lucene.search.Query 	query;
 		Query 							jquery;
 		List<Object[]>					results;
-		List<IdeaPartialSearchResponse>	list;
-		IdeaPartialSearchResponse		partial;
+		List<IdeaPartialDto>	list;
+		IdeaPartialDto		partial;
 		
 		list	= new ArrayList<>();
 		ftem	= Search.getFullTextEntityManager( entityManager );
 		qb 		= ftem.getSearchFactory().buildQueryBuilder().forEntity( IdeaEntity.class ).get();
-		query 	= qb.keyword()
-				    .onFields( "ideaNumber", "projectNumber", "name", "description" )
-				    .matching( value )
-				    .createQuery();
+		if( value.contains( "*" ) || value.contains( "?" ) ){
+			query 	= qb.keyword()
+						.wildcard()
+						.onField( "ideaNumber" )
+						.andField( "projectNumber" )
+						.andField( "amendmentNumber" )
+						.andField( "name" )
+						.andField( "description" )
+						.andField( "workflow.comments.comment" )
+						.andField( "teamImpacts.workflow.comments.comment" )
+						.andField( "teamImpacts.team.name" )
+					 	.matching( value )
+					 	.createQuery();
+		}
+		else{
+			query 	= qb.keyword()
+						.onField( "ideaNumber" )
+						.andField( "projectNumber" )
+						.andField( "amendmentNumber" )
+						.andField( "name" )
+						.andField( "description" )
+						.andField( "workflow.comments.comment" )
+						.andField( "teamImpacts.workflow.comments.comment" )
+						.andField( "teamImpacts.team.name" )
+						.matching( value )
+						.createQuery();
+		}
 		jquery	= ftem.createFullTextQuery( query )
 					  .setProjection( "id", "ideaNumber", "projectNumber", "name" )
 		;
 		results	= jquery.getResultList();
 		for( Object[] result : results ){
 			System.out.println( "Array:" + result );
-			partial	= new IdeaPartialSearchResponse();
+			partial	= new IdeaPartialDto();
 			partial.setId( ( Long )result[0] );
 			partial.setIdeaNumber( ( String )result[1] );
 			partial.setPrjNumber( ( String )result[2] );

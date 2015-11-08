@@ -6,6 +6,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.search.annotations.ContainedIn;
 
 import com.fdc.boarding.releasetracker.domain.idea.IIdea;
 import com.fdc.boarding.releasetracker.domain.workflow.IIdeaWorkflow;
@@ -17,6 +18,7 @@ import com.fdc.boarding.releasetracker.persistence.idea.IdeaEntity;
 public class IdeaWorkflowEntity extends AbstractWorkflowEntity implements IIdeaWorkflow {
 	private static final long 			serialVersionUID = 1L;
 
+	@ContainedIn
 	@Audited( targetAuditMode = RelationTargetAuditMode.NOT_AUDITED )
 	@OneToOne( targetEntity = IdeaEntity.class )
 	private IIdea						idea;

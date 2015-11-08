@@ -12,10 +12,6 @@ var app = angular
         		selectedUser: null,
         };
         vm.getAllTeams 			= getAllTeams();
-        
-//        var typeaheadScope		= $scope.$new();
-//        $controller( 'UserTypeaheadCtrl', { $scope : typeaheadScope } );
-//        vm.userTypeaheadCtrl	= UserTypeaheadCtrl;
 
         function getAllTeams() {
             vm.dataLoading = true;

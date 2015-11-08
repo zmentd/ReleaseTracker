@@ -12,9 +12,12 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 import org.jboss.weld.bean.proxy.ProxyObject;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import com.fdc.boarding.core.intercept.annotation.ServiceCall;
 import com.fdc.boarding.core.log.LoggerProxy;
+import com.fdc.boarding.core.util.DateTimeUtil;
 import com.fdc.boarding.releasetracker.common.cdi.CDIContext;
 import com.fdc.boarding.releasetracker.usecase.IServiceResponse;
 import com.fdc.boarding.releasetracker.usecase.ValidationFailure;
@@ -39,7 +42,15 @@ public class ServiceCallInterceptor {
 		Set<ValidationFailure>				failures;
 		Class<?>							returnType;
 		ServiceCall							anno;
-		
+    	DateTime							start;
+    	DateTime							end;
+    	Duration							duration;
+    	String								sduration;
+    
+    	//
+    	// Log entry
+    	//
+    	start	= new DateTime();
 		anno	= invocationContext.getMethod().getAnnotation( ServiceCall.class ); 
 		service = getService( invocationContext.getTarget() );
 		logger	= LoggerProxy.getLogger( service );
@@ -66,6 +77,9 @@ public class ServiceCallInterceptor {
 			}
 		}
 		if( !validated ){
+			//
+			// Failed validation, create a response and do not proceed.
+			//
 			returnType	= invocationContext.getMethod().getReturnType();
 			if( IServiceResponse.class.isAssignableFrom( returnType ) ){
 				result	= CDIContext.getInstance().getBean( returnType );
@@ -74,21 +88,39 @@ public class ServiceCallInterceptor {
 				( ( IServiceResponse )result ).setMessage( "Validation failed." );
 			}
 			else{
+		    	end			= new DateTime();
+		    	duration	= new Duration( start, end );
+		    	sduration	= DateTimeUtil.getPeriodFormatter().print( duration.toPeriod() );
 				logger.info( "Service call "
 						   , service.getName()
 						   , ".", invocationContext.getMethod().getName()
-						   , " completed execution with error, request validation failed and the return type does not implement " + IServiceResponse.class.getName() + "." 
+						   , " completed execution with error in "
+						   , sduration
+						   , ", request validation failed and the return type does not implement " 
+						   , IServiceResponse.class.getName() 
+						   , "." 
 				);
 				throw new ValidationException( "Validation failed for Service call " + service.getName() + "." + invocationContext.getMethod().getName() );
 			}
 		}
 		else{
+			//
+			// Validation succeeded, proceed
+			//
 			result 	= invocationContext.proceed();
 		}
+		
+		//
+		// Log completion
+		//
+    	end			= new DateTime();
+    	duration	= new Duration( start, end );
+    	sduration	= DateTimeUtil.getPeriodFormatter().print( duration.toPeriod() );
 		logger.info( "Service call "
 				   , service.getName()
 				   , ".", invocationContext.getMethod().getName()
-				   , " completed execution." 
+				   , " completed execution in "
+				   , sduration
 		);
 
 		return result;
