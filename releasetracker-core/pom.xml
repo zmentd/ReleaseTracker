@@ -122,8 +122,6 @@
 		    <artifactId>poi-ooxml</artifactId>
 		    <version>3.12</version>
 		</dependency>
-		<!-- 
-		 -->
 		<dependency>
 		  <groupId>javax.el</groupId>
 		  <artifactId>javax.el-api</artifactId>
